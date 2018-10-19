@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ScsBusiness;
 
 namespace TWill
 {
@@ -58,6 +59,9 @@ namespace TWill
             });
 
             Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+
+            var a = new ScsProgram();
+            var dataSet = a.BOAdd("HUM0020100").GetAwaiter().GetResult();
         }
     }
 }
