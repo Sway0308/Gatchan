@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Element", "Element\Element.csproj", "{D868D3CF-EEE7-4CB9-8D3D-C275E3251874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Element", "Element\Element.csproj", "{D868D3CF-EEE7-4CB9-8D3D-C275E3251874}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScsBusiness", "ScsBusiness\ScsBusiness.csproj", "{E48245B4-CB74-4FD4-AF08-E67E6EEFB193}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScsBusiness", "ScsBusiness\ScsBusiness.csproj", "{E48245B4-CB74-4FD4-AF08-E67E6EEFB193}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net.Core", "Net.Core", "{871DA763-08B8-4FEC-A661-7C36424B0CA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ScsService", "ScsService", "{5F3EA828-AA5E-4B69-BCBF-F33392BA116A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TWill", "TWill\TWill.csproj", "{57975CE4-508D-4FFA-8479-2E55589630A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +27,17 @@ Global
 		{E48245B4-CB74-4FD4-AF08-E67E6EEFB193}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E48245B4-CB74-4FD4-AF08-E67E6EEFB193}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E48245B4-CB74-4FD4-AF08-E67E6EEFB193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57975CE4-508D-4FFA-8479-2E55589630A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57975CE4-508D-4FFA-8479-2E55589630A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57975CE4-508D-4FFA-8479-2E55589630A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57975CE4-508D-4FFA-8479-2E55589630A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D868D3CF-EEE7-4CB9-8D3D-C275E3251874} = {871DA763-08B8-4FEC-A661-7C36424B0CA7}
+		{E48245B4-CB74-4FD4-AF08-E67E6EEFB193} = {5F3EA828-AA5E-4B69-BCBF-F33392BA116A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {688FEDB8-4CDE-4152-AEFE-7CE06EE617FF}
