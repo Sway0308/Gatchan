@@ -1,10 +1,7 @@
-﻿using Element.Core;
-using ScsService;
+﻿using Elementary;
+using ScsBusiness.ScsService;
 using System;
 using System.Data;
-using System.IO;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace ScsBusiness
 {
@@ -12,36 +9,34 @@ namespace ScsBusiness
     {
         public ScsProgram()
         {
-            this.ScsService = new SCSServiceSoapClient(SCSServiceSoapClient.EndpointConfiguration.SCSServiceSoap, "http://localhost/scsweb/scsservice.asmx");
-            this.Connect("SCS003", "07001", "scsadmin");
+            this.ScsServices = new ScsService.SCSService();
+            this.ScsServices.Url = @"http://localhost/scsweb/scsservice.asmx";
+            var loginResult = this.ScsServices.Login(new ScsService.TWsLoginInputArgs { CompanyID = "SCS003", UserID = "07001", Password = "scsadmin" });
+            this.SessionGuid = loginResult.SessionGuid;
         }
 
-        private SCSServiceSoapClient ScsService { get; }
+        private ScsService.SCSService ScsServices { get; }
 
-        private Guid SessionGuid { get; set; }
+        private Guid SessionGuid { get; }
 
-        private void Connect(string companyID, string userID, string password)
+        public DataTable Find(string progID)
         {
-            var result = this.ScsService.LoginAsync(new TWsLoginInputArgs { CompanyID = companyID, UserID = userID, Password = password });
-            this.SessionGuid = result.GetAwaiter().GetResult().SessionGuid;   
-        }
+            var args = new TFindInputArgs();
+            var json = JsonFunc.ObjectToJson(args);
+            var result = this.ScsServices.BusinessObjectJson(this.SessionGuid.ToString(), progID, EBusinessObjectAction.Find, json);
 
-        public async Task<DataSet> BOAdd(string progID)
-        {
-            var result = await this.ScsService.BOAddAsync(new TWsBOAddInputArgs { SessionGuid = this.SessionGuid, ProgID = progID });
-            var xml = result.DataSet;
 
-            var dataSet = new DataSet();
-            dataSet.ReadXml(new StringReader(xml.ToString()));
-            return dataSet;
-            //var oSerializer = new XmlSerializer(typeof(DataSet));
-            //
-            //var a = xml.Nodes[1];
-            //
-            //var oStringReader = new StringReader(a.Value);
-            //var oValue = oSerializer.Deserialize(oStringReader) as DataSet;
-            //oStringReader.Close();
-            //return oValue;
+
+            if (StrFunc.StrContains(result, "StackTrace"))
+            {
+                return null;
+            }
+            else
+            {
+                // 將回傳的 JSON 字串反序列化為物件
+                var findResult = JsonFunc.JsonToObject<TFindOutputResult>(result);
+                return findResult.DataTable;
+            }
         }
     }
 }

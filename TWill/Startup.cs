@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ElectronNET.API;
+﻿using ElectronNET.API;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ScsBusiness;
+using System.Threading.Tasks;
 
 namespace TWill
 {
@@ -60,8 +57,8 @@ namespace TWill
 
             Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
 
-            var a = new ScsProgram();
-            var dataSet = a.BOAdd("HUM0020100").GetAwaiter().GetResult();
+            var scs = new ScsProgram();
+            var table = scs.Find("HUM0020100");
         }
     }
 }

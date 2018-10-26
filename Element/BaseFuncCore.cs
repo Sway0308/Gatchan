@@ -4,12 +4,12 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Element.Core
+namespace Elementary.Core
 {
     /// <summary>
     /// 基礎函式庫。
     /// </summary>
-    public class BaseFunc
+    public class BaseFuncCore
     {
         #region 判斷空值相關方法
 
@@ -38,7 +38,7 @@ namespace Element.Core
         public static bool IsEmpty(object value)
         {
             if (value is string)
-                return StrFunc.StrIsEmpty(BaseFunc.CStr(value));
+                return StrFuncCore.StrIsEmpty(BaseFuncCore.CStr(value));
             else
                 return IsNull(value);
         }
@@ -86,7 +86,7 @@ namespace Element.Core
         public static string CStr(object value, string defaultValue)
         {
             //若為 Null 或 DBNull 值，則傳回預設值
-            if (BaseFunc.IsNull(value))
+            if (BaseFuncCore.IsNull(value))
             {
                 return defaultValue;
             }
@@ -106,7 +106,7 @@ namespace Element.Core
         /// <param name="value">要轉型的值。</param>
         public static string CStr(object value)
         {
-            return BaseFunc.CStr(value, string.Empty);
+            return BaseFuncCore.CStr(value, string.Empty);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Element.Core
         /// <param name="value">要轉型的值。</param>
         public static string CStrTrim(object value)
         {
-            return BaseFunc.CStr(value).Trim();
+            return BaseFuncCore.CStr(value).Trim();
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Element.Core
         /// <param name="value">要轉型的值。</param>
         public static Guid CGuid(string value)
         {
-            if (IsEmpty(value) || StrFunc.SameText(value, "*"))
+            if (IsEmpty(value) || StrFuncCore.SameText(value, "*"))
                 return Guid.Empty;
             else
             {
@@ -176,17 +176,17 @@ namespace Element.Core
         /// <param name="value">要轉型的值。</param>
         public static bool CBool(string value)
         {
-            if (StrFunc.SameText(value, "Y"))
+            if (StrFuncCore.SameText(value, "Y"))
                 return true;
-            else if (StrFunc.SameText(value, "T"))
+            else if (StrFuncCore.SameText(value, "T"))
                 return true;
-            else if (StrFunc.SameText(value, "true"))
+            else if (StrFuncCore.SameText(value, "true"))
                 return true;
-            else if (StrFunc.SameText(value, "1"))
+            else if (StrFuncCore.SameText(value, "1"))
                 return true;
-            else if (StrFunc.SameText(value, "是"))
+            else if (StrFuncCore.SameText(value, "是"))
                 return true;
-            else if (StrFunc.SameText(value, "真"))
+            else if (StrFuncCore.SameText(value, "真"))
                 return true;
             else
                 return false;
@@ -239,7 +239,7 @@ namespace Element.Core
             char[] oChars;
             string sReturnValue;
 
-            if (StrFunc.StrIsEmpty(value)) return string.Empty;
+            if (StrFuncCore.StrIsEmpty(value)) return string.Empty;
 
             sReturnValue = string.Empty;
             oChars = value.ToCharArray();
@@ -273,12 +273,12 @@ namespace Element.Core
             if (value is string)
             {
                 // 空字串傳回 0
-                if (StrFunc.StrIsEmpty(value)) { return 0; }
+                if (StrFuncCore.StrIsEmpty(value)) { return 0; }
                 // 若為數值先轉型為 Double 型別，防止有小數點無法轉型為整數
-                if (BaseFunc.IsNumeric(value)) { value = Convert.ToDouble(value); }
+                if (BaseFuncCore.IsNumeric(value)) { value = Convert.ToDouble(value); }
             }
 
-            if (!BaseFunc.IsNumeric(value))
+            if (!BaseFuncCore.IsNumeric(value))
                 throw new Exception(value + " 無法轉型為數值");
 
             return value;
@@ -369,10 +369,10 @@ namespace Element.Core
         {
             var result = new TimeSpan();
 
-            if (StrFunc.StrIsNotEmpty(time))
+            if (StrFuncCore.StrIsNotEmpty(time))
             {
-                int hours = BaseFunc.CInt(StrFunc.StrLeft(time, 2));
-                int minutes = BaseFunc.CInt(StrFunc.StrRight(time, 2));
+                int hours = BaseFuncCore.CInt(StrFuncCore.StrLeft(time, 2));
+                int minutes = BaseFuncCore.CInt(StrFuncCore.StrRight(time, 2));
                 result = new TimeSpan(hours, minutes, 0);
             }
 
@@ -478,21 +478,21 @@ namespace Element.Core
             int iBaseValue;
 
             oBaseValues = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-            sValue = StrFunc.StrTrim(value);
+            sValue = StrFuncCore.StrTrim(value);
 
             for (int N1 = sValue.Length - 1; N1 >= 0; N1--)
             {
                 iBaseValue = Array.IndexOf(oBaseValues, sValue[N1]);
                 if (iBaseValue != -1 && iBaseValue < numberBase - 1)
                 {
-                    return StrFunc.StrFormat("{0}{1}{2}", StrFunc.StrLeft(sValue, N1), oBaseValues[iBaseValue + 1], StrFunc.StrSubstring(sValue, N1 + 1));
+                    return StrFuncCore.StrFormat("{0}{1}{2}", StrFuncCore.StrLeft(sValue, N1), oBaseValues[iBaseValue + 1], StrFuncCore.StrSubstring(sValue, N1 + 1));
                 }
                 else
                 {
                     // 需要進位，將目前位數歸零
                     if (iBaseValue != -1 && iBaseValue < numberBase)
                     {
-                        sValue = StrFunc.StrFormat("{0}{1}{2}", StrFunc.StrLeft(sValue, N1), "0", StrFunc.StrSubstring(sValue, N1 + 1));
+                        sValue = StrFuncCore.StrFormat("{0}{1}{2}", StrFuncCore.StrLeft(sValue, N1), "0", StrFuncCore.StrSubstring(sValue, N1 + 1));
                     }
                 }
             }
@@ -520,7 +520,7 @@ namespace Element.Core
             Random oRnd = new Random(Guid.NewGuid().GetHashCode());
             int iValue = 0;
 
-            iValue = BaseFunc.CInt(oRnd.Next(min, max));
+            iValue = BaseFuncCore.CInt(oRnd.Next(min, max));
             return iValue;
         }
 
@@ -533,7 +533,7 @@ namespace Element.Core
             int iIndex = 0;
 
             iIndex = RndInt(1, s.Length);
-            return StrFunc.StrSubstring(s, iIndex, 1);
+            return StrFuncCore.StrSubstring(s, iIndex, 1);
         }
 
         /// <summary>

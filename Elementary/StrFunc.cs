@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Element.Core
+namespace Elementary
 {
     /// <summary>
     /// 字串相關函式庫。

@@ -10,7 +10,7 @@
     <DotNetCliToolReference Include="ElectronNET.CLI" Version="0.0.9" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Element\Element.csproj" />
+    <ProjectReference Include="..\Elementary\Elementary.csproj" />
     <ProjectReference Include="..\ScsBusiness\ScsBusiness.csproj" />
   </ItemGroup>
   <ItemGroup>

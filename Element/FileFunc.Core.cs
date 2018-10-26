@@ -2,10 +2,8 @@
 using System.Text;
 using System.IO;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
-namespace Element.Core
+namespace Elementary.Core
 {
     /// <summary>
     /// 檔案及目錄相關函式庫。
@@ -15,7 +13,7 @@ namespace Element.Core
     /// Directory：目錄相關的函式。
     /// Path：路徑相關的函式。
     /// </remarks>
-    public class FileFunc
+    public class FileFuncCore
     {
         /// <summary>
         /// 組合二個路徑字串。
@@ -81,7 +79,7 @@ namespace Element.Core
         /// <param name="filePath">檔案路徑。</param>
         public static void FileDelele(string filePath)
         {
-            if (FileFunc.FileExists(filePath))
+            if (FileFuncCore.FileExists(filePath))
                 System.IO.File.Delete(filePath);
         }
 
@@ -149,7 +147,7 @@ namespace Element.Core
         /// <param name="path">目錄路徑。</param>
         public static void DirectoryDelete(string path)
         {
-            if (FileFunc.DirectoryExists(path))
+            if (FileFuncCore.DirectoryExists(path))
                 Directory.Delete(path, true);
         }
 
@@ -234,7 +232,7 @@ namespace Element.Core
         /// <param name="path">指定目錄。</param>
         public static string[] GetDirectories(string path)
         {
-            if (FileFunc.DirectoryExists(path))
+            if (FileFuncCore.DirectoryExists(path))
                 return Directory.GetDirectories(path);
             else
                 return new string[0];
@@ -301,7 +299,7 @@ namespace Element.Core
         public static string GetAssemblyPath()
         {
             //取得程式組件路徑
-            if (StrFunc.StrIsEmpty(AppDomain.CurrentDomain.RelativeSearchPath))
+            if (StrFuncCore.StrIsEmpty(AppDomain.CurrentDomain.RelativeSearchPath))
                 return AppDomain.CurrentDomain.BaseDirectory;
             else
                 return AppDomain.CurrentDomain.RelativeSearchPath;
@@ -331,7 +329,7 @@ namespace Element.Core
         /// <param name="path">指定目錄。</param>
         public static string[] GetFiles(string path)
         {
-            if (FileFunc.DirectoryExists(path))
+            if (FileFuncCore.DirectoryExists(path))
                 return System.IO.Directory.GetFiles(path);
             else
                 return new string[0];
@@ -344,7 +342,7 @@ namespace Element.Core
         /// <param name="searchPattern">搜尋條件。</param>
         public static string[] GetFiles(string path, string searchPattern)
         {
-            if (!FileFunc.DirectoryExists(path))
+            if (!FileFuncCore.DirectoryExists(path))
                 return new string[0];
             else
                 return System.IO.Directory.GetFiles(path, searchPattern);
@@ -389,7 +387,7 @@ namespace Element.Core
             FileStream oFileStream;
             int iLen;
 
-            FileFunc.DirectoryCheck(filePath, true);
+            FileFuncCore.DirectoryCheck(filePath, true);
 
             iLen = bytes.Length;
             oFileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
@@ -406,7 +404,7 @@ namespace Element.Core
         {
             FileStream oFileStream;
 
-            FileFunc.DirectoryCheck(filePath, true);
+            FileFuncCore.DirectoryCheck(filePath, true);
 
             oFileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
             stream.CopyTo(oFileStream);
@@ -447,7 +445,7 @@ namespace Element.Core
         /// <param name="path">路徑。</param>
         public static bool IsRemotePath(string path)
         {
-            return StrFunc.StrLeftWith(path, "\\");
+            return StrFuncCore.StrLeftWith(path, "\\");
         }
 
         /// <summary>
@@ -462,12 +460,12 @@ namespace Element.Core
 
             if (!IsRemotePath(path)) { return string.Empty; }
 
-            sPath = StrFunc.StrLeftCut(path, 2);
-            iPos = StrFunc.StrPos(sPath, @"\");
+            sPath = StrFuncCore.StrLeftCut(path, 2);
+            iPos = StrFuncCore.StrPos(sPath, @"\");
             if (iPos == -1)
                 sRemoteHost = sPath;
             else
-                sRemoteHost = StrFunc.StrLeft(sPath, iPos);
+                sRemoteHost = StrFuncCore.StrLeft(sPath, iPos);
 
             return sRemoteHost;
         }
@@ -506,10 +504,10 @@ namespace Element.Core
                 }
 
                 sErrorMsg = oProc.StandardError.ReadToEnd();
-                if (StrFunc.StrIsNotEmpty(sErrorMsg))
+                if (StrFuncCore.StrIsNotEmpty(sErrorMsg))
                 {
                     // 如錯誤訊息中有 1219 的代碼，則代表已經連線過了
-                    if (StrFunc.StrPos(sErrorMsg, "1219") < 0)
+                    if (StrFuncCore.StrPos(sErrorMsg, "1219") < 0)
                     {
                         bConnect = false;
                     }
@@ -563,7 +561,7 @@ namespace Element.Core
                 }
 
                 sErrorMsg = oProc.StandardError.ReadToEnd();
-                if (StrFunc.StrIsNotEmpty(sErrorMsg))
+                if (StrFuncCore.StrIsNotEmpty(sErrorMsg))
                     bDisConnect = false;
 
                 oProc.StandardError.Close();

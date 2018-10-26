@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Element.Core
+namespace Elementary
 {
     /// <summary>
     /// 時間日期相關函式庫。
