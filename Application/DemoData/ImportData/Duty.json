@@ -1,0 +1,17 @@
+[
+  {
+    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB156B",
+    "DutyCode": "Boss",
+    "DutyName": "老闆"
+  },
+  {
+    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB157B",
+    "DutyCode": "Manager",
+    "DutyName": "經理"
+  },
+  {
+    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB158B",
+    "DutyCode": "Employee",
+    "DutyName": "員工"
+  }
+]

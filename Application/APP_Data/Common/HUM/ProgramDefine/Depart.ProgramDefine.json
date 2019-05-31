@@ -1,0 +1,51 @@
+{
+  "ProgID": "Depart",
+  "DisplayName": "部門",
+  "Tables": [
+    {
+      "TableName": "Depart",
+      "DbTableName": "Depart",
+      "DisplayName": "部門",
+      "PrimaryKey": "DepartID",
+      "Fields": [
+        {
+          "FieldType": 0,
+          "MaxLength": 10,
+          "AllowNull": false,
+          "LinkFieldName": "",
+          "LinkProgID": "",
+          "LinkReturnFields": [],
+          "FieldName": "DepartID",
+          "DisplayName": "部門編號",
+          "DbType": 7
+        },
+        {
+          "FieldType": 0,
+          "MaxLength": 10,
+          "AllowNull": false,
+          "LinkFieldName": "",
+          "LinkProgID": "",
+          "LinkReturnFields": [],
+          "FieldName": "DepartCode",
+          "DisplayName": "部門代碼",
+          "DbType": 0
+        },
+        {
+          "FieldType": 0,
+          "MaxLength": 10,
+          "AllowNull": false,
+          "LinkFieldName": "",
+          "LinkProgID": "",
+          "LinkReturnFields": [],
+          "FieldName": "DepartName",
+          "DisplayName": "部門名稱",
+          "DbType": 0
+        }
+      ],
+      "EntityInstanceType": {
+        "AssemblyFile": "",
+        "TypeName": ""
+      }
+    }
+  ]
+}

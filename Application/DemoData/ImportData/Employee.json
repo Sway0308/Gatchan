@@ -1,0 +1,23 @@
+[
+  {
+    "EmployeeID": "013BA635-F8F8-4907-B82F-C961E9DB156C",
+    "EmployeeCode": "0183",
+    "EmployeeName": "John",
+    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB158B",
+    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB256B"
+  },
+  {
+    "EmployeeID": "013BA635-F8F8-4907-B82F-C961E9DB156D",
+    "EmployeeCode": "0211",
+    "EmployeeName": "Bob",
+    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB156B",
+    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB356B"
+  },
+  {
+    "EmployeeID": "013BA635-F8F8-4907-B82F-C961E9DB156F",
+    "EmployeeCode": "0349",
+    "EmployeeName": "Elisa",
+    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB158B",
+    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB456B"
+  }
+]

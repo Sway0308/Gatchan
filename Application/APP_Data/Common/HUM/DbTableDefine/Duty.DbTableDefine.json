@@ -1,0 +1,27 @@
+{
+  "TableName": "Duty",
+  "DisplayName": "職缺",
+  "Fields": [
+    {
+      "MaxLength": 10,
+      "AllowNull": false,
+      "FieldName": "DutyID",
+      "DisplayName": "職缺編號",
+      "DbType": 7
+    },
+    {
+      "MaxLength": 10,
+      "AllowNull": false,
+      "FieldName": "DutyCode",
+      "DisplayName": "職缺代碼",
+      "DbType": 0
+    },
+    {
+      "MaxLength": 10,
+      "AllowNull": false,
+      "FieldName": "DutyName",
+      "DisplayName": "職缺名稱",
+      "DbType": 0
+    }
+  ]
+}

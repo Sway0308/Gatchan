@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ME.Base
+{
+    /// <summary>
+    /// 組件動態載入器。
+    /// </summary>
+    public class GAssemblyLoader
+    {
+        /// <summary>
+        /// 建構函式。
+        /// </summary>
+        /// <param name="assemblyFile">組件檔案名稱。</param>
+        public GAssemblyLoader(string assemblyFile)
+        {
+            this.AssemblyFile = assemblyFile;
+        }
+
+        /// <summary>
+        /// 組件檔案名稱。
+        /// </summary>
+        public string AssemblyFile { get; } = string.Empty;
+
+        /// <summary>
+        /// 建立指定型別的執行個體。
+        /// </summary>
+        /// <param name="typeName">物件型別。</param>
+        /// <param name="args">建構函式引數。</param>
+        public object CreateInstance(string typeName, params object[] args)
+        {
+            return AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(this.AssemblyFile, typeName, true, BindingFlags.CreateInstance, null, args, null, null);
+        }
+
+        /// <summary>
+        /// 建立指定型別的執行個體。
+        /// </summary>
+        /// <param name="typeName">物件型別。</param>
+        /// <param name="args">建構函式引數。</param>
+        public T CreateInstance<T>(string typeName, params object[] args)
+        {
+            return (T)this.CreateInstance(typeName, args);
+        }
+
+        /// <summary>
+        /// 建立指定型別的執行個體。
+        /// </summary>
+        /// <param name="typeName">物件型別。</param>
+        public object CreateInstance(string typeName)
+        {
+            return this.CreateInstance(typeName, null);
+        }
+
+        /// <summary>
+        /// 建立指定型別的執行個體。
+        /// </summary>
+        /// <param name="typeName">物件型別。</param>
+        public T CreateInstance<T>(string typeName)
+        {
+            return (T)this.CreateInstance(typeName);
+        }
+    }
+}

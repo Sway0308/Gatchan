@@ -1,0 +1,40 @@
+﻿using ME.Base;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml.Serialization;
+
+namespace ME.Define
+{
+    /// <summary>
+    /// 欄位定義
+    /// </summary>
+    [Serializable]
+    public class GFieldDefine : GBaseField
+    {
+        /// <summary>
+        /// 欄位類型
+        /// </summary>
+        public EFieldType FieldType { get; set; } = EFieldType.DataField;
+        /// <summary>
+        /// 最大長度
+        /// </summary>
+        public int MaxLength { get; set; }
+        /// <summary>
+        /// 是否允許 Null 值
+        /// </summary>
+        public bool AllowNull { get; set; }
+        /// <summary>
+        /// 關連欄位必填屬性，設定 Select 語法中，關連欄位是由那個來源編號欄位一併取回。
+        /// </summary>
+        public string LinkFieldName { get; set; } = string.Empty;
+        /// <summary>
+        /// 關連對象的程式代碼
+        /// </summary>
+        public string LinkProgID { get; set; } = string.Empty;
+        /// <summary>
+        /// 關聯取回對象
+        /// </summary>
+        public GLinkReturnFieldCollection LinkReturnFields { get; } = new GLinkReturnFieldCollection();
+    }
+}

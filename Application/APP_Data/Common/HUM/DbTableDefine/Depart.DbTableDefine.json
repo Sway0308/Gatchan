@@ -1,0 +1,27 @@
+{
+  "TableName": "Depart",
+  "DisplayName": "部門",
+  "Fields": [
+    {
+      "MaxLength": 10,
+      "AllowNull": false,
+      "FieldName": "DepartID",
+      "DisplayName": "部門編號",
+      "DbType": 7
+    },
+    {
+      "MaxLength": 10,
+      "AllowNull": false,
+      "FieldName": "DepartCode",
+      "DisplayName": "部門代碼",
+      "DbType": 0
+    },
+    {
+      "MaxLength": 10,
+      "AllowNull": false,
+      "FieldName": "DepartName",
+      "DisplayName": "部門名稱",
+      "DbType": 0
+    }
+  ]
+}

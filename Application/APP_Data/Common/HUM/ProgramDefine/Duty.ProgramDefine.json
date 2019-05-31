@@ -1,0 +1,51 @@
+{
+  "ProgID": "Duty",
+  "DisplayName": "職缺",
+  "Tables": [
+    {
+      "TableName": "Duty",
+      "DbTableName": "Duty",
+      "DisplayName": "職缺",
+      "PrimaryKey": "DutyID",
+      "Fields": [
+        {
+          "FieldType": 0,
+          "MaxLength": 10,
+          "AllowNull": false,
+          "LinkFieldName": "",
+          "LinkProgID": "",
+          "LinkReturnFields": [],
+          "FieldName": "DutyID",
+          "DisplayName": "職缺編號",
+          "DbType": 7
+        },
+        {
+          "FieldType": 0,
+          "MaxLength": 10,
+          "AllowNull": false,
+          "LinkFieldName": "",
+          "LinkProgID": "",
+          "LinkReturnFields": [],
+          "FieldName": "DutyCode",
+          "DisplayName": "職缺代碼",
+          "DbType": 0
+        },
+        {
+          "FieldType": 0,
+          "MaxLength": 10,
+          "AllowNull": false,
+          "LinkFieldName": "",
+          "LinkProgID": "",
+          "LinkReturnFields": [],
+          "FieldName": "DutyName",
+          "DisplayName": "職缺名稱",
+          "DbType": 0
+        }
+      ],
+      "EntityInstanceType": {
+        "AssemblyFile": "",
+        "TypeName": ""
+      }
+    }
+  ]
+}

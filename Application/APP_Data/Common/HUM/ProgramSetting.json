@@ -1,0 +1,28 @@
+{
+  "Items": [
+    {
+      "ProgID": "Depart",
+      "DisplayName": "部門",
+      "BusinessInstanceType": {
+        "AssemblyFile": "",
+        "TypeName": ""
+      }
+    },
+    {
+      "ProgID": "Duty",
+      "DisplayName": "職缺",
+      "BusinessInstanceType": {
+        "AssemblyFile": "",
+        "TypeName": ""
+      }
+    },
+    {
+      "ProgID": "Employee",
+      "DisplayName": "員工",
+      "BusinessInstanceType": {
+        "AssemblyFile": "TUBE.FD.dll",
+        "TypeName": "TUBE.FD.AEmployeeBusinessLogic"
+      }
+    }
+  ]
+}
