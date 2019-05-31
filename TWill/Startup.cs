@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ScsBusiness;
+using ScsBusiness.Core;
 using System.Threading.Tasks;
 
 namespace TWill
@@ -57,8 +58,7 @@ namespace TWill
 
             Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
 
-            var scs = new ScsProgram();
-            var table = scs.Find("HUM0020100");
+            var scs = new ScsProgram("http://localhost/scsweb/scsservice.asmx");
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace Elementary
 {
@@ -567,53 +569,43 @@ namespace Elementary
         }
 
         /// <summary>
-        /// 將浮點數四捨五入至指定位數。
+        /// 將物件序列化為 XML 字串。
         /// </summary>
-        /// <param name="value">浮點數。</param>
-        /// <param name="digits">小數位數。</param>
-        public static double Round(double value, int digits)
+        /// <param name="value">物件。</param>
+        public static string ObjectToXml(object value)
         {
-            // 預設為偶捨基入，加上 MidpointRounding.AwayFromZero 才是一般認知的四捨五入
-            return Math.Round(value, digits, MidpointRounding.AwayFromZero);
+            XmlSerializer oSerializer = new XmlSerializer(value.GetType());
+            StringWriter oStringWriter = new StringWriter();
+            oSerializer.Serialize((TextWriter)oStringWriter, value);
+            string sXml = oStringWriter.ToString();
+            oStringWriter.Close();
+
+            return sXml;
         }
 
         /// <summary>
-        /// 十進位數值四捨五入至指定位數。
+        /// 將 XML 字串反序列化為物件。
         /// </summary>
-        /// <param name="value">十進位數值。</param>
-        /// <param name="digits">小數位數。</param>
-        public static decimal Round(decimal value, int digits)
+        /// <param name="xml">XML 字串。</param>
+        /// <param name="type">型別。</param>
+        public static object XmlToObject(string xml, Type type)
         {
-            // 預設為偶捨基入，加上 MidpointRounding.AwayFromZero 才是一般認知的四捨五入
-            return Math.Round(value, digits, MidpointRounding.AwayFromZero);
+            XmlSerializer oSerializer = new XmlSerializer(type);
+            StringReader oStringReader = new StringReader(xml);
+            object oValue = oSerializer.Deserialize(oStringReader);
+            oStringReader.Close();
+
+            return oValue;
         }
 
         /// <summary>
-        /// 無條件捨去至指定位數
+        /// 將 XML 字串反序列化為物件。
         /// </summary>
-        /// <param name="value">數值</param>
-        /// <param name="digit">小數位數</param>
-        /// <returns></returns>
-        public static double Floor(double value, int digit)
+        /// <typeparam name="T">泛型型別。</typeparam>
+        /// <param name="xml">XML 字串。</param>
+        public static T XmlToObject<T>(string xml)
         {
-            if (digit < 0) { return Math.Floor(value); }
-            var pow = Math.Pow(10, digit);
-            var sign = value >= 0 ? 1 : -1;
-            return sign * Math.Floor(sign * value * pow) / pow;
-        }
-
-        /// <summary>
-        /// 無條件進位至指定位數
-        /// </summary>
-        /// <param name="value">數值</param>
-        /// <param name="digit">小數位數</param>
-        /// <returns></returns>
-        public static double Ceiling(double value, int digit)
-        {
-            if (digit < 0) { return Math.Floor(value); }
-            var pow = Math.Pow(10, digit);
-            var sign = value >= 0 ? 1 : -1;
-            return sign * Math.Ceiling(sign * value * pow) / pow;
+            return (T)XmlToObject(xml, typeof(T));
         }
     }
 }
