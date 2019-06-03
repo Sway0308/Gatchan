@@ -63,9 +63,12 @@
     <Compile Include="Args\GSelectInputArgs.cs" />
     <Compile Include="Args\GSelectOutputResult.cs" />
     <Compile Include="Common\GBaseField.cs" />
+    <Compile Include="Common\GSortField.cs" />
+    <Compile Include="Common\GSortFieldCollection.cs" />
     <Compile Include="Common\GTextItemCollection.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\DefineFunc.cs" />
+    <Compile Include="Company\GCompanyInfo.cs" />
     <Compile Include="Database\GDatabaseItem.cs" />
     <Compile Include="Database\GDatabaseItemCollection.cs" />
     <Compile Include="Database\GDatabaseSettings.cs" />
@@ -76,6 +79,8 @@
     <Compile Include="Entity\GEntitySet.cs" />
     <Compile Include="Entity\GEntityTable.cs" />
     <Compile Include="Entity\GEntityTableCollection.cs" />
+    <Compile Include="Filter\GFilterItem.cs" />
+    <Compile Include="Filter\GFilterItemCollection.cs" />
     <Compile Include="Helper\GItemKeeper.cs" />
     <Compile Include="Interface\IBusinessLogic.cs" />
     <Compile Include="Interface\IEntityRow.cs" />
@@ -92,6 +97,10 @@
     <Compile Include="Program\GTableDefineCollection.cs" />
     <Compile Include="Common\GTextItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Session\GSessionInfo.cs" />
+    <Compile Include="Session\GEmployeeInfo.cs" />
+    <Compile Include="ValueParser\GFilterItemsParser.cs" />
+    <Compile Include="ValueParser\GVariableParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ME.Base\ME.Base.csproj">

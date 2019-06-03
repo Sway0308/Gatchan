@@ -17,7 +17,7 @@ namespace ME.Business
         /// 建構函式
         /// </summary>
         /// <param name="progID">程式代碼</param>
-        public GBaseBusinessLogic(string progID)
+        public GBaseBusinessLogic(Guid sessionGuid, string progID) : base(sessionGuid)
         {
             this.ProgID = progID;
             this.ProgramDefine = CacheFunc.GetProgramDefine("HUM", this.ProgID);

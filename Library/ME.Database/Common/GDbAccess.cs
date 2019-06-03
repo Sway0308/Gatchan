@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using Dapper;
 using System.Data;
 using ME.Define;
+using System.Data.Common;
 
 namespace ME.Database
 {
@@ -41,6 +42,19 @@ namespace ME.Database
                 item.Password    
             );
             return new SqlConnection(connectionString);
+        }
+
+        /// <summary>
+        /// 建立新的 DataTable，並執行命令載入資料。 
+        /// </summary>
+        /// <param name="databaseID">資料庫編號。</param>
+        /// <param name="command">資料庫命令。</param>
+        /// <param name="commandTimeout">等待命令執行的時間 (以秒為單位)，-1 表示不指定。</param>
+        public DataTable ExecuteDataTable(string databaseID, DbCommand command, int commandTimeout = -1)
+        {
+            var dt = new DataTable();
+            dt.Load(this.SqlConnection(databaseID).ExecuteReader(new CommandDefinition(command.CommandText, command.Parameters, commandTimeout: commandTimeout)));
+            return dt;
         }
 
         /// <summary>

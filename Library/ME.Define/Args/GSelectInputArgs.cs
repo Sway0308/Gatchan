@@ -13,13 +13,38 @@ namespace ME.Define
     public class GSelectInputArgs
     {
         /// <summary>
+        /// 資料表名稱
+        /// </summary>
+        public string TableName { get; set; }
+
+        /// <summary>
+        /// 資料過濾項目條件集合。
+        /// </summary>
+        public GFilterItemCollection FilterItems { get; set; } = new GFilterItemCollection();
+
+        /// <summary>
+        /// 要取得的欄位集合字串，以逗點分隔欄位名稱，空字串表示取得所有欄位。
+        /// </summary>
+        public string SelectFields { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 自訂過濾條件。
+        /// </summary>
+        public string UserFilter { get; set; } = string.Empty;
+
+        /// <summary>
+        /// 執行排序
+        /// </summary>
+        public bool IsOrderBy { get; set; } = true;
+
+        /// <summary>
         /// 取消動作
         /// </summary>
         public bool Cancel { get; set; }
 
         /// <summary>
-        /// 參數設定
+        /// 是否建立虛擬欄位。
         /// </summary>
-        public GParameterCollection Parameters { get; set; } = new GParameterCollection();
+        public bool IsBuildVirtualField { get; set; } = true;
     }
 }

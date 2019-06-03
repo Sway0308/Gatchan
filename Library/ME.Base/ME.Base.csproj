@@ -49,6 +49,8 @@
     <Compile Include="Collection\GDictionary.cs" />
     <Compile Include="Collection\GKeyCollectionBase.cs" />
     <Compile Include="Collection\GKeyCollectionItem.cs" />
+    <Compile Include="Collection\GStringHashSet.cs" />
+    <Compile Include="Common\DateFunc.cs" />
     <Compile Include="Common\GAssemblyLoader.cs" />
     <Compile Include="Common\GDataTableHelper.cs" />
     <Compile Include="Common\GInstanceType.cs" />

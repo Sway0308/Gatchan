@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,8 +47,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\DatabaseFunc.cs" />
     <Compile Include="Common\GDbAccess.cs" />
+    <Compile Include="DbCommand\GBaseDbCommandBuilder.cs" />
+    <Compile Include="DbCommand\GFilterInputArgs.cs" />
+    <Compile Include="DbCommand\GOracleCommandBuilder.cs" />
+    <Compile Include="DbCommand\GSqlCommandBuilder.cs" />
+    <Compile Include="DbCommand\GVirtualFieldBuilder.cs" />
+    <Compile Include="FilterBuilder\GFilterBuilder.cs" />
+    <Compile Include="Helper\GBaseDbCommandHelper.cs" />
+    <Compile Include="Helper\GOracleCommandHelper.cs" />
+    <Compile Include="Helper\GSqlCommandHelper.cs" />
+    <Compile Include="Interface\IDbCommandBuilder.cs" />
+    <Compile Include="Interface\IDbCommandHelper.cs" />
+    <Compile Include="Interface\IFilterBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableJoin\GLinkFieldMapping.cs" />
+    <Compile Include="TableJoin\GLinkFieldMappingCollection.cs" />
+    <Compile Include="TableJoin\GTableJoin.cs" />
+    <Compile Include="TableJoin\GTableJoinBuilder.cs" />
+    <Compile Include="TableJoin\GTableJoinProvider.cs" />
+    <Compile Include="TableJoin\GTableJoinCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -57,10 +78,15 @@
       <Project>{bd976132-c4c1-4289-bb59-ad4a3d53a641}</Project>
       <Name>ME.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ME.Cahce\ME.Cahce.csproj">
+      <Project>{0fc476fd-16dc-4f5f-b1e6-8da85fc3c043}</Project>
+      <Name>ME.Cahce</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ME.Define\ME.Define.csproj">
       <Project>{f2d37dc0-e623-4240-b677-d252a77e12be}</Project>
       <Name>ME.Define</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

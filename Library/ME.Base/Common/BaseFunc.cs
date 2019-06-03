@@ -634,6 +634,43 @@ namespace ME.Base
         }
 
         /// <summary>
+        /// 取得下一個流水號。
+        /// </summary>
+        /// <param name="value">目前編號。</param>
+        /// <param name="baseValues">編碼基底字串。</param>
+        public static string GetNextID(string value, string baseValues)
+        {
+            string sValue;
+            char[] oBaseValues;
+            int iCount;
+            int iIndex;
+
+            oBaseValues = baseValues.ToCharArray();
+            iCount = oBaseValues.Length;
+            sValue = StrFunc.StrTrim(value);
+
+            for (int N1 = sValue.Length - 1; N1 >= 0; N1--)
+            {
+                iIndex = Array.IndexOf(oBaseValues, sValue[N1]);
+                if (iIndex != -1 && iIndex < iCount - 1)
+                {
+                    return StrFunc.StrFormat("{0}{1}{2}", StrFunc.StrLeft(sValue, N1), oBaseValues[iIndex + 1], StrFunc.StrSubstring(sValue, N1 + 1));
+                }
+                else
+                {
+                    // 需要進位，將目前位數歸零
+                    if (iIndex != -1 && iIndex < iCount)
+                    {
+                        sValue = StrFunc.StrFormat("{0}{1}{2}", StrFunc.StrLeft(sValue, N1), oBaseValues[0], StrFunc.StrSubstring(sValue, N1 + 1));
+                        if (N1 == 0)
+                            return oBaseValues[0] + sValue;
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
         /// 驗證Email格式正確性
         /// </summary>
         /// <param name="email">email</param>
@@ -760,6 +797,57 @@ namespace ME.Base
                 return true;
             else
                 return false;
+        }
+
+        /// <summary>
+        /// 將傳入值轉型為指定欄位資料型別。
+        /// </summary>
+        /// <param name="fieldDbType">欄位資料型別。</param>
+        /// <param name="value">傳入值。</param>
+        public static object CFieldValue(EFieldDbType fieldDbType, object value)
+        {
+            switch (fieldDbType)
+            {
+                case EFieldDbType.String:
+                    return BaseFunc.CStr(value).Trim();  // 去除左右空白
+                case EFieldDbType.Text:
+                    return BaseFunc.CStr(value).Trim();  // 去除左右空白
+                case EFieldDbType.Boolean:
+                    return BaseFunc.CBool(value);
+                case EFieldDbType.Integer:
+                    return BaseFunc.CInt(value);
+                case EFieldDbType.Double:
+                    return BaseFunc.CDouble(value);
+                case EFieldDbType.Currency:
+                    return BaseFunc.CDecimal(value);
+                case EFieldDbType.DateTime:
+                    if (BaseFunc.IsDBNull(value))
+                        return value;
+                    else
+                        return BaseFunc.CDateTime(value);
+                case EFieldDbType.GUID:
+                    return BaseFunc.CGuid(value);
+                default:
+                    return value;
+            }
+        }
+
+        /// <summary>
+        /// 將傳入值轉型為指定欄位資料型別。
+        /// </summary>
+        /// <param name="fieldDbType">欄位資料型別。</param>
+        /// <param name="value">傳入值。</param>
+        /// <param name="defaultValue">無法正確轉型的預設值。</param>
+        public static object CFieldValue(EFieldDbType fieldDbType, object value, object defaultValue)
+        {
+            try
+            {
+                return CFieldValue(fieldDbType, value);
+            }
+            catch
+            {
+                return defaultValue;
+            }
         }
     }
 }

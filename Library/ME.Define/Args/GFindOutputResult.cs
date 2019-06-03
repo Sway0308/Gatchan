@@ -13,8 +13,8 @@ namespace ME.Define
     public class GFindOutputResult
     {
         /// <summary>
-        /// Entity 資料集
+        /// Entity 資料表
         /// </summary>
-        public GEntitySet EntitySet { get; set; }
+        public GEntityTable EntityTable { get; set; }
     }
 }

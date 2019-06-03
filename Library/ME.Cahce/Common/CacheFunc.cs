@@ -1,5 +1,6 @@
 ﻿using ME.Base;
 using ME.Define;
+using System;
 using System.Configuration;
 
 namespace ME.Cahce
@@ -9,6 +10,11 @@ namespace ME.Cahce
     /// </summary>
     public class CacheFunc
     {
+        /// <summary>
+        /// 快取暫存器
+        /// </summary>
+        private static GItemKeeper CacheKeeper { get; } = new GItemKeeper();
+
         /// <summary>
         /// 取得應用程式資料路徑，伺服端及用戶端應用程式皆適用。
         /// </summary>
@@ -56,9 +62,11 @@ namespace ME.Cahce
         /// <returns></returns>
         public static GProgramDefine GetProgramDefine(string systemID, string progID)
         {
-            var programDefinePath = FileFunc.PathCombine(GetAppDataPath(), $@"Common\{systemID}\ProgramDefine");
-            var filePath = FileFunc.PathCombine(programDefinePath, $"{progID}.ProgramDefine.json");
-            return ConvertToDefine<GProgramDefine>(filePath);
+            return CacheKeeper.GetItem<GProgramDefine>(progID, () => {
+                var programDefinePath = FileFunc.PathCombine(GetAppDataPath(), $@"Common\{systemID}\ProgramDefine");
+                var filePath = FileFunc.PathCombine(programDefinePath, $"{progID}.ProgramDefine.json");
+                return ConvertToDefine<GProgramDefine>(filePath);
+            });
         }
 
         /// <summary>
@@ -78,10 +86,22 @@ namespace ME.Cahce
         /// <returns></returns>
         public static GProgramSetting GetProgramSetting(string systemID)
         {
-            var modulePath = FileFunc.PathCombine(GetAppDataPath(), $@"Common\{systemID}");
-            var filePath =  FileFunc.PathCombine(modulePath, "ProgramSetting.json");
-            return ConvertToDefine<GProgramSetting>(filePath);
+            return CacheKeeper.GetItem<GProgramSetting>(systemID, () => {
+                var modulePath = FileFunc.PathCombine(GetAppDataPath(), $@"Common\{systemID}");
+                var filePath = FileFunc.PathCombine(modulePath, "ProgramSetting.json");
+                return ConvertToDefine<GProgramSetting>(filePath);
+            });
 
+        }
+
+        /// <summary>
+        /// 由快取區取得程式定義。
+        /// </summary>
+        /// <param name="sessionGuid">連線識別</param>
+        /// <param name="progID">程式代碼。</param>
+        public static GSessionInfo GetSessionInfo(Guid sessionGuid)
+        {
+            return CacheKeeper.GetItem<GSessionInfo>(sessionGuid.ToString(), () => null);
         }
     }
 }

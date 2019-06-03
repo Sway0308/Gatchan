@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CacheFunc.cs" />
+    <Compile Include="Common\GBaseSessionObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +57,10 @@
       <Project>{f2d37dc0-e623-4240-b677-d252a77e12be}</Project>
       <Name>ME.Define</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CacheLoader\" />
+    <Folder Include="CacheObject\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.Text;
 
 namespace ME.Base
@@ -612,6 +613,57 @@ namespace ME.Base
                 return string.Empty;
 
             return s.PadRight(totalWidth, paddingChar);
+        }
+
+        /// <summary>
+        /// 拆解字串的資料表名稱及欄位名稱。
+        /// </summary>
+        /// <param name="s">字串。</param>
+        /// <param name="tableName">資料表名稱。</param>
+        /// <param name="fieldName">欄位名稱。</param>
+        public static void StrSplitFieldName(string s, out string tableName, out string fieldName)
+        {
+            string[] oValues;
+
+            oValues = StrFunc.StrSplit(s, ".");
+            if (oValues.Length == 1)
+            {
+                tableName = string.Empty;
+                fieldName = oValues[0];
+            }
+            else if (oValues.Length == 2)
+            {
+                tableName = oValues[0];
+                fieldName = oValues[1];
+            }
+            else
+            {
+                throw new GException("錯誤的欄位名欄位 {0}", s);
+            }
+        }
+
+        /// <summary>
+        /// SQL 命令文字格式化。
+        /// </summary>
+        /// <param name="s">SQL 命令文字。</param>
+        /// <param name="parameters">命令參數集合。</param>
+        public static string SQLFormat(string s, DbParameter[] parameters)
+        {
+            return StrFormat(s, parameters);
+        }
+
+        /// <summary>
+        /// SQL 命令文字格式化。
+        /// </summary>
+        /// <param name="s">SQL 命令文字。</param>
+        /// <param name="parameters">命令參數集合。</param>
+        public static string SQLFormat(string s, DbParameterCollection parameters)
+        {
+            DbParameter[] oParameters;
+
+            oParameters = new DbParameter[parameters.Count];
+            parameters.CopyTo(oParameters, 0);
+            return StrFormat(s, oParameters);
         }
     }
 }

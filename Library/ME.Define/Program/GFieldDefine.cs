@@ -1,4 +1,5 @@
 ﻿using ME.Base;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,22 @@ namespace ME.Define
     [Serializable]
     public class GFieldDefine : GBaseField
     {
+        private string _DbFieldName = string.Empty;
+
+        /// <summary>
+        /// 實體欄位名稱。
+        /// </summary>
+        public string DbFieldName
+        {
+            get
+            {
+                if (StrFunc.StrIsEmpty(_DbFieldName))
+                    return this.FieldName;
+                else
+                    return _DbFieldName;
+            }
+            set { _DbFieldName = value; }
+        }
         /// <summary>
         /// 欄位類型
         /// </summary>

@@ -35,13 +35,13 @@ namespace ME.Define
         /// <param name="typeName">類別名稱。</param>
         /// <param name="sessionGuid">連線識別。</param>
         /// <param name="progID">程式代碼。</param>
-        private static IBusinessLogic CreateBusinessLogic(string assemblyFile, string typeName, string progID)
+        private static IBusinessLogic CreateBusinessLogic(string assemblyFile, string typeName, Guid sessionGuid, string progID)
         {
             //取得組件的完整路徑
             var sAssemblyFile = FileFunc.PathCombine(FileFunc.GetAssemblyPath(), assemblyFile);
             //動態載入組件，建立指定類別的物件
             var oAssemblyLoader = new GAssemblyLoader(sAssemblyFile);
-            return (IBusinessLogic)oAssemblyLoader.CreateInstance(typeName, new object[] { progID });
+            return (IBusinessLogic)oAssemblyLoader.CreateInstance(typeName, new object[] { sessionGuid, progID });
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace ME.Define
         /// <param name="instanceType">動態載入物件的型別描述。</param>
         /// <param name="sessionGuid">連線識別。</param>
         /// <param name="progID">程式代碼。</param>
-        public static IBusinessLogic CreateBusinessLogic(GInstanceType instanceType, string progID)
+        public static IBusinessLogic CreateBusinessLogic(GInstanceType instanceType, Guid sessionGuid, string progID)
         {
-            return CreateBusinessLogic(instanceType.AssemblyFile, instanceType.TypeName, progID);
+            return CreateBusinessLogic(instanceType.AssemblyFile, instanceType.TypeName, sessionGuid, progID);
         }
 
         /// <summary>

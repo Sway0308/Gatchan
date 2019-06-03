@@ -3,6 +3,7 @@ using ME.Cahce;
 using ME.Define;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -20,14 +21,14 @@ namespace ME.Business
         /// </summary>
         /// <param name="progID"></param>
         /// <returns></returns>
-        public static IBusinessLogic CreateBusinessLogic(string progID)
+        public static IBusinessLogic CreateBusinessLogic(Guid sessionGuid, string progID)
         {
             var progSetting = CacheFunc.GetProgramSetting("HUM");
             var progItem = progSetting.Items[progID];
             if (progItem.BusinessInstanceType.IsEmpty)
-                return new GBusinessLogic(progID);
+                return new GBusinessLogic(sessionGuid, progID);
             else
-                return DefineFunc.CreateBusinessLogic(progItem.BusinessInstanceType, progID);
+                return DefineFunc.CreateBusinessLogic(progItem.BusinessInstanceType, sessionGuid, progID);
         }
 
         /// <summary>
@@ -56,6 +57,23 @@ namespace ME.Business
         public static T CreateEntityRow<T>(string progID, string tableName) where T : IEntityRow
         {
             return (T)CreateEntityRow(progID, tableName);
+        }
+
+        /// <summary>
+        /// 設定資料表中每個欄位的預設值。
+        /// </summary>
+        /// <param name="tableDefine">資料表定義。</param>
+        /// <param name="dataTable">資料表。</param>
+        public static void SetDataColumnDefaultValue(GTableDefine tableDefine, DataTable dataTable)
+        {
+            foreach (DataColumn oColumn in dataTable.Columns)
+            {
+                var oFieldDefine = tableDefine.Fields[oColumn.ColumnName];
+                if (BaseFunc.IsNotNull(oFieldDefine) && !oFieldDefine.AllowNull)
+                {
+                    oColumn.DefaultValue = DataFunc.GetDefaultValue(oFieldDefine.DbType);
+                }
+            }
         }
     }
 }

@@ -40,6 +40,8 @@ namespace ImportData
         /// </summary>
         private string DbDefineDataPath => $@"{SettingDataPath}\DbTableDefine";
 
+        private Guid SessionGuid => Guid.NewGuid();
+
         /// <summary>
         /// 檔案初始化
         /// </summary>
@@ -63,17 +65,6 @@ namespace ImportData
             ProgDefineToJson(depart);
             ProgDefineToJson(duty);
             ProgDefineToJson(employee);
-        }
-
-        private void InitTubeSalaryAccount()
-        {
-            var salAccCategory = CreateProgDefines("SalaryAccountCategory", "薪資科目類別");
-            var salAccount = CreateProgDefines("SalaryAccount", "薪資科目");
-            AddLinkReturnField(salAccount.MasterFields, salAccCategory);
-            var salRange = CreateProgDefines("SalaryRange", "薪資範圍");
-            var salAccRange = CreateProgDefines("SalaryAccountForSalaryRange", "薪資科目範圍");
-            AddLinkReturnField(salAccRange.MasterFields, salAccount);
-            AddLinkReturnField(salAccRange.MasterFields, salRange);
         }
 
         /// <summary>
@@ -245,7 +236,7 @@ namespace ImportData
                 var dataSet = DataFunc.CreateDataSet(file.FileName);
                 
                 dataSet.Tables.Add(dt);
-                var bl = BusinessFunc.CreateBusinessLogic(file.FileName);
+                var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, file.FileName);
                 var result = bl.Save(new GSaveInputArgs { DataSet = dataSet, SaveMode = ESaveMode.Add });
             }
         }
@@ -269,7 +260,7 @@ namespace ImportData
                 var dataSet = DataFunc.CreateDataSet(file.ProgID);
 
                 dataSet.Tables.Add(table);
-                var bl = BusinessFunc.CreateBusinessLogic(file.ProgID);
+                var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, file.ProgID);
                 var result = bl.Save(new GSaveInputArgs { DataSet = dataSet, SaveMode = ESaveMode.Edit });
             }
         }
@@ -284,7 +275,7 @@ namespace ImportData
             foreach (var file in files)
             {
                 var jsonArray = JArray.Parse(file.Text);
-                var bl = BusinessFunc.CreateBusinessLogic(file.ProgID);
+                var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, file.ProgID);
 
                 foreach (var json in jsonArray.Children<JObject>())
                 {
@@ -298,7 +289,7 @@ namespace ImportData
         /// </summary>
         public void FindSingleData()
         {
-            var bl = BusinessFunc.CreateBusinessLogic("Employee");
+            var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, "Employee");
             var result = bl.Find(new GFindInputArgs());
         }
 
@@ -307,9 +298,9 @@ namespace ImportData
         /// </summary>
         public void FindData()
         {
-            var bl = BusinessFunc.CreateBusinessLogic("Employee");
+            var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, "Employee");
             var result = bl.Find(new GFindInputArgs());
-            var table = result.EntitySet.Tables["Employee"];
+            var table = result.EntityTable;
             var json = JsonConvert.SerializeObject(table, Formatting.Indented);
             FileFunc.FileWriteAllText($@"{CurrentPath}\DemoData\FindData", "Employee.json", json);
         }

@@ -1,9 +1,11 @@
 ﻿using ME.Base;
 using ME.Cahce;
+using ME.Database;
 using ME.Define;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 
@@ -32,7 +34,7 @@ namespace ME.Business
         /// 建構函式
         /// </summary>
         /// <param name="progID"></param>
-        public GBusinessLogic(string progID) : base(progID)
+        public GBusinessLogic(Guid sessionGuid, string progID) : base(sessionGuid, progID)
         {
         }
 
@@ -249,9 +251,9 @@ namespace ME.Business
         /// <param name="outputResult"></param>
         protected virtual void DoFind(GFindInputArgs inputArgs, GFindOutputResult outputResult)
         {
-            var selectArgs = new GSelectInputArgs { Parameters = inputArgs.Parameters };
+            var selectArgs = new GSelectInputArgs { FilterItems = inputArgs.FilterItems };
             var selectResult = Select(selectArgs);
-            outputResult.EntitySet = selectResult.EntitySet;
+            outputResult.EntityTable = selectResult.EntityTable;
         }
 
         /// <summary>
@@ -300,9 +302,13 @@ namespace ME.Business
         /// <param name="outputResult"></param>
         protected virtual void DoMove(GMoveInputArgs inputArgs, GMoveOutputResult outputResult)
         {
-            var selectArgs = new GSelectInputArgs { Parameters = { new GParameter($"{this.ProgID}ID", inputArgs.FormID) } };
-            var selectResult = Select(selectArgs);
-            outputResult.EntitySet = selectResult.EntitySet;
+            outputResult.EntitySet = new GEntitySet(this.ProgID);
+            foreach (var tableDefine in this.ProgramDefine.Tables)
+            {
+                var selectArgs = new GSelectInputArgs { FilterItems = { new GFilterItem($"{this.ProgID}ID", inputArgs.FormID) } };
+                var selectResult = Select(selectArgs);
+                outputResult.EntitySet.Tables.Add(selectResult.EntityTable);
+            }
         }
 
         /// <summary>
@@ -450,56 +456,99 @@ namespace ME.Business
         /// <param name="outputResult"></param>
         protected virtual void DoSelect(GSelectInputArgs inputArgs, GSelectOutputResult outputResult)
         {
-            var sql = new StringBuilder();
-            sql.AppendLine("Select");
-            var tableJoins = GetTableJoin();
-            var fieldTexts = GetFieldText(tableJoins);
-            var lastField = fieldTexts.Last();
-            foreach (var field in fieldTexts)
+            var sTableName = inputArgs.TableName;
+            var oTableDefine = this.ProgramDefine.Tables[sTableName];
+            if (BaseFunc.IsNull(oTableDefine)) { return; }
+
+            // 因為 Find 與 Move 都會統一進入 Select
+            // 所以放在這邊統一做判斷過濾條件是否有包含 SYS_ID 欄位且其值是 *
+            // 如滿足條件則需要判斷資料型別，並更改其查詢值
+            CheckFilterItemsForDbType(inputArgs.FilterItems);
+
+            // 取得 Select 的欄位集合字串
+            var sSelectFields = GetSelectFields(oTableDefine, inputArgs.SelectFields);
+
+            var oDbCommandBuilder = this.CreateDbCommandBuilder();
+            var oDbCommand = oDbCommandBuilder.BuildSelectCommand(sTableName, sSelectFields, inputArgs.FilterItems, inputArgs.UserFilter,
+                inputArgs.IsOrderBy);
+            if (BaseFunc.IsNull(oDbCommand)) { return; }
+
+            var oDataTable = base.DbAccess.ExecuteDataTable(this.DatabaseID, oDbCommand);
+            oDataTable.TableName = sTableName;
+
+            if (inputArgs.IsBuildVirtualField)
             {
-                var fieldText = $"{field.Value}.{field.Name}";
-                var fieldDefine = this.ProgramDefine.MasterFields[field.Name];
-                if (fieldDefine.FieldType == EFieldType.LinkField)
+                // 加入虛擬欄位
+                var oVFBuilder = new GVirtualFieldBuilder(oTableDefine, oDataTable);
+                oVFBuilder.Execute();
+            }
+            else
+            {
+                // 判斷 Select 的欄位是否有虛擬欄位
+                var oVFBuilder = new GVirtualFieldBuilder(oTableDefine, oDataTable);
+                oVFBuilder.Execute(sSelectFields);
+            }
+
+            // 設定資料表中每個欄位的預設值
+            BusinessFunc.SetDataColumnDefaultValue(oTableDefine, oDataTable);
+
+            // 設定DataTable主索引鍵
+            if (StrFunc.StrIsNotEmpty(oTableDefine.TablePrimaryKey))
+                DataFunc.DataTableSetPrimaryKey(oDataTable, oTableDefine.TablePrimaryKey);
+
+            // 資料表同意變更，讓資料表無異動狀態
+            oDataTable.AcceptChanges();
+            outputResult.EntityTable = new GEntityTable(oDataTable);
+        }
+
+        /// <summary>
+        /// 建立資料庫命令產生器。
+        /// </summary>
+        private IDbCommandBuilder CreateDbCommandBuilder()
+        {
+            return DatabaseFunc.CreateDbCommandBuilder(this.SessionInfo, this.ProgramDefine);
+        }
+
+        /// <summary>
+        /// 檢查過濾條件的 SYS_ID 欄位的資料型別
+        /// </summary>
+        /// <param name="filterItems">過濾條件集合。</param>
+        /// <remarks>
+        /// 如果過濾條件的 SYS_ID 欄位其查詢值是 *
+        /// 需要判斷 SYS_ID 的欄位資料型別，再依照型別更改為正確的值。
+        /// </remarks>
+        private void CheckFilterItemsForDbType(GFilterItemCollection filterItems)
+        {
+            if (!this.ProgramDefine.MasterTable.Fields.Contains(SysFields.ID)) return;
+            var oFieldDefine = this.ProgramDefine.MasterTable.Fields[SysFields.ID];
+
+            foreach (var filterItem in filterItems)
+            {
+                if (StrFunc.SameText(filterItem.FieldName, SysFields.ID) && StrFunc.SameText(filterItem.FilterValue, "*"))
                 {
-                    var activeLinkFieldDefine = this.ProgramDefine.MasterFields.FindActiveLinkFieldDefine(fieldDefine.LinkFieldName);
-                    if (activeLinkFieldDefine != null)
-                    {
-                        var linkReturnField = activeLinkFieldDefine.LinkReturnFields.FindByDestField(fieldDefine.FieldName);
-                        if (linkReturnField != null)
-                            fieldText = $"{field.Value}.{linkReturnField.SourceField} as {linkReturnField.DestField}";
-                    }
+                    // 資料型別是 Interger 時把查詢值換成 -1
+                    if (oFieldDefine.DbType == EFieldDbType.Integer)
+                        filterItem.FilterValue = "-1";
+                    // 資料型別是 DateTime 時把查詢值換成最小時間 0001/01/01
+                    else if (oFieldDefine.DbType == EFieldDbType.DateTime)
+                        filterItem.FilterValue = BaseFunc.CDateTime("0001/1/1").ToString("yyyy/MM/dd");
                 }
-
-                sql.AppendLine($"{fieldText}" + (field == lastField ? "" : ","));
             }
+        }
 
-            var firstTable = tableJoins.First();
-            foreach (var tableJoin in tableJoins)
-            {
-                var tableName = tableJoin.TableName;
-                var dbTableName = tableJoin.DbTableName;
-                var alias = tableJoin.AliasName;
-                var isJoin = tableJoin != firstTable;
-                sql.AppendLine((!isJoin ? "From " : "Left Join ") + dbTableName + $" {alias}" + (!isJoin ? "" : $" On A.{tableName}ID = {alias}.{tableName}ID"));
-            }
-            sql.AppendLine("Where 1 = 1");
-            foreach (var para in inputArgs.Parameters)
-            {
-                var fieldName = para.Name;
-                var field = this.ProgramDefine.MasterFields[fieldName];
-                if (field == null)
-                    continue;
-                var fieldText = fieldTexts.FirstOrDefault(x => x.Name.SameText(fieldName));
-                if (fieldText == null)
-                    continue;
-                sql.AppendLine($"And {fieldText.Value}.{fieldText.Name} = {para.Value.ToString().SQLStr()}");
-            }
+        /// <summary>
+        /// 取得 Select 的欄位集合字串。
+        /// </summary>
+        /// <param name="tableDefine">資料表。</param>
+        /// <param name="selectFields"></param>
+        private string GetSelectFields(GTableDefine tableDefine, string selectFields)
+        {
+            if (StrFunc.StrIsEmpty(selectFields)) { return string.Empty; }
 
-            var table = this.DbAccess.ExecuteDataTable(this.DatabaseID, sql.ToString());
-            table.TableName = this.ProgID;
-            var dataSet = DataFunc.CreateDataSet(this.ProgID);
-            dataSet.Tables.Add(table);
-            outputResult.EntitySet = new GEntitySet(dataSet);
+            var oSelectFields = StrFunc.StrSplit(selectFields, ",");
+            var oFields = new GStringHashSet(selectFields, ",");
+
+            return oFields.ToString(",");
         }
 
         /// <summary>

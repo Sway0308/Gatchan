@@ -38,7 +38,7 @@ namespace ME.Base
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void AddItem(T value)
+        public virtual void AddItem(T value)
         {
             if (!this.Contains(value.Key))
                 this.Add(value);

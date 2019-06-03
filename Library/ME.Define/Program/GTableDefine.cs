@@ -9,7 +9,6 @@ namespace ME.Define
     /// <summary>
     /// 資料表定義
     /// </summary>
-    [Serializable]
     public class GTableDefine : GKeyCollectionItem
     {
         /// <summary>
@@ -36,5 +35,36 @@ namespace ME.Define
         /// 商業邏輯載入物件型別
         /// </summary>
         public GInstanceType EntityInstanceType { get; set; } = new GInstanceType();
+
+        /// <summary>
+        /// 預設排序欄位集合。
+        /// </summary>
+        public GSortFieldCollection SortFields { get; set; } = new GSortFieldCollection();
+
+        /// <summary>
+        /// Table主索引鍵，以逗點分隔多個欄位名稱。
+        /// </summary>
+        public string TablePrimaryKey { get; set; }
+
+        /// <summary>
+        /// 是否建立實體資料表。
+        /// </summary>
+        public bool IsCreateDbTable { get; set; } = true;
+
+        /// <summary>
+        /// 取得設定關連取回的編號欄位。
+        /// </summary>
+        /// <param name="fieldDefine">欄位定義</param>
+        public GFieldDefine GetLinkReturnActiveField(GFieldDefine fieldDefine)
+        {
+            if (StrFunc.StrIsNotEmpty(fieldDefine.LinkFieldName))
+                // 傳回關連來源欄位
+                return this.Fields[fieldDefine.LinkFieldName];
+            else if (StrFunc.StrIsNotEmpty(fieldDefine.LinkProgID))
+                // 內碼欄位
+                return fieldDefine;
+            else
+                return null;
+        }
     }
 }

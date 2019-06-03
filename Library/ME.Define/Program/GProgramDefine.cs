@@ -35,5 +35,42 @@ namespace ME.Define
         /// </summary>
         [JsonIgnore]
         public GFieldDefineCollection MasterFields => this.MasterTable.Fields;
+
+        /// <summary>
+        /// 尋找指定定義欄位。
+        /// </summary>
+        /// <param name="fieldName">[欄位名稱] 或 [資料表.欄位名稱]。</param>
+        public GFieldDefine FindField(string fieldName)
+        {
+            string sTableName;
+            string sFieldName;
+
+            if (StrFunc.StrContains(fieldName, "."))
+            {
+                StrFunc.StrSplitFieldName(fieldName, out sTableName, out sFieldName);
+            }
+            else
+            {
+                sTableName = this.ProgID;
+                sFieldName = fieldName;
+            }
+
+            return FindField(sTableName, sFieldName);
+        }
+
+        /// <summary>
+        /// 在資料表及延伸資料表尋找指定欄位定義。
+        /// </summary>
+        /// <param name="tableName">資料表名稱。</param>
+        /// <param name="fieldName">欄位名稱。</param>
+        public GFieldDefine FindField(string tableName, string fieldName)
+        {
+            var realTableName = StrFunc.StrIsEmpty(tableName) ? this.ProgID : tableName;
+            var tableDefine = this.Tables[realTableName];
+            if (BaseFunc.IsNotNull(tableDefine))
+                return tableDefine.Fields[fieldName];
+            else
+                return null;
+        }
     }
 }
