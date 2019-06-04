@@ -11,6 +11,7 @@ namespace ME.Define
     /// <summary>
     /// Entity 資料列 介面
     /// </summary>
+    [Obsolete]
     public interface IEntityRow
     {
         /// <summary>

@@ -14,7 +14,7 @@ namespace ME.Define
     /// Entity 資料表(指定型別)
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class GEntityTable<T> : GEntityTable where T : IEntityRow
+    public class GEntityTable<T> : GEntityTable where T : GEntityRow
     {
         /// <summary>
         /// 建構函式
@@ -30,7 +30,7 @@ namespace ME.Define
         /// <summary>
         /// Entity 資料列集合
         /// </summary>
-        public Dictionary<T, IEntityRow> EntityRows { get; } = new Dictionary<T, IEntityRow>();
+        public Dictionary<T, GEntityRow> EntityRows { get; } = new Dictionary<T, GEntityRow>();
 
         /// <summary>
         /// 原始 Entity 資料表
@@ -88,7 +88,7 @@ namespace ME.Define
         /// <summary>
         /// 資料列集合
         /// </summary>
-        public List<IEntityRow> Rows { get; } = new List<IEntityRow>();
+        public List<GEntityRow> Rows { get; } = new List<GEntityRow>();
 
         /// <summary>
         /// 將資料表轉為實體資料列集合

@@ -12,7 +12,7 @@ namespace ME.Define
     /// Entity 資料集(指定型別)
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class GEntitySet<T> : GEntitySet where T : IEntityRow
+    public class GEntitySet<T> : GEntitySet where T : GEntityRow
     {
         /// <summary>
         /// 建構函式

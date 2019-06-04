@@ -37,7 +37,7 @@ namespace ME.Business
         /// <param name="progID"></param>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public static IEntityRow CreateEntityRow(string progID, string tableName)
+        public static GEntityRow CreateEntityRow(string progID, string tableName)
         {
             var progDefine = CacheFunc.GetProgramDefine("HUM", progID);
             var tableDefine = progDefine.Tables[tableName];
@@ -54,7 +54,7 @@ namespace ME.Business
         /// <param name="progID"></param>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public static T CreateEntityRow<T>(string progID, string tableName) where T : IEntityRow
+        public static T CreateEntityRow<T>(string progID, string tableName) where T : GEntityRow
         {
             return (T)CreateEntityRow(progID, tableName);
         }

@@ -16,7 +16,7 @@ namespace ME.Define
     /// <summary>
     /// Entity 資料列
     /// </summary>
-    public class GEntityRow : IEntityRow
+    public class GEntityRow// : IEntityRow
     {
         /// <summary>
         /// 建構函式
@@ -42,7 +42,7 @@ namespace ME.Define
         /// 建構函式
         /// </summary>
         /// <param name="originalRow">欄位定義</param>
-        public GEntityRow(IEntityRow originalRow) : base()
+        public GEntityRow(GEntityRow originalRow) : base()
         {
             ImportFieldNames(originalRow);
             ImportFieldValues(originalRow);
@@ -122,7 +122,7 @@ namespace ME.Define
         /// 匯入欄位
         /// </summary>
         /// <param name="originalRow">來源資料列</param>
-        private void ImportFieldNames(IEntityRow originalRow)
+        private void ImportFieldNames(GEntityRow originalRow)
         {
             foreach (var field in originalRow.Fields)
                 this.Fields.Add(field.Key, DataFunc.GetDefaultValue(field.Value.GetType()));
@@ -132,7 +132,7 @@ namespace ME.Define
         /// 匯入欄位值集合到來源資料列
         /// </summary>
         /// <param name="originalRow">來源資料列</param>
-        public void ImportFieldValues(IEntityRow originalRow)
+        public void ImportFieldValues(GEntityRow originalRow)
         {
             foreach (var f in this.FieldNames.Where(x => x.SameTextOr(originalRow.FieldNames)))
                 this.SetValue(f, originalRow.GetValue(f));
@@ -143,7 +143,7 @@ namespace ME.Define
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T ToRealEntity<T>(T realEntity) where T : IEntityRow
+        public T ToRealEntity<T>(T realEntity) where T : GEntityRow
         {
             this.ImportFieldValues(realEntity);
             var props = from p in typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public)

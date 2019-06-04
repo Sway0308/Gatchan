@@ -84,13 +84,13 @@ namespace ME.Define
         /// </summary>
         /// <param name="instanceType">動態載入物件的型別描述。</param>
         /// <returns></returns>
-        public static IEntityRow CreateEntityRow(GInstanceType instanceType)
+        public static GEntityRow CreateEntityRow(GInstanceType instanceType)
         {
             //取得組件的完整路徑
             var assemblyFilePath = FileFunc.PathCombine(FileFunc.GetAssemblyPath(), instanceType.AssemblyFile);
             //動態載入組件，建立指定類別的物件
             var assemblyLoader = new GAssemblyLoader(assemblyFilePath);
-            return (IEntityRow)assemblyLoader.CreateInstance(instanceType.TypeName, new object[] { });
+            return (GEntityRow)assemblyLoader.CreateInstance(instanceType.TypeName, new object[] { });
         }
     }
 }
