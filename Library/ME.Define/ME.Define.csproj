@@ -66,7 +66,7 @@
     <Compile Include="Common\GSortField.cs" />
     <Compile Include="Common\GSortFieldCollection.cs" />
     <Compile Include="Common\GTextItemCollection.cs" />
-    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\DefineConfig.cs" />
     <Compile Include="Common\DefineFunc.cs" />
     <Compile Include="Company\GCompanyInfo.cs" />
     <Compile Include="Database\GDatabaseItem.cs" />

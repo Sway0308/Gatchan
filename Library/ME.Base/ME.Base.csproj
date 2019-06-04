@@ -60,7 +60,7 @@
     <Compile Include="Common\BaseConst.cs" />
     <Compile Include="Common\BaseFunc.cs" />
     <Compile Include="Common\BaseInfo.cs" />
-    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\BaseConfig.cs" />
     <Compile Include="Common\DataFunc.cs" />
     <Compile Include="Common\DbTypeConverter.cs" />
     <Compile Include="Common\ExtensionMethod.cs" />

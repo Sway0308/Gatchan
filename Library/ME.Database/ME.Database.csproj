@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\DatabaseConfig.cs" />
     <Compile Include="Common\DatabaseFunc.cs" />
     <Compile Include="Common\GDbAccess.cs" />
     <Compile Include="DbCommand\GBaseDbCommandBuilder.cs" />
