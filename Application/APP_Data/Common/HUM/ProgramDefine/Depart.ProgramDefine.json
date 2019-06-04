@@ -9,43 +9,61 @@
       "PrimaryKey": "DepartID",
       "Fields": [
         {
+          "FieldName": "SYS_CompanyID",
+          "DisplayName": "公司編號",
+          "DbType": 0,
+          "DbFieldName": "SYS_CompanyID",
           "FieldType": 0,
           "MaxLength": 10,
           "AllowNull": false,
           "LinkFieldName": "",
           "LinkProgID": "",
-          "LinkReturnFields": [],
-          "FieldName": "DepartID",
+          "LinkReturnFields": []
+        },
+        {
+          "FieldName": "SYS_ID",
           "DisplayName": "部門編號",
-          "DbType": 7
-        },
-        {
+          "DbType": 0,
+          "DbFieldName": "SYS_ID",
           "FieldType": 0,
           "MaxLength": 10,
           "AllowNull": false,
           "LinkFieldName": "",
           "LinkProgID": "",
-          "LinkReturnFields": [],
-          "FieldName": "DepartCode",
+          "LinkReturnFields": []
+        },
+        {
+          "FieldName": "SYS_ViewID",
           "DisplayName": "部門代碼",
-          "DbType": 0
-        },
-        {
+          "DbType": 0,
+          "DbFieldName": "SYS_ViewID",
           "FieldType": 0,
           "MaxLength": 10,
           "AllowNull": false,
           "LinkFieldName": "",
           "LinkProgID": "",
-          "LinkReturnFields": [],
-          "FieldName": "DepartName",
+          "LinkReturnFields": []
+        },
+        {
+          "FieldName": "SYS_Name",
           "DisplayName": "部門名稱",
-          "DbType": 0
+          "DbType": 0,
+          "DbFieldName": "SYS_Name",
+          "FieldType": 0,
+          "MaxLength": 10,
+          "AllowNull": false,
+          "LinkFieldName": "",
+          "LinkProgID": "",
+          "LinkReturnFields": []
         }
       ],
       "EntityInstanceType": {
         "AssemblyFile": "",
         "TypeName": ""
-      }
+      },
+      "SortFields": [],
+      "TablePrimaryKey": null,
+      "IsCreateDbTable": true
     }
   ]
 }

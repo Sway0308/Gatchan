@@ -22,11 +22,11 @@ namespace ImportData
     [Description]
     public class InitDataHelper
     {
-        private string CurrentPath { get; } = @"C:\Users\SCSRD\Downloads\TestCode\BaseBL";
+        private string CurrentPath => Directory.GetParent(this.AppDataPath).FullName;
         /// <summary>
         /// 檔案路徑
         /// </summary>
-        private string AppDataPath => $@"{this.CurrentPath}\APP_Data";
+        private string AppDataPath => BaseInfo.AppDataPath;
         /// <summary>
         /// 設定檔檔案路徑
         /// </summary>
@@ -75,7 +75,7 @@ namespace ImportData
             var progSetting = new GProgramSetting();
             progSetting.Items.AddItem(new GProgramItem { ProgID = "Depart", DisplayName = "部門" });
             progSetting.Items.AddItem(new GProgramItem { ProgID = "Duty", DisplayName = "職缺" });
-            progSetting.Items.AddItem(new GProgramItem { ProgID = "Employee", DisplayName = "員工", BusinessInstanceType = { AssemblyFile = "TUBE.FD.dll", TypeName = "TUBE.FD.AEmployeeBusinessLogic" } });
+            progSetting.Items.AddItem(new GProgramItem { ProgID = "Employee", DisplayName = "員工" });
             ProgSettingToJson(progSetting);
         }
 
@@ -110,9 +110,10 @@ namespace ImportData
         {
             var progDefine = new GProgramDefine { ProgID = progID, DisplayName = displayName };
             var tableDefine = new GTableDefine { TableName = progID, DisplayName = displayName, DbTableName = progID, PrimaryKey = $"{progID}ID" };
-            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = $"{progID}ID", DisplayName = $"{displayName}編號", MaxLength = 10, DbType = EFieldDbType.GUID });
-            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = $"{progID}Code", DisplayName = $"{displayName}代碼", MaxLength = 10 });
-            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = $"{progID}Name", DisplayName = $"{displayName}名稱", MaxLength = 10 });
+            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = SysFields.CompanyID, DisplayName = $"公司編號", MaxLength = 10 });
+            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = SysFields.ID, DisplayName = $"{displayName}編號", MaxLength = 10 });
+            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = SysFields.ViewID, DisplayName = $"{displayName}代碼", MaxLength = 10 });
+            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = SysFields.Name, DisplayName = $"{displayName}名稱", MaxLength = 10 });
             progDefine.Tables.AddItem(tableDefine);
             return progDefine;
         }
@@ -128,12 +129,12 @@ namespace ImportData
             var linkProgID = linkProgDefine.ProgID;
             var linkDisplayName = linkProgDefine.DisplayName;
 
-            var linkField = new GFieldDefine { FieldName = $"{linkProgID}ID", DisplayName = $"{linkDisplayName}編號", MaxLength = 10, LinkProgID = linkProgID, DbType = EFieldDbType.GUID };
-            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = $"{linkProgID}ID", DestField = $"{linkProgID}ID" });
-            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = $"{linkProgID}Code", DestField = $"TMP_{linkProgID}Code" });
-            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = $"{linkProgID}Name", DestField = $"TMP_{linkProgID}Name" });
+            var linkField = new GFieldDefine { FieldName = $"{linkProgID}ID", DisplayName = $"{linkDisplayName}編號", MaxLength = 10, LinkProgID = linkProgID };
+            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = SysFields.ID, DestField = $"{linkProgID}ID" });
+            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = SysFields.ViewID, DestField = $"TMP_{linkProgID}ID" });
+            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = SysFields.Name, DestField = $"TMP_{linkProgID}Name" });
             fields.AddItem(linkField);
-            fields.AddItem(new GFieldDefine { FieldName = $"TMP_{linkProgID}Code", DisplayName = $"{linkDisplayName}代碼", FieldType = EFieldType.LinkField, LinkFieldName = $"{linkProgID}ID" });
+            fields.AddItem(new GFieldDefine { FieldName = $"TMP_{linkProgID}ID", DisplayName = $"{linkDisplayName}代碼", FieldType = EFieldType.LinkField, LinkFieldName = $"{linkProgID}ID" });
             fields.AddItem(new GFieldDefine { FieldName = $"TMP_{linkProgID}Name", DisplayName = $"{linkDisplayName}名稱", FieldType = EFieldType.LinkField, LinkFieldName = $"{linkProgID}ID" });
         }
 
@@ -233,11 +234,12 @@ namespace ImportData
             {
                 var dt = JsonConvert.DeserializeObject<DataTable>(file.Text);
                 dt.TableName = file.FileName;
-                var dataSet = DataFunc.CreateDataSet(file.FileName);
+                var table = new GEntityTable(dt);
+                var dataSet = new GEntitySet(file.FileName);
                 
-                dataSet.Tables.Add(dt);
+                dataSet.Tables.Add(table);
                 var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, file.FileName);
-                var result = bl.Save(new GSaveInputArgs { DataSet = dataSet, SaveMode = ESaveMode.Add });
+                var result = bl.Save(new GSaveInputArgs { EntitySet = dataSet, SaveMode = ESaveMode.Add });
             }
         }
 
@@ -246,23 +248,16 @@ namespace ImportData
         /// </summary>
         public void EditData()
         {
-            var files = from f in Directory.EnumerateFiles($@"{this.CurrentPath}\DemoData\FindData", "*.json", SearchOption.TopDirectoryOnly)
-                        select new { ProgID = FileFunc.GetFileName(f).Replace(".json", ""), Text = FileFunc.FileReadAllText(f) };
-            foreach (var file in files)
+            var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, "Employee");
+            var result = bl.Find(new GFindInputArgs());
+            var table = result.EntityTable;
+            foreach (var row in result.EntityTable.Rows)
             {
-                var table = JsonConvert.DeserializeObject<DataTable>(file.Text);
-                foreach (DataRow row in table.Rows)
-                {
-                    row[$"{file.ProgID}Code"] = row.ValueAsString($"{file.ProgID}Code") + "_2";
-                }
-
-                table.TableName = file.ProgID;
-                var dataSet = DataFunc.CreateDataSet(file.ProgID);
-
-                dataSet.Tables.Add(table);
-                var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, file.ProgID);
-                var result = bl.Save(new GSaveInputArgs { DataSet = dataSet, SaveMode = ESaveMode.Edit });
+                row.SetValue(SysFields.ViewID, row.ValueAsString(SysFields.ViewID) + "_2");
             }
+            var dataSet = new GEntitySet(table.TableName);
+            dataSet.Tables.Add(table);
+            var saveResult = bl.Save(new GSaveInputArgs { EntitySet = dataSet, SaveMode = ESaveMode.Edit });
         }
 
         /// <summary>
@@ -270,17 +265,12 @@ namespace ImportData
         /// </summary>
         public void DeleteData()
         {
-            var files = from f in Directory.EnumerateFiles($@"{CurrentPath}\DemoData\FindData", "*.json", SearchOption.TopDirectoryOnly)
-                        select new { ProgID = FileFunc.GetFileName(f).Replace(".json", ""), Text = FileFunc.FileReadAllText(f) };
-            foreach (var file in files)
+            var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, "Employee");
+            var result = bl.Find(new GFindInputArgs());
+            var table = result.EntityTable;
+            foreach (var row in result.EntityTable.Rows)
             {
-                var jsonArray = JArray.Parse(file.Text);
-                var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, file.ProgID);
-
-                foreach (var json in jsonArray.Children<JObject>())
-                {
-                    var result = bl.Delete(new GDeleteInputArgs { FormID = json.TokenAsString($"{file.ProgID}ID") });
-                }                
+                bl.Delete(new GDeleteInputArgs { FormID = row.ValueAsString(SysFields.ID) });
             }
         }
 

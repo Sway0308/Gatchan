@@ -215,8 +215,7 @@ namespace ME.Database
                 }
             }
 
-
-            return oBuffer.ToString();
+            return StrFunc.StrFormat("Select \n") + oBuffer.ToString();
         }
 
         /// <summary>
@@ -230,12 +229,12 @@ namespace ME.Database
             StringBuilder oBuffer;
 
             oBuffer = new StringBuilder();
-            oBuffer.AppendFormat("From {0} {1} WITH (NOLOCK) ", helper.GetTableName(tableDefine.DbTableName), "A");
+            oBuffer.AppendFormat("From {0} {1} ", helper.GetTableName(tableDefine.DbTableName), "A");
             oBuffer.AppendLine();
 
             foreach (GTableJoin item in provider.TableJoins)
             {
-                oBuffer.AppendFormat("Left Join {2} {3} WITH (NOLOCK) On {0}.{1}={3}.{4} ",
+                oBuffer.AppendFormat("Left Join {2} {3} On {0}.{1}={3}.{4} ",
                     item.LeftTableAlias, helper.GetFieldName(item.LeftFieldName),
                     helper.GetTableName(item.RightTableName), item.RightTableAlias, helper.GetFieldName(item.RightFieldName));
 
@@ -282,7 +281,7 @@ namespace ME.Database
             string sSortDirection;
 
             // 無排序欄位則傳回空字串
-            if (BaseFunc.IsEmpty(sortFields)) { return string.Empty; }
+            if (BaseFunc.IsEmpty(sortFields) || !sortFields.Any()) { return string.Empty; }
 
             oBuilder = new StringBuilder();
             foreach (GSortField sortField in sortFields)

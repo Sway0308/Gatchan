@@ -16,20 +16,6 @@ namespace ME.Business
     /// </summary>
     public class GBusinessLogic : GBaseBusinessLogic, IBusinessLogic
     {
-        private class ATableJoin
-        {
-            public ATableJoin(string tableName, string dbTableName, string aliasName)
-            {
-                TableName = tableName;
-                DbTableName = dbTableName;
-                AliasName = aliasName;
-            }
-
-            public string TableName { get; set; }
-            public string DbTableName { get; set; }
-            public string AliasName { get; set; }
-        }
-
         /// <summary>
         /// 建構函式
         /// </summary>
@@ -130,7 +116,7 @@ namespace ME.Business
             var sql = new StringBuilder();
             sql.AppendLine("Delete A");
             sql.AppendLine($"From {this.ProgID} A");
-            sql.AppendLine($"Where A.{this.ProgID}ID = {inputArgs.FormID.SQLStr()}");
+            sql.AppendLine($"Where A.{SysFields.ID} = {inputArgs.FormID.SQLStr()}");
             this.DbAccess.ExecuteNonQuery(this.DatabaseID, sql.ToString());
         }
 
@@ -251,7 +237,7 @@ namespace ME.Business
         /// <param name="outputResult"></param>
         protected virtual void DoFind(GFindInputArgs inputArgs, GFindOutputResult outputResult)
         {
-            var selectArgs = new GSelectInputArgs { FilterItems = inputArgs.FilterItems };
+            var selectArgs = new GSelectInputArgs { TableName = this.ProgID, SelectFields = inputArgs.SelectFields, FilterItems = inputArgs.FilterItems };
             var selectResult = Select(selectArgs);
             outputResult.EntityTable = selectResult.EntityTable;
         }
@@ -357,16 +343,18 @@ namespace ME.Business
         /// <param name="outputResult"></param>
         protected virtual void DoSave(GSaveInputArgs inputArgs, GSaveOutputResult outputResult)
         {
-            var table = inputArgs.DataSet.Tables[this.ProgID];
+            var table = inputArgs.EntitySet.Tables[this.ProgID];
             if (inputArgs.SaveMode == ESaveMode.Add)
             {
-                foreach (DataRow row in table.Rows)
+                foreach (GEntityRow row in table.Rows)
                 {
                     var sql = new StringBuilder();
                     sql.AppendLine($"Insert Into {this.ProgID} (");
                     var isFirst = true;
                     foreach (var fieldDefine in this.ProgramDefine.MasterFields.Where(x => x.FieldType == EFieldType.DataField))
                     {
+                        if (!row.HasField(fieldDefine.FieldName))
+                            continue;
                         var fieldName = fieldDefine.FieldName;
                         sql.AppendLine((isFirst ? "" : ",") + $"{fieldName}");
                         isFirst = false;
@@ -377,9 +365,9 @@ namespace ME.Business
                     foreach (var fieldDefine in this.ProgramDefine.MasterFields.Where(x => x.FieldType == EFieldType.DataField))
                     {
                         var fieldName = fieldDefine.FieldName;
-                        if (DataFunc.HasField(row, fieldName))
+                        if (row.HasField(fieldName))
                         {
-                            sql.AppendLine((isFirst ? "" : ",") + $"{row.ValueAsSQLStr(fieldName)}");
+                            sql.AppendLine((isFirst ? "" : ",") + $"{row.ValueAsString(fieldName).SQLStr()}");
                             isFirst = false;
                         }
                     }
@@ -389,7 +377,7 @@ namespace ME.Business
             }
             else
             {
-                foreach (DataRow row in table.Rows)
+                foreach (var row in table.Rows)
                 {
                     var sql = new StringBuilder();
                     sql.AppendLine("Update A Set");
@@ -397,14 +385,14 @@ namespace ME.Business
                     foreach (var fieldDefine in this.ProgramDefine.MasterFields.Where(x => x.FieldType == EFieldType.DataField))
                     {
                         var fieldName = fieldDefine.FieldName;
-                        if (DataFunc.HasField(row, fieldName) && !fieldName.SameText($"{this.ProgID}ID"))
+                        if (row.HasField(fieldName) && !fieldName.SameText($"{SysFields.ID}"))
                         {
-                            sql.AppendLine((isFirst ? "" : ",") + $"{fieldName} = {row.ValueAsSQLStr(fieldName)}");
+                            sql.AppendLine((isFirst ? "" : ",") + $"{fieldName} = {row.ValueAsString(fieldName).SQLStr()}");
                             isFirst = false;
                         }
                     }
                     sql.AppendLine($"From {this.ProgID} A");
-                    sql.AppendLine($"Where A.{this.ProgID}ID = {row.ValueAsSQLStr($"{this.ProgID}ID")}");
+                    sql.AppendLine($"Where A.{SysFields.ID} = {row.ValueAsString($"{SysFields.ID}").SQLStr()}");
                     this.DbAccess.ExecuteNonQuery(this.DatabaseID, sql.ToString());
                 }
             }
@@ -549,55 +537,6 @@ namespace ME.Business
             var oFields = new GStringHashSet(selectFields, ",");
 
             return oFields.ToString(",");
-        }
-
-        /// <summary>
-        /// 取得欄位集合
-        /// </summary>
-        /// <returns></returns>
-        private GTextItemCollection GetFieldText(IEnumerable<ATableJoin> tableJoins)
-        {
-            var result = new GTextItemCollection();
-            foreach (var field in this.ProgramDefine.MasterFields.Where(x => x.FieldType != EFieldType.VirtualField))
-            {
-                var tableAlias = field.FieldType == EFieldType.DataField 
-                               ? "A" 
-                               : tableJoins.FirstOrDefault(x => field.LinkFieldName.Replace("Id", "").SameText(x.TableName))?.AliasName;
-                result.AddItem(field.FieldName, tableAlias);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// 取得Join Table 的集合
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerable<ATableJoin> GetTableJoin()
-        {
-            char NextChar(char letter)
-            {
-                var nextChar = default(char);
-                if (letter == 'z')
-                    nextChar = 'a';
-                else if (letter == 'Z')
-                    nextChar = 'A';
-                else
-                    nextChar = (char)(((int)letter) + 1);
-
-                return nextChar;
-            }
-
-
-            var result = new List<ATableJoin>();
-            var curAliasName = 'A';
-            result.Add(new ATableJoin(this.ProgramDefine.MasterTable.TableName, this.ProgramDefine.MasterTable.DbTableName, curAliasName.ToString()));
-            foreach (var field in this.ProgramDefine.MasterFields.Where(x => x.FieldType == EFieldType.DataField && !x.LinkProgID.IsEmpty()))
-            {
-                var linkProgDefine = CacheFunc.GetProgramDefine("HUM", field.LinkProgID);
-                curAliasName = NextChar(curAliasName);
-                result.Add(new ATableJoin(linkProgDefine.MasterTable.TableName, linkProgDefine.MasterTable.DbTableName, curAliasName.ToString()));
-            }
-            return result;
         }
 
         /// <summary>

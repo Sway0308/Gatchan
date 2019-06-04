@@ -66,5 +66,13 @@ namespace ME.Define
             else
                 return null;
         }
+
+        /// <summary>
+        /// 物件描述。
+        /// </summary>
+        public override string ToString()
+        {
+            return StrFunc.StrFormat("{0} - {1}, {2}", this.TableName, this.DisplayName, this.DbTableName);
+        }
     }
 }

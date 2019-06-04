@@ -22,14 +22,13 @@ namespace ME.Base
                 var result = this.FirstOrDefault(x => x.Key.SameText(key));
                 if (result != null)
                     return result;
-                throw new GException("No such key exists");
+                return default(T);
             }
             set
             {
                 var result = this.FirstOrDefault(x => x.Key.SameText(key));
                 if (result != null)
                     result = value;
-                throw new GException("No such key exists");
             }
         }
 

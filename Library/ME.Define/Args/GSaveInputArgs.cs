@@ -17,10 +17,6 @@ namespace ME.Define
         /// </summary>
         public bool Cancel { get; set; }
         /// <summary>
-        /// 資料集。
-        /// </summary>
-        public DataSet DataSet { get; set; }
-        /// <summary>
         /// Entity資料集。
         /// </summary>
         public GEntitySet EntitySet { get; set; }

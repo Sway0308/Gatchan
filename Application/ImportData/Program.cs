@@ -12,8 +12,8 @@ namespace ImportData
     {
         static void Main(string[] args)
         {
-            BaseInfo.AppDataPath = @"C:\Users\SCSRD\Downloads\TestCode\BaseBL\APP_Data";
-            ReSaveProgramDefine();
+            BaseInfo.AppDataPath = @"C:\Users\SCSRD\Documents\GitHub\Gatchan\Application\APP_Data";
+            MechanismDemo();
         }
 
         private static void ReSaveProgramDefine()

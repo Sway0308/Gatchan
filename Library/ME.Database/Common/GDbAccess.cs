@@ -52,8 +52,12 @@ namespace ME.Database
         /// <param name="commandTimeout">等待命令執行的時間 (以秒為單位)，-1 表示不指定。</param>
         public DataTable ExecuteDataTable(string databaseID, DbCommand command, int commandTimeout = -1)
         {
+            var dbParams = new Dictionary<string, object>();
+            foreach (DbParameter para in command.Parameters)
+                dbParams.Add(para.ParameterName, para.Value);
+
             var dt = new DataTable();
-            dt.Load(this.SqlConnection(databaseID).ExecuteReader(new CommandDefinition(command.CommandText, command.Parameters, commandTimeout: commandTimeout)));
+            dt.Load(this.SqlConnection(databaseID).ExecuteReader(command.CommandText, dbParams));
             return dt;
         }
 

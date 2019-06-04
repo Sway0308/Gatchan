@@ -3,25 +3,32 @@
   "DisplayName": "部門",
   "Fields": [
     {
+      "FieldName": "SYS_CompanyID",
+      "DisplayName": "公司編號",
+      "DbType": 0,
       "MaxLength": 10,
-      "AllowNull": false,
-      "FieldName": "DepartID",
+      "AllowNull": false
+    },
+    {
+      "FieldName": "SYS_ID",
       "DisplayName": "部門編號",
-      "DbType": 7
+      "DbType": 0,
+      "MaxLength": 10,
+      "AllowNull": false
     },
     {
-      "MaxLength": 10,
-      "AllowNull": false,
-      "FieldName": "DepartCode",
+      "FieldName": "SYS_ViewID",
       "DisplayName": "部門代碼",
-      "DbType": 0
+      "DbType": 0,
+      "MaxLength": 10,
+      "AllowNull": false
     },
     {
-      "MaxLength": 10,
-      "AllowNull": false,
-      "FieldName": "DepartName",
+      "FieldName": "SYS_Name",
       "DisplayName": "部門名稱",
-      "DbType": 0
+      "DbType": 0,
+      "MaxLength": 10,
+      "AllowNull": false
     }
   ]
 }

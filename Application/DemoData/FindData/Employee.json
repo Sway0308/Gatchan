@@ -1,35 +1,47 @@
-[
-  {
-    "EmployeeID": "013ba635-f8f8-4907-b82f-c961e9db156c",
-    "EmployeeCode": "0183",
-    "EmployeeName": "John",
-    "DepartID": "013ba635-f8f8-4907-b82f-c961e9db256b",
-    "TMP_DepartCode": "R&D",
-    "TMP_DepartName": "研發",
-    "DutyID": "013ba635-f8f8-4907-b82f-c961e9db158b",
-    "TMP_DutyCode": "Employee",
-    "TMP_DutyName": "員工"
-  },
-  {
-    "EmployeeID": "013ba635-f8f8-4907-b82f-c961e9db156d",
-    "EmployeeCode": "0211",
-    "EmployeeName": "Bob",
-    "DepartID": "013ba635-f8f8-4907-b82f-c961e9db356b",
-    "TMP_DepartCode": "Q&A",
-    "TMP_DepartName": "品管",
-    "DutyID": "013ba635-f8f8-4907-b82f-c961e9db156b",
-    "TMP_DutyCode": "Boss",
-    "TMP_DutyName": "老闆"
-  },
-  {
-    "EmployeeID": "013ba635-f8f8-4907-b82f-c961e9db156f",
-    "EmployeeCode": "0349",
-    "EmployeeName": "Elisa",
-    "DepartID": "013ba635-f8f8-4907-b82f-c961e9db456b",
-    "TMP_DepartCode": "PM",
-    "TMP_DepartName": "專案管理",
-    "DutyID": "013ba635-f8f8-4907-b82f-c961e9db158b",
-    "TMP_DutyCode": "Employee",
-    "TMP_DutyName": "員工"
-  }
-]
+{
+  "TableName": "Employee",
+  "Rows": [
+    {
+      "Fields": {
+        "SYS_COMPANYID": "SCS001",
+        "SYS_ID": "C001",
+        "SYS_VIEWID": "0183",
+        "SYS_NAME": "John",
+        "DEPARTID": "A002",
+        "TMP_DEPARTID": null,
+        "TMP_DEPARTNAME": null,
+        "DUTYID": "B001",
+        "TMP_DUTYID": null,
+        "TMP_DUTYNAME": null
+      }
+    },
+    {
+      "Fields": {
+        "SYS_COMPANYID": "SCS001",
+        "SYS_ID": "C002",
+        "SYS_VIEWID": "0211",
+        "SYS_NAME": "Bob",
+        "DEPARTID": "A001",
+        "TMP_DEPARTID": null,
+        "TMP_DEPARTNAME": null,
+        "DUTYID": "B003",
+        "TMP_DUTYID": null,
+        "TMP_DUTYNAME": null
+      }
+    },
+    {
+      "Fields": {
+        "SYS_COMPANYID": "SCS001",
+        "SYS_ID": "C003",
+        "SYS_VIEWID": "0349",
+        "SYS_NAME": "Elisa",
+        "DEPARTID": "A003",
+        "TMP_DEPARTID": null,
+        "TMP_DEPARTNAME": null,
+        "DUTYID": "B001",
+        "TMP_DUTYID": null,
+        "TMP_DUTYNAME": null
+      }
+    }
+  ]
+}

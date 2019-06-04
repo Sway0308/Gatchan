@@ -1,17 +1,20 @@
 [
   {
-    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB256B",
-    "DepartCode": "R&D",
-    "DepartName": "研發"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "A001",
+    "SYS_ViewID": "R&D",
+    "SYS_Name": "研發"
   },
   {
-    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB356B",
-    "DepartCode": "Q&A",
-    "DepartName": "品管"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "A002",
+    "SYS_ViewID": "Q&A",
+    "SYS_Name": "品管"
   },
   {
-    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB456B",
-    "DepartCode": "PM",
-    "DepartName": "專案管理"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "A003",
+    "SYS_ViewID": "PM",
+    "SYS_Name": "專案管理"
   }
 ]

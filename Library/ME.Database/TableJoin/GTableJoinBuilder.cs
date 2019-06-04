@@ -216,20 +216,16 @@ namespace ME.Database
         /// <param name="detailTableName">明細資料表名稱。</param>
         private void BuildTableJoins(GTableJoinProvider provider, GTableDefine tableDefine, GStringHashSet useFields, string detailTableName = "")
         {
-            GStringHashSet oReturnFields;
-            string sLeftTableAlias;
-            string sKey;
-
-            foreach (GFieldDefine fieldDefine in tableDefine.Fields)
+            foreach (var fieldDefine in tableDefine.Fields)
             {
                 if (fieldDefine.FieldType == EFieldType.DataField && StrFunc.StrIsNotEmpty(fieldDefine.LinkProgID))
                 {
-                    oReturnFields = GetReturnFields(tableDefine, fieldDefine.FieldName, useFields);
+                    var oReturnFields = GetReturnFields(tableDefine, fieldDefine.FieldName, useFields);
                     if (oReturnFields.Count > 0)
                     {
-                        sKey = StrFunc.StrFormat("{0}.{1}.{2}", tableDefine.TableName, fieldDefine.FieldName, fieldDefine.LinkProgID);
-                        sLeftTableAlias = StrFunc.StrIsEmpty(detailTableName) ? "A" : "DA";
-                        BuildTableJoin(sKey, provider, fieldDefine, oReturnFields, sLeftTableAlias, detailTableName);
+                        var key = StrFunc.StrFormat("{0}.{1}.{2}", tableDefine.TableName, fieldDefine.FieldName, fieldDefine.LinkProgID);
+                        var leftTableAlias = StrFunc.StrIsEmpty(detailTableName) ? "A" : "DA";
+                        BuildTableJoin(key, provider, fieldDefine, oReturnFields, leftTableAlias, detailTableName);
                     }
                 }
             }

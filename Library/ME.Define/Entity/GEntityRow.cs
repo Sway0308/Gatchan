@@ -31,6 +31,16 @@ namespace ME.Define
         /// <summary>
         /// 建構函式
         /// </summary>
+        /// <param name="columns"></param>
+        public GEntityRow(DataColumnCollection columns) : base()
+        {
+            foreach (DataColumn col in columns)
+                this.Fields.Add(col.ColumnName, col.DefaultValue);
+        }
+
+        /// <summary>
+        /// 建構函式
+        /// </summary>
         /// <param name="originalRow">欄位定義</param>
         public GEntityRow(IEntityRow originalRow) : base()
         {
@@ -54,6 +64,26 @@ namespace ME.Define
         /// </summary>
         [JsonIgnore]
         public IEnumerable<string> FieldNames => this.Fields.Keys.ToList();
+
+        /// <summary>
+        /// 傳回指定鍵值的快取資料。
+        /// </summary>
+        /// <param name="key">鍵值。</param>
+        public object this[string fieldName]
+        {
+            get
+            {
+                if (this.HasField(fieldName))
+                    return this.GetValue(fieldName);
+                throw new GException("No such field exists");
+            }
+            set
+            {
+                if (this.HasField(fieldName))
+                    this.SetValue(fieldName, value);
+                throw new GException("No such field exists");
+            }
+        }
 
         /// <summary>
         /// 傳回指定欄位名稱的欄位值。
@@ -123,6 +153,112 @@ namespace ME.Define
             foreach (var p in props)
                 p.SetValue(realEntity, this.GetValue(p.Name));
             return realEntity;
+        }
+
+        /// <summary>
+        /// 判斷是否有指定欄位。
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public bool HasField(string fieldName)
+        {
+            return this.FieldNames.Any(x => x.SameText(fieldName));
+        }
+
+        /// <summary>
+        /// 取得欄位值後轉型成int
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public int ValueAsInt(string fieldName)
+        {
+            if (this.HasField(fieldName))
+                return BaseFunc.CInt(this[fieldName]);
+            return 0;
+        }
+
+        /// <summary>
+        /// 取得欄位值後轉型成double
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public double ValueAsDouble(string fieldName)
+        {
+            if (this.HasField(fieldName))
+                return BaseFunc.CDouble(this[fieldName]);
+            return 0;
+        }
+
+        /// <summary>
+        /// 取得欄位值後轉型成float
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public float ValueAsFloat(string fieldName)
+        {
+            if (this.HasField(fieldName))
+                return BaseFunc.CFloat(this[fieldName]);
+            return 0;
+        }
+
+        /// <summary>
+        /// 取得欄位值後轉型成decimal
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public decimal ValueAsDecimal(string fieldName)
+        {
+            if (this.HasField(fieldName))
+                return BaseFunc.CDecimal(this[fieldName]);
+            return 0;
+        }
+
+        /// <summary>
+        /// 取得欄位值後轉型成string
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public string ValueAsString(string fieldName)
+        {
+            if (this.HasField(fieldName))
+                return BaseFunc.CStr(this[fieldName]);
+            return "";
+        }
+
+        /// <summary>
+        /// 取得欄位值後轉型成bool
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public bool ValueAsBool(string fieldName)
+        {
+            if (this.HasField(fieldName))
+                return BaseFunc.CBool(this[fieldName]);
+            return false;
+        }
+
+        /// <summary>
+        /// 取得欄位值後轉型成DateTime
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public DateTime ValueAsDateTime(string fieldName)
+        {
+            if (this.HasField(fieldName))
+                return BaseFunc.CDateTime(this[fieldName]);
+            return default(DateTime);
+        }
+
+        /// <summary>
+        /// 取得欄位值後轉型成Guid
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        public Guid ValueAsGuid(string fieldName)
+        {
+            if (this.HasField(fieldName))
+                return BaseFunc.CGuid(this[fieldName]);
+            return Guid.Empty;
         }
     }
 }

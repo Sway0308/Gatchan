@@ -38,6 +38,69 @@ namespace ME.Define
         void SetValue(string fieldName, object value);
 
         /// <summary>
+        /// 判斷是否有指定欄位。
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        bool HasField(string fieldName);
+
+        /// <summary>
+        /// 取得欄位值後轉型成int
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        int ValueAsInt(string fieldName);
+
+        /// <summary>
+        /// 取得欄位值後轉型成double
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        double ValueAsDouble(string fieldName);
+
+        /// <summary>
+        /// 取得欄位值後轉型成float
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        float ValueAsFloat(string fieldName);
+
+        /// <summary>
+        /// 取得欄位值後轉型成decimal
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        decimal ValueAsDecimal(string fieldName);
+
+        /// <summary>
+        /// 取得欄位值後轉型成string
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        string ValueAsString(string fieldName);
+
+        /// <summary>
+        /// 取得欄位值後轉型成bool
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        bool ValueAsBool(string fieldName);
+
+        /// <summary>
+        /// 取得欄位值後轉型成DateTime
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        DateTime ValueAsDateTime(string fieldName);
+
+        /// <summary>
+        /// 取得欄位值後轉型成Guid
+        /// </summary>
+        /// <param name="fieldName">欄位名稱</param>
+        /// <returns></returns>
+        Guid ValueAsGuid(string fieldName);
+
+        /// <summary>
         /// 轉換為真正的 Entity
         /// </summary>
         /// <typeparam name="T"></typeparam>

@@ -1,17 +1,20 @@
 [
   {
-    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB156B",
-    "DutyCode": "Boss",
-    "DutyName": "老闆"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "B001",
+    "SYS_ViewID": "Boss",
+    "SYS_Name": "老闆"
   },
   {
-    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB157B",
-    "DutyCode": "Manager",
-    "DutyName": "經理"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "B002",
+    "SYS_ViewID": "Manager",
+    "SYS_Name": "經理"
   },
   {
-    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB158B",
-    "DutyCode": "Employee",
-    "DutyName": "員工"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "B003",
+    "SYS_ViewID": "Employee",
+    "SYS_Name": "員工"
   }
 ]

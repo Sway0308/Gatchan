@@ -3,25 +3,32 @@
   "DisplayName": "職缺",
   "Fields": [
     {
+      "FieldName": "SYS_CompanyID",
+      "DisplayName": "公司編號",
+      "DbType": 0,
       "MaxLength": 10,
-      "AllowNull": false,
-      "FieldName": "DutyID",
+      "AllowNull": false
+    },
+    {
+      "FieldName": "SYS_ID",
       "DisplayName": "職缺編號",
-      "DbType": 7
+      "DbType": 0,
+      "MaxLength": 10,
+      "AllowNull": false
     },
     {
-      "MaxLength": 10,
-      "AllowNull": false,
-      "FieldName": "DutyCode",
+      "FieldName": "SYS_ViewID",
       "DisplayName": "職缺代碼",
-      "DbType": 0
+      "DbType": 0,
+      "MaxLength": 10,
+      "AllowNull": false
     },
     {
-      "MaxLength": 10,
-      "AllowNull": false,
-      "FieldName": "DutyName",
+      "FieldName": "SYS_Name",
       "DisplayName": "職缺名稱",
-      "DbType": 0
+      "DbType": 0,
+      "MaxLength": 10,
+      "AllowNull": false
     }
   ]
 }

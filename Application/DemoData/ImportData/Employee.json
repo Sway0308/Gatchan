@@ -1,23 +1,26 @@
 [
   {
-    "EmployeeID": "013BA635-F8F8-4907-B82F-C961E9DB156C",
-    "EmployeeCode": "0183",
-    "EmployeeName": "John",
-    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB158B",
-    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB256B"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "C001",
+    "SYS_ViewID": "0183",
+    "SYS_Name": "John",
+    "DutyID": "B001",
+    "DepartID": "A002"
   },
   {
-    "EmployeeID": "013BA635-F8F8-4907-B82F-C961E9DB156D",
-    "EmployeeCode": "0211",
-    "EmployeeName": "Bob",
-    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB156B",
-    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB356B"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "C002",
+    "SYS_ViewID": "0211",
+    "SYS_Name": "Bob",
+    "DutyID": "B003",
+    "DepartID": "A001"
   },
   {
-    "EmployeeID": "013BA635-F8F8-4907-B82F-C961E9DB156F",
-    "EmployeeCode": "0349",
-    "EmployeeName": "Elisa",
-    "DutyID": "013BA635-F8F8-4907-B82F-C961E9DB158B",
-    "DepartID": "013BA635-F8F8-4907-B82F-C961E9DB456B"
+    "SYS_CompanyID": "SCS001",
+    "SYS_ID": "C003",
+    "SYS_ViewID": "0349",
+    "SYS_Name": "Elisa",
+    "DutyID": "B001",
+    "DepartID": "A003"
   }
 ]

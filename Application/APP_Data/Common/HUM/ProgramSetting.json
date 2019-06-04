@@ -20,8 +20,8 @@
       "ProgID": "Employee",
       "DisplayName": "員工",
       "BusinessInstanceType": {
-        "AssemblyFile": "TUBE.FD.dll",
-        "TypeName": "TUBE.FD.AEmployeeBusinessLogic"
+        "AssemblyFile": "",
+        "TypeName": ""
       }
     }
   ]

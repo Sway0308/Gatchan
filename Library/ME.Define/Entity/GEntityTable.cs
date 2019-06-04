@@ -98,7 +98,7 @@ namespace ME.Define
         {
             foreach (DataRow row in table.Rows)
             {
-                var entity = new GEntityRow();
+                var entity = new GEntityRow(table.Columns);
                 foreach (var fieldName in entity.FieldNames)
                     entity.SetValue(fieldName, row[fieldName]);
                 this.Rows.Add(entity);

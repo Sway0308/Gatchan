@@ -101,7 +101,7 @@ namespace ME.Cahce
         /// <param name="progID">程式代碼。</param>
         public static GSessionInfo GetSessionInfo(Guid sessionGuid)
         {
-            return CacheKeeper.GetItem<GSessionInfo>(sessionGuid.ToString(), () => null);
+            return CacheKeeper.GetItem<GSessionInfo>(sessionGuid.ToString(), () => new GSessionInfo { SessionGuid = sessionGuid });
         }
     }
 }
