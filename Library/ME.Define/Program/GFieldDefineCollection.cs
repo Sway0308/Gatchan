@@ -12,6 +12,18 @@ namespace ME.Define
     [Serializable]
     public class GFieldDefineCollection : GKeyCollectionBase<GFieldDefine>
     {
+        #region 建構函式
+
+        /// <summary>
+        /// 建構函式。
+        /// </summary>
+        /// <param name="owner">資料表定義。</param>
+        public GFieldDefineCollection(GTableDefine owner)
+            : base(owner)
+        { }
+
+        #endregion
+
         /// <summary>
         /// 找出關連主欄位的欄位定義
         /// </summary>

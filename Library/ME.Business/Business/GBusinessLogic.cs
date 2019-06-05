@@ -510,7 +510,7 @@ namespace ME.Business
             if (!this.ProgramDefine.MasterTable.Fields.Contains(SysFields.ID)) return;
             var oFieldDefine = this.ProgramDefine.MasterTable.Fields[SysFields.ID];
 
-            foreach (var filterItem in filterItems)
+            foreach (GFilterItem filterItem in filterItems)
             {
                 if (StrFunc.SameText(filterItem.FieldName, SysFields.ID) && StrFunc.SameText(filterItem.FilterValue, "*"))
                 {

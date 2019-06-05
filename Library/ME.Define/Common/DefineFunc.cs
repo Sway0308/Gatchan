@@ -19,7 +19,7 @@ namespace ME.Define
         /// <returns></returns>
         public static IEnumerable<GDbTableDefine> ProgDefineToDbTableDefine(GProgramDefine progDefine)
         {
-            foreach (var tableDefine in progDefine.Tables)
+            foreach (GTableDefine tableDefine in progDefine.Tables)
             {
                 var dbDefine = new GDbTableDefine { TableName = tableDefine.TableName, DisplayName = tableDefine.DisplayName };
                 foreach (var field in tableDefine.Fields.Where(x => x.FieldType == Base.EFieldType.DataField))
@@ -62,7 +62,7 @@ namespace ME.Define
         public static DataTable CreateDataTable(GTableDefine tableDefine)
         {
             var helper = new GDataTableHelper(tableDefine.TableName);
-            foreach (var fieldDefine in tableDefine.Fields)
+            foreach (GFieldDefine fieldDefine in tableDefine.Fields)
                 helper.AddColumn(fieldDefine.FieldName, fieldDefine.DbType, GetDefaultValue(fieldDefine));
             return helper.DataTable;
         }

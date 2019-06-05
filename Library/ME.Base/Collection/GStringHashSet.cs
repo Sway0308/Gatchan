@@ -35,15 +35,13 @@ namespace ME.Base
         /// <param name="delimiter">分隔符號。</param>
         public string ToString(string delimiter)
         {
-            StringBuilder oBuffer;
-
-            oBuffer = new StringBuilder();
-            foreach (string item in this)
+            var buffer = new StringBuilder();
+            foreach (var item in this)
             {
-                if (oBuffer.Length > 0) { oBuffer.Append(delimiter); }
-                oBuffer.Append(item);
+                if (buffer.Length > 0) { buffer.Append(delimiter); }
+                buffer.Append(item);
             }
-            return oBuffer.ToString();
+            return buffer.ToString();
         }
 
         /// <summary>
@@ -52,8 +50,8 @@ namespace ME.Base
         /// <param name="array">字串陣列。</param>
         public void Add(string[] array)
         {
-            foreach (string sValue in array)
-                this.Add(sValue);
+            foreach (var value in array)
+                this.Add(value);
         }
 
         /// <summary>
@@ -63,12 +61,10 @@ namespace ME.Base
         /// <param name="delimiter">分隔符號。</param>
         public void Add(string s, string delimiter)
         {
-            string[] oValues;
-
             if (StrFunc.StrIsEmpty(s)) { return;  }
 
-            oValues = StrFunc.StrSplit(s, delimiter);
-            foreach (string value in oValues)
+            var values = StrFunc.StrSplit(s, delimiter);
+            foreach (var value in values)
             {
                 if (!this.Contains(value))
                     this.Add(value);

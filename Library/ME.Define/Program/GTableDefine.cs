@@ -12,6 +12,14 @@ namespace ME.Define
     public class GTableDefine : GKeyCollectionItem
     {
         /// <summary>
+        /// 建構函式
+        /// </summary>
+        public GTableDefine()
+        { 
+            this.Fields = new GFieldDefineCollection(this);
+        }
+
+        /// <summary>
         /// 資料表名稱
         /// </summary>
         public string TableName { get => this.Key; set => this.Key = value; }
@@ -30,7 +38,7 @@ namespace ME.Define
         /// <summary>
         /// 欄位集合
         /// </summary>
-        public GFieldDefineCollection Fields { get; } = new GFieldDefineCollection();
+        public GFieldDefineCollection Fields { get; }
         /// <summary>
         /// 商業邏輯載入物件型別
         /// </summary>

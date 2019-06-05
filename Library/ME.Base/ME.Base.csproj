@@ -51,6 +51,7 @@
     <Compile Include="Collection\GKeyCollectionItem.cs" />
     <Compile Include="Collection\GStringHashSet.cs" />
     <Compile Include="Common\DateFunc.cs" />
+    <Compile Include="Common\EncryptFunc.cs" />
     <Compile Include="Common\GAssemblyLoader.cs" />
     <Compile Include="Common\GDataTableHelper.cs" />
     <Compile Include="Common\GInstanceType.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Common\DbTypeConverter.cs" />
     <Compile Include="Common\ExtensionMethod.cs" />
     <Compile Include="Common\FileFunc.cs" />
+    <Compile Include="Common\MathFunc.cs" />
+    <Compile Include="Common\SerializeFunc.cs" />
     <Compile Include="Common\StrFunc.cs" />
     <Compile Include="Exception\GException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,8 +9,14 @@ namespace ME.Define
     /// <summary>
     /// 資料表定義集合
     /// </summary>
-    [Serializable]
     public class GTableDefineCollection : GKeyCollectionBase<GTableDefine>
     {
+        /// <summary>
+        /// 建構函式。
+        /// </summary>
+        /// <param name="programDefine">程式定義。</param>
+        public GTableDefineCollection(GProgramDefine programDefine)
+            : base(programDefine)
+        { }
     }
 }

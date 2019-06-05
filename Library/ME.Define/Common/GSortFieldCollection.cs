@@ -19,7 +19,7 @@ namespace ME.Define
         public string GetSortedText()
         {
             var result = "";
-            foreach (var f in this)
+            foreach (GSortField f in this)
             {
                 result += (StrFunc.StrIsNotEmpty(result) ? ", " : "") +
                     f.FieldName +

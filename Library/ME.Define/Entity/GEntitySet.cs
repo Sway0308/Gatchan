@@ -40,7 +40,7 @@ namespace ME.Define
         /// <param name="tables"></param>
         private void ConvertGTables(GInstanceType instanceType)
         {
-            foreach (var table in this.OriginalEntitySet.Tables)
+            foreach (GEntityTable table in this.OriginalEntitySet.Tables)
                 this.EntityTables.Add(new GEntityTable<T>(table, instanceType), table);
         }
     }
@@ -94,7 +94,7 @@ namespace ME.Define
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("Name：{0}, Count：{1}", this.DataSetName, this.Tables.Count());
+            return string.Format("Name：{0}, Count：{1}", this.DataSetName, this.Tables.Count);
         }
     }
 }

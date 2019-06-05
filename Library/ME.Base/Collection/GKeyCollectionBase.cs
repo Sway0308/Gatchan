@@ -12,6 +12,27 @@ namespace ME.Base
     public class GKeyCollectionBase<T> : List<T> where T : GKeyCollectionItem
     {
         /// <summary>
+        /// 建構函式
+        /// </summary>
+        public GKeyCollectionBase()
+        {
+        }
+
+        /// <summary>
+        /// 建構函式
+        /// </summary>
+        /// <param name="owner">擁有者</param>
+        public GKeyCollectionBase(object owner)
+        {
+            this.Owner = owner;
+        }
+
+        /// <summary>
+        /// 擁有者
+        /// </summary>
+        private object Owner { get; }
+
+        /// <summary>
         /// 傳回指定鍵值的快取資料。
         /// </summary>
         /// <param name="key">鍵值。</param>

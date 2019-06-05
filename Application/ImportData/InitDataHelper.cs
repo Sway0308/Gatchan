@@ -73,9 +73,9 @@ namespace ImportData
         private void InitProgSetting()
         {
             var progSetting = new GProgramSetting();
-            progSetting.Items.AddItem(new GProgramItem { ProgID = "Depart", DisplayName = "部門" });
-            progSetting.Items.AddItem(new GProgramItem { ProgID = "Duty", DisplayName = "職缺" });
-            progSetting.Items.AddItem(new GProgramItem { ProgID = "Employee", DisplayName = "員工" });
+            progSetting.Items.Add(new GProgramItem { ProgID = "Depart", DisplayName = "部門" });
+            progSetting.Items.Add(new GProgramItem { ProgID = "Duty", DisplayName = "職缺" });
+            progSetting.Items.Add(new GProgramItem { ProgID = "Employee", DisplayName = "員工" });
             ProgSettingToJson(progSetting);
         }
 
@@ -110,11 +110,11 @@ namespace ImportData
         {
             var progDefine = new GProgramDefine { ProgID = progID, DisplayName = displayName };
             var tableDefine = new GTableDefine { TableName = progID, DisplayName = displayName, DbTableName = progID, PrimaryKey = $"{progID}ID" };
-            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = SysFields.CompanyID, DisplayName = $"公司編號", MaxLength = 10 });
-            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = SysFields.ID, DisplayName = $"{displayName}編號", MaxLength = 10 });
-            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = SysFields.ViewID, DisplayName = $"{displayName}代碼", MaxLength = 10 });
-            tableDefine.Fields.AddItem(new GFieldDefine { FieldName = SysFields.Name, DisplayName = $"{displayName}名稱", MaxLength = 10 });
-            progDefine.Tables.AddItem(tableDefine);
+            tableDefine.Fields.Add(new GFieldDefine { FieldName = SysFields.CompanyID, DisplayName = $"公司編號", MaxLength = 10 });
+            tableDefine.Fields.Add(new GFieldDefine { FieldName = SysFields.ID, DisplayName = $"{displayName}編號", MaxLength = 10 });
+            tableDefine.Fields.Add(new GFieldDefine { FieldName = SysFields.ViewID, DisplayName = $"{displayName}代碼", MaxLength = 10 });
+            tableDefine.Fields.Add(new GFieldDefine { FieldName = SysFields.Name, DisplayName = $"{displayName}名稱", MaxLength = 10 });
+            progDefine.Tables.Add(tableDefine);
             return progDefine;
         }
 
@@ -130,12 +130,12 @@ namespace ImportData
             var linkDisplayName = linkProgDefine.DisplayName;
 
             var linkField = new GFieldDefine { FieldName = $"{linkProgID}ID", DisplayName = $"{linkDisplayName}編號", MaxLength = 10, LinkProgID = linkProgID };
-            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = SysFields.ID, DestField = $"{linkProgID}ID" });
-            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = SysFields.ViewID, DestField = $"TMP_{linkProgID}ID" });
-            linkField.LinkReturnFields.AddItem(new GLinkReturnField { SourceField = SysFields.Name, DestField = $"TMP_{linkProgID}Name" });
-            fields.AddItem(linkField);
-            fields.AddItem(new GFieldDefine { FieldName = $"TMP_{linkProgID}ID", DisplayName = $"{linkDisplayName}代碼", FieldType = EFieldType.LinkField, LinkFieldName = $"{linkProgID}ID" });
-            fields.AddItem(new GFieldDefine { FieldName = $"TMP_{linkProgID}Name", DisplayName = $"{linkDisplayName}名稱", FieldType = EFieldType.LinkField, LinkFieldName = $"{linkProgID}ID" });
+            linkField.LinkReturnFields.Add(new GLinkReturnField { SourceField = SysFields.ID, DestField = $"{linkProgID}ID" });
+            linkField.LinkReturnFields.Add(new GLinkReturnField { SourceField = SysFields.ViewID, DestField = $"TMP_{linkProgID}ID" });
+            linkField.LinkReturnFields.Add(new GLinkReturnField { SourceField = SysFields.Name, DestField = $"TMP_{linkProgID}Name" });
+            fields.Add(linkField);
+            fields.Add(new GFieldDefine { FieldName = $"TMP_{linkProgID}ID", DisplayName = $"{linkDisplayName}代碼", FieldType = EFieldType.LinkField, LinkFieldName = $"{linkProgID}ID" });
+            fields.Add(new GFieldDefine { FieldName = $"TMP_{linkProgID}Name", DisplayName = $"{linkDisplayName}名稱", FieldType = EFieldType.LinkField, LinkFieldName = $"{linkProgID}ID" });
         }
 
         /// <summary>

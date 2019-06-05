@@ -119,10 +119,10 @@ namespace ME.Database
                 // 加入取回欄位
                 useFieldSet.Add(this.SelectFields, ",");
                 // 加入篩選欄位
-                foreach (var filterItem in this.FilterItems)
+                foreach (GFilterItem filterItem in this.FilterItems)
                     useFieldSet.Add(filterItem.FieldName);
                 // 加入排序欄位
-                foreach (var sortField in this.SortFields)
+                foreach (GSortField sortField in this.SortFields)
                     useFieldSet.Add(sortField.FieldName);
             }
             return useFieldSet;
@@ -216,7 +216,7 @@ namespace ME.Database
         /// <param name="detailTableName">明細資料表名稱。</param>
         private void BuildTableJoins(GTableJoinProvider provider, GTableDefine tableDefine, GStringHashSet useFields, string detailTableName = "")
         {
-            foreach (var fieldDefine in tableDefine.Fields)
+            foreach (GFieldDefine fieldDefine in tableDefine.Fields)
             {
                 if (fieldDefine.FieldType == EFieldType.DataField && StrFunc.StrIsNotEmpty(fieldDefine.LinkProgID))
                 {

@@ -14,6 +14,14 @@ namespace ME.Define
     public class GProgramDefine : GKeyCollectionItem
     {
         /// <summary>
+        /// 建構函式
+        /// </summary>
+        public GProgramDefine()
+        {
+            this.Tables = new GTableDefineCollection(this);
+        }
+
+        /// <summary>
         /// 程式代碼
         /// </summary>
         public string ProgID { get => this.Key; set => this.Key = value; }
@@ -24,7 +32,7 @@ namespace ME.Define
         /// <summary>
         /// 資料表定義集合
         /// </summary>
-        public GTableDefineCollection Tables { get; } = new GTableDefineCollection();
+        public GTableDefineCollection Tables { get; }
         /// <summary>
         /// 主資料表定義
         /// </summary>
