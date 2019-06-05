@@ -2,6 +2,7 @@
   "TableName": "Employee",
   "Rows": [
     {
+      "RowState": 0,
       "Fields": {
         "SYS_COMPANYID": "SCS001",
         "SYS_ID": "C001",
@@ -16,6 +17,7 @@
       }
     },
     {
+      "RowState": 0,
       "Fields": {
         "SYS_COMPANYID": "SCS001",
         "SYS_ID": "C002",
@@ -30,6 +32,7 @@
       }
     },
     {
+      "RowState": 0,
       "Fields": {
         "SYS_COMPANYID": "SCS001",
         "SYS_ID": "C003",

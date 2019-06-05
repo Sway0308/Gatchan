@@ -57,6 +57,7 @@ namespace ME.Database
                 dbParams.Add(para.ParameterName, para.Value);
 
             var dt = new DataTable();
+            var row = dt.NewRow();
             dt.Load(this.SqlConnection(databaseID).ExecuteReader(command.CommandText, dbParams));
             return dt;
         }

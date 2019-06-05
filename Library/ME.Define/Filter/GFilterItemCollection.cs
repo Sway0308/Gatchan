@@ -74,14 +74,14 @@ namespace ME.Define
             if (BaseFunc.IsEmpty(items)) { return; }
 
             foreach (GFilterItem oItem in items)
-                AddItem(oItem);
+                Add(oItem);
         }
 
         /// <summary>
         /// 加入資料過濾條件項目。
         /// </summary>
         /// <param name="filterItem">資料過濾條件項目。</param>
-        public override void AddItem(GFilterItem filterItem)
+        public override void Add(GFilterItem filterItem)
         {
             string sFieldName, sFilterValue;
             ECombineOperator oCombine;

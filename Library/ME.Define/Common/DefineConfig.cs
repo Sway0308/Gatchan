@@ -313,4 +313,27 @@ namespace ME.Define
         /// </summary>
         Today
     }
+
+    /// <summary>
+    /// Entity 資料列狀態
+    /// </summary>
+    public enum EEntityRowState
+    {
+        /// <summary>
+        /// 新增
+        /// </summary>
+        Added = 0,
+        /// <summary>
+        /// 刪除
+        /// </summary>
+        Deleted = 1,
+        /// <summary>
+        /// 修改
+        /// </summary>
+        Modified = 2,
+        /// <summary>
+        /// 未變更
+        /// </summary>
+        Unchanged = 3
+    }
 }

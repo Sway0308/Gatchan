@@ -1,4 +1,5 @@
 ﻿using ME.Base;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -74,6 +75,12 @@ namespace ME.Define
             else
                 return null;
         }
+
+        /// <summary>
+        /// 程式定義。
+        /// </summary>
+        [JsonIgnore]
+        public GProgramDefine Table => ((GTableDefineCollection)this.Collection).Owner as GProgramDefine;
 
         /// <summary>
         /// 物件描述。

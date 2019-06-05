@@ -53,5 +53,11 @@ namespace ME.Define
         /// 關聯取回對象
         /// </summary>
         public GLinkReturnFieldCollection LinkReturnFields { get; } = new GLinkReturnFieldCollection();
+
+        /// <summary>
+        /// 資料表定義。
+        /// </summary>
+        [JsonIgnore]
+        public GTableDefine Table => ((GFieldDefineCollection)this.Collection).Owner as GTableDefine;
     }
 }

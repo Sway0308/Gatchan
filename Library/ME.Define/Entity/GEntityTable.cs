@@ -88,7 +88,7 @@ namespace ME.Define
         /// <summary>
         /// 資料列集合
         /// </summary>
-        public List<GEntityRow> Rows { get; } = new List<GEntityRow>();
+        public GEntityRowCollection Rows { get; } = new GEntityRowCollection();
 
         /// <summary>
         /// 將資料表轉為實體資料列集合

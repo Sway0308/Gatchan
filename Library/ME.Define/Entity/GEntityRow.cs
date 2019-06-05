@@ -16,12 +16,12 @@ namespace ME.Define
     /// <summary>
     /// Entity 資料列
     /// </summary>
-    public class GEntityRow// : IEntityRow
+    public class GEntityRow : GCollectionItem
     {
         /// <summary>
         /// 建構函式
         /// </summary>
-        public GEntityRow()
+        public GEntityRow() : base()
         {
             var props = this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
             foreach (var prop in props.Where(x => x.CanWrite))
@@ -32,7 +32,7 @@ namespace ME.Define
         /// 建構函式
         /// </summary>
         /// <param name="columns"></param>
-        public GEntityRow(DataColumnCollection columns) : base()
+        public GEntityRow(DataColumnCollection columns) : this()
         {
             foreach (DataColumn col in columns)
                 this.Fields.Add(col.ColumnName, col.DefaultValue);
@@ -42,11 +42,16 @@ namespace ME.Define
         /// 建構函式
         /// </summary>
         /// <param name="originalRow">欄位定義</param>
-        public GEntityRow(GEntityRow originalRow) : base()
+        public GEntityRow(GEntityRow originalRow) : this()
         {
             ImportFieldNames(originalRow);
             ImportFieldValues(originalRow);
         }
+
+        /// <summary>
+        /// 資料列狀態
+        /// </summary>
+        public EEntityRowState RowState { get; private set; }
 
         /// <summary>
         /// 屬性名稱集合
@@ -73,16 +78,25 @@ namespace ME.Define
         {
             get
             {
-                if (this.HasField(fieldName))
-                    return this.GetValue(fieldName);
-                throw new GException("No such field exists");
+                if (!this.HasField(fieldName))
+                    throw new GException("No such field exists");
+                return this.GetValue(fieldName);
             }
             set
             {
-                if (this.HasField(fieldName))
-                    this.SetValue(fieldName, value);
-                throw new GException("No such field exists");
+                if (!this.HasField(fieldName))
+                    throw new GException("No such field exists");
+                this.SetValue(fieldName, value);
             }
+        }
+
+        /// <summary>
+        /// 檢查資料列狀態
+        /// </summary>
+        private void CheckRowstate()
+        {
+            if (this.RowState == EEntityRowState.Deleted)
+                throw new GException("Can't read/get deleted row");
         }
 
         /// <summary>
@@ -91,7 +105,8 @@ namespace ME.Define
         /// <param name="fieldName">欄位名稱</param>
         /// <returns></returns>
         public object GetValue(string fieldName)
-        {            
+        {
+            CheckRowstate();
             var propInfo = this.PropNames.FirstOrDefault(x => x.Name.SameText(fieldName));
             if (propInfo != null)
                 return propInfo.GetValue(this);
@@ -108,14 +123,17 @@ namespace ME.Define
         /// <param name="value">欄位值</param>
         public void SetValue(string fieldName, object value)
         {
+            CheckRowstate();
+
+            if (!this.Fields.ContainsKey(fieldName))
+                throw new Exception("No such column exist");
+
+            this.Fields[fieldName] = value;
             var propInfo = this.PropNames.FirstOrDefault(x => x.Name.SameText(fieldName));
             if (propInfo != null)
                 propInfo.SetValue(this, value);
-
-            if (this.Fields.ContainsKey(fieldName))
-                this.Fields[fieldName] = value;
-            else
-                throw new Exception("No such column exist");
+            if (this.RowState == EEntityRowState.Unchanged)
+                SetRowState(EEntityRowState.Modified);
         }
 
         /// <summary>
@@ -164,6 +182,8 @@ namespace ME.Define
         {
             return this.FieldNames.Any(x => x.SameText(fieldName));
         }
+
+        #region 取值方法
 
         /// <summary>
         /// 取得欄位值後轉型成int
@@ -259,6 +279,44 @@ namespace ME.Define
             if (this.HasField(fieldName))
                 return BaseFunc.CGuid(this[fieldName]);
             return Guid.Empty;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 確認資料狀態變更邏輯
+        /// </summary>
+        /// <param name="newRowState"></param>
+        private void CheckNewRowState(EEntityRowState newRowState)
+        {
+            switch (this.RowState)
+            {
+                case EEntityRowState.Added:
+                    if (newRowState != EEntityRowState.Unchanged)
+                        throw new GException("Wrong RowState");
+                    break;
+                case EEntityRowState.Deleted:
+                    throw new GException("Wrong RowState");
+                case EEntityRowState.Modified:
+                    if (newRowState != EEntityRowState.Unchanged)
+                        throw new GException("Wrong RowState");
+                    break;
+                case EEntityRowState.Unchanged:
+                default:
+                    if (newRowState != EEntityRowState.Modified)
+                        throw new GException("Wrong RowState");
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 設定資料列狀態
+        /// </summary>
+        /// <param name="rowState"></param>
+        public void SetRowState(EEntityRowState rowState)
+        {
+            CheckNewRowState(rowState);
+            this.RowState = rowState;
         }
     }
 }

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 namespace ME.Define
 {
     /// <summary>
-    /// 文字項目集合
+    /// Entity 資料列集合
     /// </summary>
-    public class GTextItemCollection : GKeyCollectionBase<GTextItem>
+    public class GEntityRowCollection : GCollectionBase<GEntityRow>
     {
         /// <summary>
-        /// 加入文字項目
+        /// 移除事件
         /// </summary>
-        /// <param name="name"></param>
         /// <param name="value"></param>
-        public void AddItem(string name, string value)
+        protected override void OnRemove(ICollectionItem value)
         {
-            this.Add(new GTextItem(name, value));
+            (value as GEntityRow).SetRowState(EEntityRowState.Deleted);
+            base.OnRemove(value);
         }
     }
 }

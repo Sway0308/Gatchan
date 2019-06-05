@@ -18,7 +18,7 @@ namespace ME.Base
         /// <param name="value">參數值。</param>
         public void AddItem(string key, object value)
         {
-            this.AddItem(new GParameter(key, value));
+            this.Add(new GParameter(key, value));
         }
 
         /// <summary>

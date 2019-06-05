@@ -50,6 +50,8 @@
     <Compile Include="Collection\GKeyCollectionBase.cs" />
     <Compile Include="Collection\GKeyCollectionItem.cs" />
     <Compile Include="Collection\GStringHashSet.cs" />
+    <Compile Include="Collection\GCollectionBase.cs" />
+    <Compile Include="Collection\GCollectionItem.cs" />
     <Compile Include="Common\DateFunc.cs" />
     <Compile Include="Common\EncryptFunc.cs" />
     <Compile Include="Common\GAssemblyLoader.cs" />
@@ -70,6 +72,10 @@
     <Compile Include="Common\SerializeFunc.cs" />
     <Compile Include="Common\StrFunc.cs" />
     <Compile Include="Exception\GException.cs" />
+    <Compile Include="Interface\ICollectionBase.cs" />
+    <Compile Include="Interface\ICollectionItem.cs" />
+    <Compile Include="Interface\IKeyCollectionBase.cs" />
+    <Compile Include="Interface\IKeyCollectionItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
