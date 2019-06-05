@@ -16,7 +16,7 @@ namespace ME.Define
         /// 移除事件
         /// </summary>
         /// <param name="value"></param>
-        protected override void OnRemove(ICollectionItem value)
+        protected override void OnRemove(GEntityRow value)
         {
             (value as GEntityRow).SetRowState(EEntityRowState.Deleted);
             base.OnRemove(value);

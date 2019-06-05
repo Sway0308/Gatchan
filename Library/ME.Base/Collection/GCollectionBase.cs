@@ -65,7 +65,7 @@ namespace ME.Base
         /// Add 事件
         /// </summary>
         /// <param name="value"></param>
-        protected virtual void OnAdd(ICollectionItem value)
+        protected virtual void OnAdd(T value)
         {
 
         }
@@ -74,7 +74,7 @@ namespace ME.Base
         /// Remove 事件
         /// </summary>
         /// <param name="value"></param>
-        protected virtual void OnRemove(ICollectionItem value)
+        protected virtual void OnRemove(T value)
         {
 
         }
