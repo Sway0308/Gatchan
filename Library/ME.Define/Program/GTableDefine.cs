@@ -33,6 +33,10 @@ namespace ME.Define
         /// </summary>
         public string DisplayName { get; set; } = string.Empty;
         /// <summary>
+        /// Detail資料表對應Master資料表的主鍵欄位名稱，以逗點分隔多個欄位
+        /// </summary>
+        public string MasterKey { get; set; } = string.Empty;
+        /// <summary>
         /// 主索引鍵，以逗點分隔多個欄位名稱
         /// </summary>
         public string PrimaryKey { get; set; } = string.Empty;
@@ -49,6 +53,11 @@ namespace ME.Define
         /// 預設排序欄位集合。
         /// </summary>
         public GSortFieldCollection SortFields { get; set; } = new GSortFieldCollection();
+
+        /// <summary>
+        /// 資料過濾條件項目集合
+        /// </summary>
+        public GFilterItemCollection FilterItems { get; set; } = new GFilterItemCollection();
 
         /// <summary>
         /// Table主索引鍵，以逗點分隔多個欄位名稱。
@@ -80,7 +89,13 @@ namespace ME.Define
         /// 程式定義。
         /// </summary>
         [JsonIgnore]
-        public GProgramDefine Table => ((GTableDefineCollection)this.Collection).Owner as GProgramDefine;
+        public GProgramDefine ProgramDefine => ((GTableDefineCollection)this.Collection).Owner as GProgramDefine;
+
+        /// <summary>
+        /// 是否為主資料表
+        /// </summary>
+        [JsonIgnore]
+        public bool IsMaster => this.ProgramDefine.ProgID.SameText(this.TableName);
 
         /// <summary>
         /// 物件描述。

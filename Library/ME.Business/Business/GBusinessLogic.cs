@@ -239,7 +239,7 @@ namespace ME.Business
         {
             var selectArgs = new GSelectInputArgs { TableName = this.ProgID, SelectFields = inputArgs.SelectFields, FilterItems = inputArgs.FilterItems };
             var selectResult = Select(selectArgs);
-            outputResult.EntityTable = selectResult.EntityTable;
+            outputResult.EntityTable = selectResult.Table;
         }
 
         /// <summary>
@@ -291,10 +291,37 @@ namespace ME.Business
             outputResult.EntitySet = new GEntitySet(this.ProgID);
             foreach (var tableDefine in this.ProgramDefine.Tables)
             {
-                var selectArgs = new GSelectInputArgs { FilterItems = { new GFilterItem($"{this.ProgID}ID", inputArgs.FormID) } };
-                var selectResult = Select(selectArgs);
-                outputResult.EntitySet.Tables.Add(selectResult.EntityTable);
+                if (tableDefine.IsMaster)
+                {
+                    var selectArgs = new GSelectInputArgs { TableName = tableDefine.TableName, FilterItems = { new GFilterItem(SysFields.ID, inputArgs.FormID) } };
+                    var selectResult = Select(selectArgs);
+                    outputResult.EntitySet.Tables.Add(selectResult.Table);
+                }
+                else
+                {
+                    var selectArgs = new GSelectInputArgs { TableName = tableDefine.TableName, FilterItems = { new GFilterItem(SysFields.MasterID, inputArgs.FormID) } };
+                    var selectResult = Select(selectArgs);
+                    outputResult.EntitySet.Tables.Add(selectResult.Table);
+                }
             }
+        }
+
+        /// <summary>
+        /// 取得查詢資料
+        /// </summary>
+        /// <param name="tableDefine">資料表定義</param>
+        /// <param name="formID">單據編號</param>
+        /// <returns></returns>
+        private GEntityTable GetQueryTable(GTableDefine tableDefine, string formID)
+        {
+            var fieldName = tableDefine.IsMaster ? SysFields.ID : SysFields.MasterID;
+            var args = new GSelectInputArgs { TableName = tableDefine.TableName, FilterItems = { new GFilterItem(fieldName, formID) } };
+            foreach (var filterItem in tableDefine.FilterItems)
+            {
+                args.FilterItems.Add(filterItem.Clone());
+            }
+            var result = Select(args);
+            return result.Table;
         }
 
         /// <summary>
@@ -486,7 +513,7 @@ namespace ME.Business
 
             // 資料表同意變更，讓資料表無異動狀態
             oDataTable.AcceptChanges();
-            outputResult.EntityTable = new GEntityTable(oDataTable);
+            outputResult.Table = new GEntityTable(oDataTable);
         }
 
         /// <summary>

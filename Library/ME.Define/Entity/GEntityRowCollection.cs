@@ -21,5 +21,17 @@ namespace ME.Define
             (value as GEntityRow).SetRowState(EEntityRowState.Deleted);
             base.OnRemove(value);
         }
+
+        /// <summary>
+        /// 認可自上次對此資料表的所有變更
+        /// </summary>
+        public void AcceptChanges()
+        {
+            foreach (var row in this.Where(x => x.RowState == EEntityRowState.Deleted))
+                row.Remove();
+
+            foreach (var row in this)
+                row.SetRowState(EEntityRowState.Unchanged);
+        }
     }
 }

@@ -62,13 +62,13 @@ namespace ME.Define
         /// <summary>
         /// 欄位值集合
         /// </summary>
-        public GDictionary<object> Fields { get; } = new GDictionary<object>();
+        public GEntityFieldCollection Fields { get; } = new GEntityFieldCollection();
 
         /// <summary>
         /// 欄位名稱集合
         /// </summary>
         [JsonIgnore]
-        public IEnumerable<string> FieldNames => this.Fields.Keys.ToList();
+        public IEnumerable<string> FieldNames => this.Fields.Select(x => x.FieldName);
 
         /// <summary>
         /// 傳回指定鍵值的快取資料。
@@ -93,7 +93,7 @@ namespace ME.Define
         /// <summary>
         /// 檢查資料列狀態
         /// </summary>
-        private void CheckRowstate()
+        private void CheckRowState()
         {
             if (this.RowState == EEntityRowState.Deleted)
                 throw new GException("Can't read/get deleted row");
@@ -106,12 +106,12 @@ namespace ME.Define
         /// <returns></returns>
         public object GetValue(string fieldName)
         {
-            CheckRowstate();
+            CheckRowState();
             var propInfo = this.PropNames.FirstOrDefault(x => x.Name.SameText(fieldName));
             if (propInfo != null)
                 return propInfo.GetValue(this);
-            else if (this.Fields.ContainsKey(fieldName))
-                return this.Fields[fieldName];
+            else if (this.Fields.Contains(fieldName))
+                return this.Fields[fieldName].Value;
             else
                 throw new Exception("No such column exist");
         }
@@ -123,12 +123,12 @@ namespace ME.Define
         /// <param name="value">欄位值</param>
         public void SetValue(string fieldName, object value)
         {
-            CheckRowstate();
+            CheckRowState();
 
-            if (!this.Fields.ContainsKey(fieldName))
+            if (!this.Fields.Contains(fieldName))
                 throw new Exception("No such column exist");
 
-            this.Fields[fieldName] = value;
+            this.Fields[fieldName].SetValue(value);
             var propInfo = this.PropNames.FirstOrDefault(x => x.Name.SameText(fieldName));
             if (propInfo != null)
                 propInfo.SetValue(this, value);
@@ -303,7 +303,7 @@ namespace ME.Define
                     break;
                 case EEntityRowState.Unchanged:
                 default:
-                    if (newRowState != EEntityRowState.Modified)
+                    if (newRowState != EEntityRowState.Modified || newRowState != EEntityRowState.Unchanged)
                         throw new GException("Wrong RowState");
                     break;
             }

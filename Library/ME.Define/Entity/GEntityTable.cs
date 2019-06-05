@@ -77,7 +77,7 @@ namespace ME.Define
         public GEntityTable(DataTable table) : base()
         {
             this.TableName = table.TableName;
-            ConvertTabletoEntity(table);
+            ConvertTableToEntity(table);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace ME.Define
         /// 將資料表轉為實體資料列集合
         /// </summary>
         /// <param name="table"></param>
-        public void ConvertTabletoEntity(DataTable table)
+        public void ConvertTableToEntity(DataTable table)
         {
             foreach (DataRow row in table.Rows)
             {

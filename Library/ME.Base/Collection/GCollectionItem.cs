@@ -33,6 +33,15 @@ namespace ME.Base
             Collection = collection;
         }
 
+        /// <summary>
+        /// 移除成員
+        /// </summary>
+        public void Remove()
+        {
+            if (Collection != null)
+                Collection.Remove(this);
+        }
+
         #endregion
 
         /// <summary>

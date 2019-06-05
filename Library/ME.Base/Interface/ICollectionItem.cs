@@ -8,7 +8,7 @@
         /// <summary>
         /// 由集合中移除此成員。
         /// </summary>
-        //void Remove();
+        void Remove();
 
         /// <summary>
         /// 設定所屬集合。

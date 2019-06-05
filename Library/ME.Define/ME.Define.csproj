@@ -74,6 +74,8 @@
     <Compile Include="DbTable\GDbFieldDefine.cs" />
     <Compile Include="DbTable\GDbFieldDefineCollection.cs" />
     <Compile Include="DbTable\GDbTableDefine.cs" />
+    <Compile Include="Entity\GEntityField.cs" />
+    <Compile Include="Entity\GEntityFieldCollection.cs" />
     <Compile Include="Entity\GEntityRow.cs" />
     <Compile Include="Entity\GEntityRowCollection.cs" />
     <Compile Include="Entity\GEntitySet.cs" />

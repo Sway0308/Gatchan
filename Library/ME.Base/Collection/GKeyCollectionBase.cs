@@ -38,7 +38,7 @@ namespace ME.Base
         /// 傳回指定鍵值的快取資料。
         /// </summary>
         /// <param name="key">鍵值。</param>
-        public T this[string key]
+        public virtual T this[string key]
         {
             get
             {

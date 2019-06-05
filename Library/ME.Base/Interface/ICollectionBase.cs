@@ -6,6 +6,12 @@
     public interface ICollectionBase
     {
         /// <summary>
+        /// 移除成員。
+        /// </summary>
+        /// <param name="value">成員。</param>
+        void Remove(ICollectionItem value);
+
+        /// <summary>
         /// 依索引取得成員。
         /// </summary>
         /// <param name="index">索引。</param>

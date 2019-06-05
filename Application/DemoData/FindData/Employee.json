@@ -3,48 +3,168 @@
   "Rows": [
     {
       "RowState": 0,
-      "Fields": {
-        "SYS_COMPANYID": "SCS001",
-        "SYS_ID": "C001",
-        "SYS_VIEWID": "0183",
-        "SYS_NAME": "John",
-        "DEPARTID": "A002",
-        "TMP_DEPARTID": null,
-        "TMP_DEPARTNAME": null,
-        "DUTYID": "B001",
-        "TMP_DUTYID": null,
-        "TMP_DUTYNAME": null
-      }
+      "Fields": [
+        {
+          "FieldName": "SYS_COMPANYID",
+          "OriginalValue": "",
+          "Value": "SCS001"
+        },
+        {
+          "FieldName": "SYS_ID",
+          "OriginalValue": "",
+          "Value": "C001"
+        },
+        {
+          "FieldName": "SYS_VIEWID",
+          "OriginalValue": "",
+          "Value": "0183"
+        },
+        {
+          "FieldName": "SYS_NAME",
+          "OriginalValue": "",
+          "Value": "John"
+        },
+        {
+          "FieldName": "DEPARTID",
+          "OriginalValue": "",
+          "Value": "A002"
+        },
+        {
+          "FieldName": "TMP_DEPARTID",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "TMP_DEPARTNAME",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "DUTYID",
+          "OriginalValue": "",
+          "Value": "B001"
+        },
+        {
+          "FieldName": "TMP_DUTYID",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "TMP_DUTYNAME",
+          "OriginalValue": "",
+          "Value": null
+        }
+      ]
     },
     {
       "RowState": 0,
-      "Fields": {
-        "SYS_COMPANYID": "SCS001",
-        "SYS_ID": "C002",
-        "SYS_VIEWID": "0211",
-        "SYS_NAME": "Bob",
-        "DEPARTID": "A001",
-        "TMP_DEPARTID": null,
-        "TMP_DEPARTNAME": null,
-        "DUTYID": "B003",
-        "TMP_DUTYID": null,
-        "TMP_DUTYNAME": null
-      }
+      "Fields": [
+        {
+          "FieldName": "SYS_COMPANYID",
+          "OriginalValue": "",
+          "Value": "SCS001"
+        },
+        {
+          "FieldName": "SYS_ID",
+          "OriginalValue": "",
+          "Value": "C002"
+        },
+        {
+          "FieldName": "SYS_VIEWID",
+          "OriginalValue": "",
+          "Value": "0211"
+        },
+        {
+          "FieldName": "SYS_NAME",
+          "OriginalValue": "",
+          "Value": "Bob"
+        },
+        {
+          "FieldName": "DEPARTID",
+          "OriginalValue": "",
+          "Value": "A001"
+        },
+        {
+          "FieldName": "TMP_DEPARTID",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "TMP_DEPARTNAME",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "DUTYID",
+          "OriginalValue": "",
+          "Value": "B003"
+        },
+        {
+          "FieldName": "TMP_DUTYID",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "TMP_DUTYNAME",
+          "OriginalValue": "",
+          "Value": null
+        }
+      ]
     },
     {
       "RowState": 0,
-      "Fields": {
-        "SYS_COMPANYID": "SCS001",
-        "SYS_ID": "C003",
-        "SYS_VIEWID": "0349",
-        "SYS_NAME": "Elisa",
-        "DEPARTID": "A003",
-        "TMP_DEPARTID": null,
-        "TMP_DEPARTNAME": null,
-        "DUTYID": "B001",
-        "TMP_DUTYID": null,
-        "TMP_DUTYNAME": null
-      }
+      "Fields": [
+        {
+          "FieldName": "SYS_COMPANYID",
+          "OriginalValue": "",
+          "Value": "SCS001"
+        },
+        {
+          "FieldName": "SYS_ID",
+          "OriginalValue": "",
+          "Value": "C003"
+        },
+        {
+          "FieldName": "SYS_VIEWID",
+          "OriginalValue": "",
+          "Value": "0349"
+        },
+        {
+          "FieldName": "SYS_NAME",
+          "OriginalValue": "",
+          "Value": "Elisa"
+        },
+        {
+          "FieldName": "DEPARTID",
+          "OriginalValue": "",
+          "Value": "A003"
+        },
+        {
+          "FieldName": "TMP_DEPARTID",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "TMP_DEPARTNAME",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "DUTYID",
+          "OriginalValue": "",
+          "Value": "B001"
+        },
+        {
+          "FieldName": "TMP_DUTYID",
+          "OriginalValue": "",
+          "Value": null
+        },
+        {
+          "FieldName": "TMP_DUTYNAME",
+          "OriginalValue": "",
+          "Value": null
+        }
+      ]
     }
   ]
 }

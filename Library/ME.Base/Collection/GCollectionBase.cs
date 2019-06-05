@@ -42,6 +42,15 @@ namespace ME.Base
         }
 
         /// <summary>
+        /// 移除成員
+        /// </summary>
+        /// <param name="item">成員。</param>
+        public void Remove(ICollectionItem item)
+        {
+            this.Remove((T)item);
+        }
+
+        /// <summary>
         /// 移除成員。
         /// </summary>
         /// <param name="item"></param>
@@ -58,6 +67,7 @@ namespace ME.Base
         public new virtual void Add(T item)
         {
             OnAdd(item);
+            item.SetCollection(this);
             base.Add(item);
         }
 

@@ -15,6 +15,6 @@ namespace ME.Define
         /// <summary>
         /// Entity 資料表
         /// </summary>
-        public GEntityTable EntityTable { get; set; }
+        public GEntityTable Table { get; set; }
     }
 }
