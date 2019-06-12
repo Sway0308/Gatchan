@@ -11,8 +11,16 @@ namespace ME.Define
     public class GProgramSetting
     {
         /// <summary>
-        /// 程式項目集合
+        /// 系統代號
         /// </summary>
-        public GProgramItemCollection Items { get; } = new GProgramItemCollection();
+        public string SystemID { get; set; }
+        /// <summary>
+        /// 顯示名稱
+        /// </summary>
+        public string DisplayName { get; set; }
+        /// <summary>
+        /// 程式模組別集合
+        /// </summary>
+        public GProgramModuleCollection Modules { get; } = new GProgramModuleCollection();
     }
 }

@@ -2,6 +2,8 @@
 using ME.Define;
 using System;
 using System.Configuration;
+using System.IO;
+using System.Linq;
 
 namespace ME.Cahce
 {
@@ -14,33 +16,6 @@ namespace ME.Cahce
         /// 快取暫存器
         /// </summary>
         private static GItemKeeper CacheKeeper { get; } = new GItemKeeper();
-
-        /// <summary>
-        /// 取得應用程式資料路徑，伺服端及用戶端應用程式皆適用。
-        /// </summary>
-        /// <remarks>
-        /// 1. 先判斷 BaseInfo.AppDataPath 是否有自訂應用程式資料路徑。
-        /// 2. 上一條件不符合，再判斷應用程式組態檔的 AppSettings 區段是是有設定 AppDataPath。
-        /// 3. 上一條件不符合，則預設置於 "應用程式 App_Data 的資料夾下。
-        /// </remarks>
-        public static string GetAppDataPath()
-        {
-            // 1. 先判斷 BaseInfo.AppDataPath 是否有自訂應用程式資料路徑
-            if (StrFunc.StrIsNotEmpty(BaseInfo.AppDataPath))
-                return BaseInfo.AppDataPath;
-
-            // 2. 上一條件不符合，再判斷應用程式組態檔的 AppSettings 區段是是有設定 AppDataPath
-            var appDataPath = ConfigurationManager.AppSettings["AppDataPath"];
-            if (StrFunc.StrIsNotEmpty(appDataPath))
-            {
-                BaseInfo.AppDataPath = appDataPath;
-                return BaseInfo.AppDataPath;
-            }
-
-            // 3. 上一條件不符合，則預設置於 "應用程式 App_Data 的資料夾下
-            BaseInfo.AppDataPath = FileFunc.GetAppPath("App_Data");
-            return BaseInfo.AppDataPath;
-        }
 
         /// <summary>
         /// json檔案轉型為定義
@@ -60,13 +35,15 @@ namespace ME.Cahce
         /// <param name="systemID"></param>
         /// <param name="progID"></param>
         /// <returns></returns>
-        public static GProgramDefine GetProgramDefine(string systemID, string progID)
+        public static GProgramDefine GetProgramDefine(string progID)
         {
-            return CacheKeeper.GetItem<GProgramDefine>(progID, () => {
-                var programDefinePath = FileFunc.PathCombine(GetAppDataPath(), $@"Common\{systemID}\ProgramDefine");
-                var filePath = FileFunc.PathCombine(programDefinePath, $"{progID}.ProgramDefine.json");
-                return ConvertToDefine<GProgramDefine>(filePath);
-            });
+            var systemID = CacheKeeper.GetItem<string>(progID);
+            if (systemID.IsEmpty())
+                throw new GException($"No such ProgID:{progID} exists");
+
+            return CacheKeeper.GetItem<GProgramDefine>(progID, () => 
+                ConvertToDefine<GProgramDefine>(SysDefineSettingName.ProgramDefinePath(systemID, progID))
+            );
         }
 
         /// <summary>
@@ -75,8 +52,7 @@ namespace ME.Cahce
         /// <returns></returns>
         public static GDatabaseSettings GetDatabaseSettings()
         {
-            var filePath = FileFunc.PathCombine(GetAppDataPath(), "DatabaseSettings.json");
-            return ConvertToDefine<GDatabaseSettings>(filePath);
+            return ConvertToDefine<GDatabaseSettings>(SysDefineSettingName.DbSettingPath);
         }
 
         /// <summary>
@@ -86,12 +62,75 @@ namespace ME.Cahce
         /// <returns></returns>
         public static GProgramSetting GetProgramSetting(string systemID)
         {
-            return CacheKeeper.GetItem<GProgramSetting>(systemID, () => {
-                var modulePath = FileFunc.PathCombine(GetAppDataPath(), $@"Common\{systemID}");
-                var filePath = FileFunc.PathCombine(modulePath, "ProgramSetting.json");
-                return ConvertToDefine<GProgramSetting>(filePath);
-            });
+            var result = CacheKeeper.GetItem<GProgramSetting>(systemID);
+            if (result != null)
+                return result;
 
+            ExtractProgramSetting();
+            return CacheKeeper.GetItem<GProgramSetting>(systemID);
+        }
+
+        /// <summary>
+        /// 取得程式項目
+        /// </summary>
+        /// <param name="progID"></param>
+        /// <returns></returns>
+        public static GProgramItem GetProgramItem(string progID)
+        {
+            var result = CacheKeeper.GetItem<GProgramItem>(progID);
+            if (result != null)
+                return result;
+
+            return CacheKeeper.GetItem<GProgramItem>(progID);
+        }
+
+        /// <summary>
+        /// 產開程式設定
+        /// </summary>
+        private static void ExtractProgramSetting()
+        {
+            var progSettings = from f in Directory.EnumerateFiles(SysDefineSettingName.SystemPath, SysDefineSettingName.ProgramSettingName, SearchOption.AllDirectories)
+                               select new { Setting = BaseFunc.JsonToObject<GProgramSetting>(FileFunc.FileReadAllText(f)) };
+            foreach (var set in progSettings)
+            {
+                var currSystemID = set.Setting.SystemID;
+
+                if (!CacheKeeper.HasItem<GProgramSetting>(currSystemID))
+                {
+                    CacheKeeper.AddItem(currSystemID, set.Setting);
+                    ExtractProgramSetting(set.Setting);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 展開程式設定的程式項目，快取到快取暫存器
+        /// </summary>
+        /// <param name="progSetting"></param>
+        private static void ExtractProgramSetting(GProgramSetting progSetting)
+        {
+            var systemID = progSetting.SystemID;
+            foreach (var module in progSetting.Modules)
+            {
+                foreach (var category in module.Categories)
+                    CacheProgramItem(systemID, category.Items);
+
+                CacheProgramItem(systemID, module.Items);
+            }
+        }
+
+        /// <summary>
+        /// 將程式項目快取到快取暫存器
+        /// </summary>
+        /// <param name="systemID"></param>
+        /// <param name="progItems"></param>
+        private static void CacheProgramItem(string systemID, GProgramItemCollection progItems)
+        {
+            foreach (var progItem in progItems)
+            {
+                CacheKeeper.AddItem(progItem.ProgID, systemID);
+                CacheKeeper.AddItem(progItem.ProgID, progItem);
+            }
         }
 
         /// <summary>

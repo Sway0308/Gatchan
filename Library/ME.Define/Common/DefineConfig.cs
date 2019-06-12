@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ME.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -250,6 +251,57 @@ namespace ME.Define
         /// 是否有該筆資料的刪除權限，虛擬欄位。
         /// </summary>
         public const string DeletePermission = "SYS_DeletePermission";
+    }
+
+    /// <summary>
+    /// 系統設定檔案名稱
+    /// </summary>
+    public class SysDefineSettingName
+    {
+        /// <summary>
+        /// 設定檔名稱
+        /// </summary>
+        public const string Setting = "setting.json";
+        /// <summary>
+        /// 定義檔存放路徑
+        /// </summary>
+        public const string APP_Data = "APP_Data";
+        /// <summary>
+        /// 資料庫連線定義檔案名稱
+        /// </summary>
+        public const string DbSettingName = "DatabaseSettings.json";
+        /// <summary>
+        /// 資料庫連線定義檔案路徑
+        /// </summary>
+        public static string DbSettingPath => FileFunc.PathCombine(BaseInfo.AppDataPath, DbSettingName);
+        /// <summary>
+        /// 程式定義檔案名稱
+        /// </summary>
+        public const string ProgramDefineName = "ProgramDefine.json";
+        /// <summary>
+        /// 程式定義檔案路徑
+        /// </summary>
+        /// <param name="systemID">系統編號</param>
+        /// <param name="progID">程式編號</param>
+        /// <returns></returns>
+        public static string ProgramDefinePath(string systemID, string progID) 
+            => FileFunc.PathCombine(SystemPath, $@"{systemID}\ProgramDefine\{progID}.{ProgramDefineName}");
+        /// <summary>
+        /// 程式設定檔案名稱
+        /// </summary>
+        public const string ProgramSettingName = "ProgramSetting.json";
+        /// <summary>
+        /// 系統資料夾
+        /// </summary>
+        public static string SystemPath => FileFunc.PathCombine(BaseInfo.AppDataPath, "Common");
+        /// <summary>
+        /// 程式設定檔案路徑
+        /// </summary>
+        /// <param name="systemID">系統編號</param>
+        /// <returns></returns>
+        public static string ProgramSettingPath(string systemID) 
+            => FileFunc.PathCombine(BaseInfo.AppDataPath, $@"Common\{systemID}\{ProgramSettingName}");
+
     }
 
     /// <summary>

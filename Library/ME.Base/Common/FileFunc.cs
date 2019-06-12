@@ -15,6 +15,100 @@ namespace ME.Base
     public class FileFunc
     {
         /// <summary>
+        /// 判斷指定檔案是否存在。
+        /// </summary>
+        /// <param name="dirPath">要檢查的檔案。</param>
+        /// <param name="fileName">檔案名稱</param>
+        public static bool FileExists(string dirPath, string fileName)
+        {
+            var filePath = PathCombine(dirPath, fileName);
+            return System.IO.File.Exists(filePath);
+        }
+
+        /// <summary>
+        /// 判斷指定檔案是否存在。
+        /// </summary>
+        /// <param name="path">要檢查的檔案。</param>
+        public static bool FileExists(string path)
+        {
+            return System.IO.File.Exists(path);
+        }
+
+        /// <summary>
+        /// 檔案複製。
+        /// </summary>
+        /// <param name="sourceFileName">來源檔案。</param>
+        /// <param name="destFileName">目的檔案。</param>
+        public static void FileCopy(string sourceFileName, string destFileName)
+        {
+            // 確認目的資料夾是否存在
+            DirectoryCheck(destFileName, true);
+            // 執行檔案複製
+            System.IO.File.Copy(sourceFileName, destFileName);
+        }
+
+        /// <summary>
+        /// 檔案複製。
+        /// </summary>
+        /// <param name="sourceFileName">來源檔案。</param>
+        /// <param name="destFileName">目的檔案。</param>
+        /// <param name="overwrite">是否允許覆寫目的檔案。</param>
+        public static void FileCopy(string sourceFileName, string destFileName, bool overwrite)
+        {
+            // 確認目的資料夾是否存在
+            DirectoryCheck(destFileName, true);
+            // 執行檔案複製
+            System.IO.File.Copy(sourceFileName, destFileName, overwrite);
+        }
+
+        /// <summary>
+        /// 判斷目錄是否存在，不存在則建立。
+        /// </summary>
+        /// <param name="path">要檢查的路徑。</param>
+        /// <param name="isFilePath">是否為檔案路徑。</param>
+        public static void DirectoryCheck(string path, bool isFilePath = false)
+        {
+            string sPath;
+
+            // 若路徑有包含檔案(路徑有副檔名)，則取檔案所在的資料夾路徑
+            if (isFilePath || System.IO.Path.HasExtension(path))
+                sPath = GetDirectoryName(path);
+            else
+                sPath = path;
+
+            if (!DirectoryExists(sPath))
+                DirectoryCreate(sPath);
+        }
+
+        /// <summary>
+        /// 判斷目錄是否存在。
+        /// </summary>
+        /// <param name="path">要檢查的目錄。</param>
+        public static bool DirectoryExists(string path)
+        {
+            return Directory.Exists(path);
+        }
+
+        /// <summary>
+        /// 建立指定路徑的所有目錄及子目錄。
+        /// </summary>
+        /// <param name="path">目錄路徑。</param>
+        public static void DirectoryCreate(string path)
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        /// <summary>
+        /// 檔案刪除。
+        /// </summary>
+        /// <param name="filePath">檔案路徑。</param>
+        public static void FileDelele(string filePath)
+        {
+            if (FileFunc.FileExists(filePath))
+                System.IO.File.Delete(filePath);
+        }
+
+        /// <summary>
         /// 取得應用程式根目錄的路徑。
         /// </summary>
         public static string GetAppPath()

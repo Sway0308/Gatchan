@@ -244,7 +244,7 @@ namespace ME.Database
         private void BuildTableJoin(string key, GTableJoinProvider provider, GFieldDefine fieldDefine, GStringHashSet returnFields, string leftTableAlias, string detailTableName, string destFieldName = "")
         {
             // 取得關連程式定義
-            var programDefine = CacheFunc.GetProgramDefine("", fieldDefine.LinkProgID);
+            var programDefine = CacheFunc.GetProgramDefine(fieldDefine.LinkProgID);
             if (BaseFunc.IsNull(programDefine))
                 throw new GException("'{0}' ProgramDefine not found", fieldDefine.LinkProgID);
 

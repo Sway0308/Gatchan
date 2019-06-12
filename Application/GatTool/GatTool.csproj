@@ -4,17 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C159065-F612-47C3-9840-91EAFFD5DA1D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ME.Database</RootNamespace>
-    <AssemblyName>ME.Database</AssemblyName>
+    <ProjectGuid>{EC6EFCE4-4DEB-4CD5-8CF8-7C714A99DC8A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GatTool</RootNamespace>
+    <AssemblyName>GatTool</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,9 +22,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,12 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,47 +46,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\DatabaseConfig.cs" />
-    <Compile Include="Common\DatabaseFunc.cs" />
-    <Compile Include="Common\GDbAccess.cs" />
-    <Compile Include="DbCommand\GBaseDbCommandBuilder.cs" />
-    <Compile Include="DbCommand\GFilterInputArgs.cs" />
-    <Compile Include="DbCommand\GOracleCommandBuilder.cs" />
-    <Compile Include="DbCommand\GSqlCommandBuilder.cs" />
-    <Compile Include="DbCommand\GVirtualFieldBuilder.cs" />
-    <Compile Include="FilterBuilder\GFilterBuilder.cs" />
-    <Compile Include="Init\GDbSettingHelper.cs" />
-    <Compile Include="Helper\GBaseDbCommandHelper.cs" />
-    <Compile Include="Helper\GOracleCommandHelper.cs" />
-    <Compile Include="Helper\GSqlCommandHelper.cs" />
-    <Compile Include="Interface\IDbCommandBuilder.cs" />
-    <Compile Include="Interface\IDbCommandHelper.cs" />
-    <Compile Include="Interface\IFilterBuilder.cs" />
+    <Compile Include="Helper\DbSettingHelper.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableJoin\GLinkFieldMapping.cs" />
-    <Compile Include="TableJoin\GLinkFieldMappingCollection.cs" />
-    <Compile Include="TableJoin\GTableJoin.cs" />
-    <Compile Include="TableJoin\GTableJoinBuilder.cs" />
-    <Compile Include="TableJoin\GTableJoinProvider.cs" />
-    <Compile Include="TableJoin\GTableJoinCollection.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ME.Base\ME.Base.csproj">
+    <ProjectReference Include="..\..\Library\ME.Base\ME.Base.csproj">
       <Project>{bd976132-c4c1-4289-bb59-ad4a3d53a641}</Project>
       <Name>ME.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ME.Cahce\ME.Cahce.csproj">
+    <ProjectReference Include="..\..\Library\ME.Business\ME.Business.csproj">
+      <Project>{4982b085-a03e-43ed-b752-a6841c13699d}</Project>
+      <Name>ME.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\ME.Cahce\ME.Cahce.csproj">
       <Project>{0fc476fd-16dc-4f5f-b1e6-8da85fc3c043}</Project>
       <Name>ME.Cahce</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ME.Define\ME.Define.csproj">
+    <ProjectReference Include="..\..\Library\ME.Database\ME.Database.csproj">
+      <Project>{5c159065-f612-47c3-9840-91eaffd5da1d}</Project>
+      <Name>ME.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\ME.Define\ME.Define.csproj">
       <Project>{f2d37dc0-e623-4240-b677-d252a77e12be}</Project>
       <Name>ME.Define</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

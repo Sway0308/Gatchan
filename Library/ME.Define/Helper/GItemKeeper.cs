@@ -17,7 +17,6 @@ namespace ME.Define
         /// <summary>
         /// 建構函式
         /// </summary>
-        /// <param name="sessionGuid"></param>
         public GItemKeeper()
         {
         }

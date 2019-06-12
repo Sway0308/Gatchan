@@ -23,8 +23,7 @@ namespace ME.Business
         /// <returns></returns>
         public static IBusinessLogic CreateBusinessLogic(Guid sessionGuid, string progID)
         {
-            var progSetting = CacheFunc.GetProgramSetting("HUM");
-            var progItem = progSetting.Items[progID];
+            var progItem = CacheFunc.GetProgramItem(progID);
             if (progItem.BusinessInstanceType.IsEmpty)
                 return new GBusinessLogic(sessionGuid, progID);
             else
@@ -39,7 +38,7 @@ namespace ME.Business
         /// <returns></returns>
         public static GEntityRow CreateEntityRow(string progID, string tableName)
         {
-            var progDefine = CacheFunc.GetProgramDefine("HUM", progID);
+            var progDefine = CacheFunc.GetProgramDefine(progID);
             var tableDefine = progDefine.Tables[tableName];
             if (tableDefine.EntityInstanceType.IsEmpty)
                 return new GEntityRow();

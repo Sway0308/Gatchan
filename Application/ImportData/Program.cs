@@ -19,13 +19,13 @@ namespace ImportData
         private static void ReSaveProgramDefine()
         {
             var helper = new InitDataHelper();
-            var pd = CacheFunc.GetProgramDefine("HUM", "SalaryAccount");
+            var pd = CacheFunc.GetProgramDefine("SalaryAccount");
             helper.ProgDefineToJson(pd);
-            pd = CacheFunc.GetProgramDefine("HUM", "SalaryAccountCategory");
+            pd = CacheFunc.GetProgramDefine("SalaryAccountCategory");
             helper.ProgDefineToJson(pd);
-            pd = CacheFunc.GetProgramDefine("HUM", "SalaryAccountForSalaryRange");
+            pd = CacheFunc.GetProgramDefine("SalaryAccountForSalaryRange");
             helper.ProgDefineToJson(pd);
-            pd = CacheFunc.GetProgramDefine("HUM", "SalaryRange");
+            pd = CacheFunc.GetProgramDefine("SalaryRange");
             helper.ProgDefineToJson(pd);
         }
 

@@ -20,7 +20,7 @@ namespace ME.Business
         public GBaseBusinessLogic(Guid sessionGuid, string progID) : base(sessionGuid)
         {
             this.ProgID = progID;
-            this.ProgramDefine = CacheFunc.GetProgramDefine("HUM", this.ProgID);
+            this.ProgramDefine = CacheFunc.GetProgramDefine(this.ProgID);
         }
 
         /// <summary>
