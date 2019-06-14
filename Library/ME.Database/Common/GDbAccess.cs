@@ -6,6 +6,10 @@ using Dapper;
 using System.Data;
 using ME.Define;
 using System.Data.Common;
+using System.Transactions;
+using ME.Cahce;
+using ME.Base;
+using System.Linq;
 
 namespace ME.Database
 {
@@ -92,6 +96,65 @@ namespace ME.Database
         public int ExecuteNonQuery(string databaseID, string sql)
         {
             return this.SqlConnection(databaseID).Execute(sql);
+        }
+
+        /// <summary>
+        /// 使用SqlBulkCopy大量新增資料
+        /// </summary>
+        /// <param name="databaseID">資料庫編號</param>
+        /// <param name="progID">程式定義代碼</param>
+        /// <param name="dataSet">資料集</param>
+        public void SqlBulkCopy(string databaseID, string progID, DataSet dataSet)
+        {
+            foreach (DataTable table in dataSet.Tables)
+                SqlBulkCopy(databaseID, progID, table.TableName, table);
+        }
+
+        /// <summary>
+        /// 使用SqlBulkCopy大量新增資料
+        /// </summary>
+        /// <param name="databaseID">資料庫編號</param>
+        /// <param name="progID">程式定義代碼</param>
+        /// <param name="tableName">資料定義代碼</param>
+        /// <param name="table">資料表</param>
+        public void SqlBulkCopy(string databaseID, string progID, string tableName, DataTable table)
+        {
+            var progDefine = CacheFunc.GetProgramDefine(progID);
+            var tableDefine = progDefine.Tables[tableName];
+            if (tableDefine == null || !tableDefine.IsCreateDbTable || DataFunc.IsEmpty(table))
+                return;
+            var sqlBulkCopy = CreateSqlBulkCopy(databaseID, tableDefine, table);
+            SqlBulkCopy(sqlBulkCopy, table);
+        }
+
+        /// <summary>
+        /// 產生SqlBulkCopy
+        /// </summary>
+        /// <param name="databaseID">資料庫編號</param>
+        /// <param name="tableDefine">資料表定義</param>
+        /// <param name="table">資料表</param>
+        /// <returns></returns>
+        private SqlBulkCopy CreateSqlBulkCopy(string databaseID, GTableDefine tableDefine, DataTable table)
+        {
+            var sqlBulkCopy = new SqlBulkCopy(this.SqlConnection(databaseID)) { DestinationTableName = tableDefine.DbTableName };
+            foreach (var fieldDefine in tableDefine.Fields.Where(x => DataFunc.HasField(table, x.FieldName)))
+                sqlBulkCopy.ColumnMappings.Add(fieldDefine.FieldName, fieldDefine.DbFieldName);
+            return sqlBulkCopy;
+        }
+
+        /// <summary>
+        /// 使用SqlBulkCopy大量新增資料
+        /// </summary>
+        /// <param name="sqlBulkCopy"></param>
+        /// <param name="table">資料表</param>
+        private void SqlBulkCopy(SqlBulkCopy sqlBulkCopy, DataTable table)
+        {
+            using (var tx = new TransactionScope())
+            {
+                sqlBulkCopy.WriteToServer(table);
+                sqlBulkCopy.Close();
+                tx.Complete();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ME.Base;
 using ME.Database;
+using ME.Define;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,8 @@ namespace GatTool
                     Delete();
                 else
                     Console.WriteLine("No idea what you want me to do?");
+
+                Console.WriteLine();
             }
         }
 
@@ -62,7 +65,47 @@ namespace GatTool
         /// 新增
         /// </summary>
         private void Add()
-        { }
+        {
+            Console.WriteLine("Start add database item");
+            var executing = true;
+            while (executing)
+            {
+                DoAdd();
+                Console.WriteLine("Keep adding database item? Yes/No");
+                var ans = Console.ReadLine();
+                if (!ans.SameTextOr("Y", "Yes"))
+                    executing = false;
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// 新增 的實作
+        /// </summary>
+        private void DoAdd()
+        {
+            Console.WriteLine("DisplayName：");
+            var displayName = Console.ReadLine();
+            Console.WriteLine("Db Server：");
+            var dbServer = Console.ReadLine();
+            Console.WriteLine("Db Name：");
+            var dbName = Console.ReadLine();
+            Console.WriteLine("Login ID：");
+            var loginID = Console.ReadLine();
+            Console.WriteLine("Password：");
+            var password = Console.ReadLine();
+
+            var dbItem = new GDatabaseItem { DisplayName = displayName, DbServer = dbServer, DbName = dbName, LoginID = loginID, Password = password };
+            var text = BaseFunc.ObjectToJson(dbItem);
+            Console.WriteLine("You want to add this setting？ Yes/No");
+            Console.WriteLine(text);
+            var ans = Console.ReadLine();
+            if (ans.SameTextOr("Y", "Yes"))
+            {
+                this.Helper.AddDbSettingItem(displayName, dbServer, dbName, loginID, password);
+                Console.WriteLine("Add database item success");
+            }
+        }
 
         /// <summary>
         /// 修改

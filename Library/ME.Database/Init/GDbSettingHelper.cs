@@ -30,5 +30,14 @@ namespace ME.Database
         {
             this.Setting.AddDatabaseItem(displayName, dbServer, dbName, loginID, password);
         }
+
+        /// <summary>
+        /// 新增資料庫項目
+        /// </summary>
+        /// <param name="item">資料庫設定項目</param>
+        public void AddDbSettingItem(GDatabaseItem item)
+        {
+            this.Setting.Items.Add(item);
+        }
     }
 }
