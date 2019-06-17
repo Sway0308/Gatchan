@@ -6,6 +6,7 @@
       "TableName": "Depart",
       "DbTableName": "Depart",
       "DisplayName": "部門",
+      "MasterKey": "",
       "PrimaryKey": "DepartID",
       "Fields": [
         {
@@ -62,6 +63,7 @@
         "TypeName": ""
       },
       "SortFields": [],
+      "FilterItems": [],
       "TablePrimaryKey": null,
       "IsCreateDbTable": true
     }

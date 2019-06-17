@@ -6,6 +6,7 @@
       "TableName": "Duty",
       "DbTableName": "Duty",
       "DisplayName": "職缺",
+      "MasterKey": "",
       "PrimaryKey": "DutyID",
       "Fields": [
         {
@@ -62,6 +63,7 @@
         "TypeName": ""
       },
       "SortFields": [],
+      "FilterItems": [],
       "TablePrimaryKey": null,
       "IsCreateDbTable": true
     }

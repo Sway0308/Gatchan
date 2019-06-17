@@ -13,9 +13,18 @@ namespace ME.Define
     public class GDatabaseItem : GKeyCollectionItem
     {
         /// <summary>
+        /// 建構函式
+        /// </summary>
+        /// <param name="databaseID">資料庫編號</param>
+        public GDatabaseItem(string databaseID)
+        {
+            DatabaseID = databaseID;
+        }
+
+        /// <summary>
         /// 資料庫編號
         /// </summary>
-        public string ID { get => base.Key; set => base.Key = value; }
+        public string DatabaseID { get => base.Key; set => base.Key = value; }
         /// <summary>
         /// 顯示名稱
         /// </summary>

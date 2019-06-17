@@ -18,7 +18,7 @@ namespace ME.Define
         /// <param name="value"></param>
         protected override void OnRemove(GEntityRow value)
         {
-            (value as GEntityRow).SetRowState(EEntityRowState.Deleted);
+            value.SetRowState(EEntityRowState.Deleted);
             base.OnRemove(value);
         }
 

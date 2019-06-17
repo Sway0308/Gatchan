@@ -30,7 +30,7 @@ namespace ME.Base
         /// <summary>
         ///  擁有者。
         /// </summary>
-        public virtual object Owner { get; }
+        public virtual object Owner { get; protected set; }
 
         /// <summary>
         /// 依索引取得成員。

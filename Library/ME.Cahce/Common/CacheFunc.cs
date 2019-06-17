@@ -62,6 +62,7 @@ namespace ME.Cahce
         /// <returns></returns>
         public static GProgramSetting GetProgramSetting(string systemID)
         {
+            InitProgramSetting();
             var result = CacheKeeper.GetItem<GProgramSetting>(systemID);
             if (result != null)
                 return result;
@@ -77,6 +78,7 @@ namespace ME.Cahce
         /// <returns></returns>
         public static GProgramItem GetProgramItem(string progID)
         {
+            InitProgramSetting();
             var result = CacheKeeper.GetItem<GProgramItem>(progID);
             if (result != null)
                 return result;
@@ -85,7 +87,18 @@ namespace ME.Cahce
         }
 
         /// <summary>
-        /// 產開程式設定
+        /// 初始化程式設定
+        /// </summary>
+        private static void InitProgramSetting()
+        {
+            if (CacheKeeper.HasItem<GProgramSetting>())
+                return;
+
+            ExtractProgramSetting();
+        }
+
+        /// <summary>
+        /// 展開程式設定
         /// </summary>
         private static void ExtractProgramSetting()
         {

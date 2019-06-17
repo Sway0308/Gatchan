@@ -3,7 +3,7 @@
     /// <summary>
     /// 鍵值成員集合介面。
     /// </summary>
-    public interface IKeyCollectionBase
+    public interface IKeyCollectionBase : ICollectionBase
     {
         /// <summary>
         /// 擁有者。

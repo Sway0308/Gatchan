@@ -6,6 +6,7 @@
       "TableName": "Employee",
       "DbTableName": "Employee",
       "DisplayName": "員工",
+      "MasterKey": "",
       "PrimaryKey": "EmployeeID",
       "Fields": [
         {
@@ -160,6 +161,7 @@
         "TypeName": ""
       },
       "SortFields": [],
+      "FilterItems": [],
       "TablePrimaryKey": null,
       "IsCreateDbTable": true
     }

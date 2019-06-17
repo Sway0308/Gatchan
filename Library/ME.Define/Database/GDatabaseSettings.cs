@@ -30,10 +30,10 @@ namespace ME.Define
             if (StrFunc.SameTextOr(string.Empty, displayName, dbServer, dbName, loginID, password))
                 throw new GException("Empty value is not allowed");
 
-            var maxID = this.Items.Max(x => x.ID) + 1;
+            var maxID = this.Items.Max(x => x.DatabaseID) + 1;
             this.Items.Add(new GDatabaseItem
             {
-                ID = maxID,
+                DatabaseID = maxID,
                 DisplayName = displayName,
                 DbServer = dbServer,
                 DbName = dbName,

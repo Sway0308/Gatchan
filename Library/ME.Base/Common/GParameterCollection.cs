@@ -12,16 +12,6 @@ namespace ME.Base
     public class GParameterCollection : GKeyCollectionBase<GParameter>
     {
         /// <summary>
-        /// 新增參數
-        /// </summary>
-        /// <param name="name">參數名稱。</param>
-        /// <param name="value">參數值。</param>
-        public void AddItem(string key, object value)
-        {
-            this.Add(new GParameter(key, value));
-        }
-
-        /// <summary>
         /// 取得參數值。
         /// </summary>
         /// <typeparam name="T">參數型別。</typeparam>

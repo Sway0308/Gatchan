@@ -8,7 +8,7 @@ namespace ME.Base
     /// <summary>
     /// 含鍵值的集合型成員基底類別
     /// </summary>
-    public class GKeyCollectionItem : IKeyCollectionItem
+    public class GKeyCollectionItem : GCollectionItem, IKeyCollectionItem
     {
         /// <summary>
         /// 主鍵
@@ -19,8 +19,8 @@ namespace ME.Base
         /// <summary>
         /// 集合母體
         /// </summary>
-        [JsonIgnore]
-        protected IKeyCollectionBase Collection { get; private set; }
+        //[JsonIgnore]
+        //public IKeyCollectionBase Collection { get; private set; }
 
         /// <summary>
         /// 設定集合母體

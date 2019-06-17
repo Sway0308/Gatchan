@@ -13,9 +13,18 @@ namespace ME.Define
     public class GProgramModule : GKeyCollectionItem
     {
         /// <summary>
-        /// 編號
+        /// 建構函式
         /// </summary>
-        public string ID { get => base.Key; set => base.Key = value; }
+        /// <param name="moduleID"></param>
+        public GProgramModule(string moduleID)
+        {
+            ModuleID = moduleID;
+        }
+
+        /// <summary>
+        /// 模組編號編號
+        /// </summary>
+        public string ModuleID { get => base.Key; set => base.Key = value; }
         /// <summary>
         /// 顯示名稱
         /// </summary>

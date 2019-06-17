@@ -11,6 +11,15 @@ namespace ME.Define
     public class GProgramSetting
     {
         /// <summary>
+        /// 建構函式
+        /// </summary>
+        /// <param name="systemID"></param>
+        public GProgramSetting(string systemID)
+        {
+            SystemID = systemID;
+        }
+
+        /// <summary>
         /// 系統代號
         /// </summary>
         public string SystemID { get; set; }

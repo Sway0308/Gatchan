@@ -30,15 +30,15 @@ namespace ImportData
         /// <summary>
         /// 設定檔檔案路徑
         /// </summary>
-        private string SettingDataPath => $@"{this.AppDataPath}\Common\HUM";
+        private string SettingDataPath(string systemID) => $@"{this.AppDataPath}\Common\{systemID.ToUpper()}";
         /// <summary>
         /// 程式定義路徑
         /// </summary>
-        private string ProgDefineDataPath => $@"{SettingDataPath}\ProgramDefine";
+        private string ProgDefineDataPath(string systemID) => $@"{SettingDataPath(systemID)}\ProgramDefine";
         /// <summary>
         /// 資料表定義路徑
         /// </summary>
-        private string DbDefineDataPath => $@"{SettingDataPath}\DbTableDefine";
+        private string DbDefineDataPath(string systemID) => $@"{SettingDataPath(systemID)}\DbTableDefine";
 
         private Guid SessionGuid => Guid.NewGuid();
 
@@ -46,7 +46,7 @@ namespace ImportData
         /// 檔案初始化
         /// </summary>
         public void InitData()
-        {;
+        {
             InitDbSetting();
             InitProgSetting();
             InitProgDefine();
@@ -72,10 +72,11 @@ namespace ImportData
         /// </summary>
         private void InitProgSetting()
         {
-            var progSetting = new GProgramSetting();
-            progSetting.Items.Add(new GProgramItem { ProgID = "Depart", DisplayName = "部門" });
-            progSetting.Items.Add(new GProgramItem { ProgID = "Duty", DisplayName = "職缺" });
-            progSetting.Items.Add(new GProgramItem { ProgID = "Employee", DisplayName = "員工" });
+            var progSetting = new GProgramSetting("HUM") { DisplayName = "人資管理" };
+            progSetting.Modules.Add(new GProgramModule("Emp"));
+            progSetting.Modules["Emp"].Items.Add(new GProgramItem("Depart") { DisplayName = "部門" });
+            progSetting.Modules["Emp"].Items.Add(new GProgramItem("Duty") { DisplayName = "職缺" });
+            progSetting.Modules["Emp"].Items.Add(new GProgramItem("Employee") { DisplayName = "員工" });
             ProgSettingToJson(progSetting);
         }
 
@@ -85,7 +86,14 @@ namespace ImportData
         private void InitDbSetting()
         {
             var dbSetting = new GDatabaseSettings();
-            dbSetting.Items.Add(new GDatabaseItem { ID = "001", DisplayName = "Demo", DbServer = "localhost", DbName = "SkyDb", LoginID = "sa", Password = "guest" });
+            dbSetting.Items.Add(new GDatabaseItem("001")
+            {
+                DisplayName = "Demo",
+                DbServer = "localhost",
+                DbName = "SkyDb",
+                LoginID = "sa",
+                Password = "guest"
+            });
             DbSettingToJson(dbSetting);
         }
 
@@ -146,7 +154,7 @@ namespace ImportData
         {
             var json = BaseFunc.ObjectToJson(programDefine);
             var fileName = $@"{programDefine.ProgID}.ProgramDefine.json";
-            FileFunc.FileWriteAllText(this.ProgDefineDataPath, fileName, json);
+            FileFunc.FileWriteAllText(this.ProgDefineDataPath("HRM"), fileName, json);
             ProgDefineToTableDefineToJson(programDefine);
         }
 
@@ -161,7 +169,7 @@ namespace ImportData
             {
                 var dbJson = BaseFunc.ObjectToJson(d);
                 var dbPath = $@"{d.TableName}.DbTableDefine.json";
-                FileFunc.FileWriteAllText(this.DbDefineDataPath, dbPath, dbJson);
+                FileFunc.FileWriteAllText(this.DbDefineDataPath("HRM"), dbPath, dbJson);
             }
         }
 
@@ -173,7 +181,7 @@ namespace ImportData
         {
             var json = BaseFunc.ObjectToJson(programSetting);
             var fileName = $@"ProgramSetting.json";
-            FileFunc.FileWriteAllText(this.SettingDataPath, fileName, json);
+            FileFunc.FileWriteAllText(this.SettingDataPath(programSetting.SystemID), fileName, json);
         }
 
         /// <summary>
@@ -214,7 +222,7 @@ namespace ImportData
         {
             //var progSettings = GetDefine<AProgramSetting>(this.SettingDataPath);
             //var progDefines = GetDefines<AProgramDefine>(this.ProgDefineDataPath);
-            var dbDefines = GetDefines<GDbTableDefine>(this.DbDefineDataPath);
+            var dbDefines = GetDefines<GDbTableDefine>(this.DbDefineDataPath("HRM"));
             var dbSetting = CacheFunc.GetDatabaseSettings();
             var helper = new UpgradeTableHelper(dbSetting);
             foreach (var define in dbDefines)

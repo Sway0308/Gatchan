@@ -77,6 +77,8 @@
     <Compile Include="Interface\IKeyCollectionBase.cs" />
     <Compile Include="Interface\IKeyCollectionItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Result\GExeResultItem.cs" />
+    <Compile Include="Result\GResultItem.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

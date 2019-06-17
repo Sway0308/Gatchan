@@ -10,7 +10,7 @@ namespace ME.Base
     /// 包含鍵值物件集合
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class GKeyCollectionBase<T> : List<T>, IKeyCollectionBase where T : GKeyCollectionItem
+    public class GKeyCollectionBase<T> : GCollectionBase<T>, IKeyCollectionBase where T : GKeyCollectionItem
     {
         /// <summary>
         /// 建構函式
@@ -28,11 +28,6 @@ namespace ME.Base
         {
             this.Owner = owner;
         }
-
-        /// <summary>
-        /// 擁有者
-        /// </summary>
-        public object Owner { get; }
 
         /// <summary>
         /// 傳回指定鍵值的快取資料。
@@ -58,23 +53,28 @@ namespace ME.Base
         /// <summary>
         /// 新增快取物件
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        public new virtual void Add(T value)
+        /// <param name="key">鍵值</param>
+        /// <param name="item">項目</param>
+        public new virtual void Add(T item)
         {
-            if (!this.Contains(value.Key))
+            if (item.Collection == this)
+                return;
+            if (item.Collection != null)
+                throw new GException("This item is already setted for another collection");
+
+            if (!this.Contains(item.Key))
             {
-                base.Add(value);
-                value.SetCollection(this);
+                base.Add(item);
+                item.SetCollection(this);
             }
             else
-                this[value.Key] = value;
+                this[item.Key] = item;
         }
 
         /// <summary>
         /// 是否包含指定鍵值的資料
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="key">鍵值</param>
         /// <returns></returns>
         public bool Contains(string key)
         {

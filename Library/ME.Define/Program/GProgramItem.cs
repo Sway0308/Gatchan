@@ -12,6 +12,15 @@ namespace ME.Define
     public class GProgramItem : GKeyCollectionItem
     {
         /// <summary>
+        /// 建構函式
+        /// </summary>
+        /// <param name="progID">程式代碼</param>
+        public GProgramItem(string progID)
+        {
+            ProgID = progID;
+        }
+
+        /// <summary>
         /// 程式代碼
         /// </summary>
         public string ProgID { get => this.Key; set => this.Key = value; }

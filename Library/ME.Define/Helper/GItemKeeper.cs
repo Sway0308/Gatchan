@@ -39,6 +39,17 @@ namespace ME.Define
         }
 
         /// <summary>
+        /// 確認是否有特定型別的快取項目
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool HasItem<T>()
+        {
+            var key = typeof(T).ToString();
+            return (this.ItemStorage.ContainsKey(key));            
+        }
+
+        /// <summary>
         /// 根據鍵值取得項目
         /// </summary>
         /// <typeparam name="T"></typeparam>

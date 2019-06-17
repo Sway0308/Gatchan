@@ -47,6 +47,7 @@ namespace ME.Base
         /// <summary>
         /// 所屬集合。
         /// </summary>
-        protected ICollectionBase Collection { get; private set; } = null;
+        [JsonIgnore]
+        public ICollectionBase Collection { get; protected set; } = null;
     }
 }
