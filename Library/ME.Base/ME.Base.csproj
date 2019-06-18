@@ -59,7 +59,6 @@
     <Compile Include="Common\GInstanceType.cs" />
     <Compile Include="Common\GParameter.cs" />
     <Compile Include="Common\GParameterCollection.cs" />
-    <Compile Include="Common\GSerializerHelper.cs" />
     <Compile Include="Common\BaseConst.cs" />
     <Compile Include="Common\BaseFunc.cs" />
     <Compile Include="Common\BaseInfo.cs" />
@@ -68,6 +67,7 @@
     <Compile Include="Common\DbTypeConverter.cs" />
     <Compile Include="Common\ExtensionMethod.cs" />
     <Compile Include="Common\FileFunc.cs" />
+    <Compile Include="Common\JsonFunc.cs" />
     <Compile Include="Common\MathFunc.cs" />
     <Compile Include="Common\SerializeFunc.cs" />
     <Compile Include="Common\StrFunc.cs" />

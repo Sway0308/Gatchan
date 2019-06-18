@@ -1,6 +1,7 @@
 ﻿using ME.Base;
 using ME.Define;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace ME.Cahce
         private static T ConvertToDefine<T>(string filePath)
         {
             var json = FileFunc.FileReadAllText(filePath);
-            return BaseFunc.JsonToObject<T>(json);
+            return JsonFunc.JsonToObject<T>(json);
         }
 
         /// <summary>
@@ -41,8 +42,8 @@ namespace ME.Cahce
             if (systemID.IsEmpty())
                 throw new GException($"No such ProgID:{progID} exists");
 
-            return CacheKeeper.GetItem<GProgramDefine>(progID, () => 
-                ConvertToDefine<GProgramDefine>(SysDefineSettingName.ProgramDefinePath(systemID, progID))
+            return CacheKeeper.GetItem(progID, () => 
+                ConvertToDefine<GProgramDefine>(SysDefineSettingName.ProgramDefineFilePath(systemID, progID))
             );
         }
 
@@ -52,7 +53,8 @@ namespace ME.Cahce
         /// <returns></returns>
         public static GDatabaseSettings GetDatabaseSettings()
         {
-            return ConvertToDefine<GDatabaseSettings>(SysDefineSettingName.DbSettingPath);
+            return CacheKeeper.GetItem(nameof(GDatabaseSettings), () =>
+                   ConvertToDefine<GDatabaseSettings>(SysDefineSettingName.DbSettingPath));
         }
 
         /// <summary>
@@ -103,7 +105,7 @@ namespace ME.Cahce
         private static void ExtractProgramSetting()
         {
             var progSettings = from f in Directory.EnumerateFiles(SysDefineSettingName.SystemPath, SysDefineSettingName.ProgramSettingName, SearchOption.AllDirectories)
-                               select new { Setting = BaseFunc.JsonToObject<GProgramSetting>(FileFunc.FileReadAllText(f)) };
+                               select new { Setting = JsonFunc.JsonToObject<GProgramSetting>(FileFunc.FileReadAllText(f)) };
             foreach (var set in progSettings)
             {
                 var currSystemID = set.Setting.SystemID;
@@ -144,6 +146,42 @@ namespace ME.Cahce
                 CacheKeeper.AddItem(progItem.ProgID, systemID);
                 CacheKeeper.AddItem(progItem.ProgID, progItem);
             }
+        }
+
+        /// <summary>
+        /// 取得實體資料表定義列舉
+        /// </summary>
+        /// <param name="progID"></param>
+        /// <returns></returns>
+        public static void InitDbTableDefines()
+        {
+            InitProgramSetting();
+            var progSettings = CacheKeeper.GetAllItems<GProgramSetting>();
+            if (!progSettings.Any())
+                return;
+
+            foreach (var progSetting in progSettings)
+            {
+                var progItems = CacheKeeper.GetAllItems<GProgramItem>();
+                foreach (var item in progItems)
+                {
+                    CacheKeeper.GetItem(item.ProgID, () =>
+                        ConvertToDefine<GDbTableDefine>(SysDefineSettingName.DbTableDefineFilePath(progSetting.SystemID, item.ProgID))
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// 取得實體資料表定義列舉
+        /// </summary>
+        /// <param name="progID"></param>
+        /// <returns></returns>
+        public static IEnumerable<GDbTableDefine> GetDbTableDefines()
+        {
+            InitProgramSetting();
+            InitDbTableDefines();
+            return CacheKeeper.GetAllItems<GDbTableDefine>();
         }
 
         /// <summary>

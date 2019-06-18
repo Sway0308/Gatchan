@@ -84,9 +84,13 @@
     <Compile Include="Filter\GFilterItem.cs" />
     <Compile Include="Filter\GFilterItemCollection.cs" />
     <Compile Include="Helper\GItemKeeper.cs" />
-    <Compile Include="InitSetting\GBaseSettingHelper.cs" />
+    <Compile Include="InitSetting\GBaseDefineFileHelper.cs" />
+    <Compile Include="InitSetting\GSaveDefineHelper.cs" />
     <Compile Include="Interface\IBusinessLogic.cs" />
+    <Compile Include="Interface\IDefineFile.cs" />
     <Compile Include="Interface\IEntityRow.cs" />
+    <Compile Include="Interface\IProgDefine.cs" />
+    <Compile Include="Interface\ISystemDefine.cs" />
     <Compile Include="Program\GFieldDefine.cs" />
     <Compile Include="Program\GFieldDefineCollection.cs" />
     <Compile Include="Program\GLinkReturnField.cs" />

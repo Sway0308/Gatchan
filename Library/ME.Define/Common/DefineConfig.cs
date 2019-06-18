@@ -271,25 +271,21 @@ namespace ME.Define
         /// </summary>
         public const string DbSettingName = "DatabaseSettings.json";
         /// <summary>
-        /// 資料庫連線定義檔案路徑
+        /// 程式設定檔案名稱
         /// </summary>
-        public static string DbSettingPath => FileFunc.PathCombine(BaseInfo.AppDataPath, DbSettingName);
+        public const string ProgramSettingName = "ProgramSetting.json";
         /// <summary>
         /// 程式定義檔案名稱
         /// </summary>
         public const string ProgramDefineName = "ProgramDefine.json";
         /// <summary>
-        /// 程式定義檔案路徑
+        /// 資料庫定義檔案名稱
         /// </summary>
-        /// <param name="systemID">系統編號</param>
-        /// <param name="progID">程式編號</param>
-        /// <returns></returns>
-        public static string ProgramDefinePath(string systemID, string progID) 
-            => FileFunc.PathCombine(SystemPath, $@"{systemID}\ProgramDefine\{progID}.{ProgramDefineName}");
+        public const string DbTableDefineName = "DbTableDefine.json";
         /// <summary>
-        /// 程式設定檔案名稱
+        /// 資料庫連線定義檔案路徑
         /// </summary>
-        public const string ProgramSettingName = "ProgramSetting.json";
+        public static string DbSettingPath => FileFunc.PathCombine(BaseInfo.AppDataPath, DbSettingName);
         /// <summary>
         /// 系統資料夾
         /// </summary>
@@ -299,9 +295,45 @@ namespace ME.Define
         /// </summary>
         /// <param name="systemID">系統編號</param>
         /// <returns></returns>
-        public static string ProgramSettingPath(string systemID) 
-            => FileFunc.PathCombine(BaseInfo.AppDataPath, $@"Common\{systemID}\{ProgramSettingName}");
-
+        public static string ProgramSettingPath(string systemID)
+            => FileFunc.PathCombine(SystemPath, $@"{systemID}");
+        /// <summary>
+        /// 程式設定檔案路徑
+        /// </summary>
+        /// <param name="systemID">系統編號</param>
+        /// <returns></returns>
+        public static string ProgramSettingFilePath(string systemID)
+            => FileFunc.PathCombine(SystemPath, $@"{systemID}\{ProgramSettingName}");
+        /// <summary>
+        /// 程式定義檔案路徑
+        /// </summary>
+        /// <param name="systemID">系統編號</param>
+        /// <returns></returns>
+        public static string ProgramDefinePath(string systemID)
+            => FileFunc.PathCombine(SystemPath, $@"{systemID}\ProgramDefine\");
+        /// <summary>
+        /// 程式定義檔案路徑
+        /// </summary>
+        /// <param name="systemID">系統編號</param>
+        /// <param name="progID">程式編號</param>
+        /// <returns></returns>
+        public static string ProgramDefineFilePath(string systemID, string progID) 
+            => FileFunc.PathCombine(SystemPath, $@"{systemID}\ProgramDefine\{progID}.{ProgramDefineName}");
+        /// <summary>
+        /// 資料表定義檔案路徑
+        /// </summary>
+        /// <param name="systemID">系統編號</param>
+        /// <returns></returns>
+        public static string DbTableDefinePath(string systemID)
+            => FileFunc.PathCombine(SystemPath, $@"{systemID}\DbTableDefine\");
+        /// <summary>
+        /// 資料表定義檔案路徑
+        /// </summary>
+        /// <param name="systemID">系統編號</param>
+        /// <param name="progID">程式編號</param>
+        /// <returns></returns>
+        public static string DbTableDefineFilePath(string systemID, string progID)
+            => FileFunc.PathCombine(SystemPath, $@"{systemID}\DbTableDefine\{progID}.{DbTableDefineName}");
     }
 
     /// <summary>

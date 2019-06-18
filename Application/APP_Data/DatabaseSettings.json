@@ -1,7 +1,7 @@
-{
+﻿{
   "Items": [
     {
-      "ID": "001",
+      "DatabaseID": "001",
       "DisplayName": "Demo",
       "DbServer": "localhost",
       "DbName": "SkyDb",

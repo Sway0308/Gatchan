@@ -21,7 +21,12 @@ namespace ME.Define
         {
             foreach (GTableDefine tableDefine in progDefine.Tables)
             {
-                var dbDefine = new GDbTableDefine { TableName = tableDefine.TableName, DisplayName = tableDefine.DisplayName };
+                var dbDefine = new GDbTableDefine {
+                    SystemID = progDefine.SystemID,
+                    ProgID = progDefine.ProgID,
+                    TableName = tableDefine.DbTableName,
+                    DisplayName = tableDefine.DisplayName
+                };
                 foreach (var field in tableDefine.Fields.Where(x => x.FieldType == Base.EFieldType.DataField))
                     dbDefine.Fields.Add(new GDbFieldDefine(field));
                 yield return dbDefine;

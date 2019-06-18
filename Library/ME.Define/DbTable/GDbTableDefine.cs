@@ -8,8 +8,18 @@ namespace ME.Define
     /// <summary>
     /// 實體資料表定義。
     /// </summary>
-    public class GDbTableDefine : GKeyCollectionItem
+    public class GDbTableDefine : GKeyCollectionItem, IProgDefine
     {
+        /// <summary>
+        /// 系統編號
+        /// </summary>
+        public string SystemID { get; set; }
+
+        /// <summary>
+        /// 程式代碼
+        /// </summary>
+        public string ProgID { get; set; }
+
         /// <summary>
         /// 資料表名稱
         /// </summary>

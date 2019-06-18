@@ -8,7 +8,7 @@ namespace ME.Define
     /// <summary>
     /// 程式設定
     /// </summary>
-    public class GProgramSetting
+    public class GProgramSetting : ISystemDefine
     {
         /// <summary>
         /// 建構函式

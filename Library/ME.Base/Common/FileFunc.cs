@@ -225,7 +225,19 @@ namespace ME.Base
         /// <param name="contents">要寫入檔案的字串。</param>
         public static void FileWriteAllText(string filePath, string contents)
         {
-            File.WriteAllText(filePath, contents);
+            FileWriteAllText(filePath, contents, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// 將資料寫入文字檔，然後關閉檔案。若檔案已存在則覆蓋。
+        /// </summary>
+        /// <param name="filePath">檔案路徑。</param>
+        /// <param name="contents">要寫入檔案的字串。</param>
+        public static void FileWriteAllText(string filePath, string contents, bool checkDir)
+        {
+            if (checkDir)
+                DirectoryCheck(filePath, true);
+            FileWriteAllText(filePath, contents, Encoding.UTF8);
         }
 
         /// <summary>
@@ -251,7 +263,7 @@ namespace ME.Base
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             var filePath = PathCombine(path, fileName);
-            File.WriteAllText(filePath, contents);
+            FileWriteAllText(filePath, contents);
         }
 
         /// <summary>

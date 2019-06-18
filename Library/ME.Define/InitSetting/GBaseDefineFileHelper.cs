@@ -10,7 +10,7 @@ namespace ME.Define
     /// <summary>
     /// 定義設定輔助器
     /// </summary>
-    public class GBaseSettingHelper<T>
+    public class GBaseSettingHelper<T> where T : IDefineFile
     {
         /// <summary>
         /// 定義檔案路徑
@@ -28,13 +28,18 @@ namespace ME.Define
         protected GItemKeeper ItemKeeper { get; } = new GItemKeeper();
 
         /// <summary>
+        /// 定義儲存輔助器
+        /// </summary>
+        protected GSaveDefineHelper SaveDefineHelper { get; } = new GSaveDefineHelper();
+
+        /// <summary>
         /// 定義設定
         /// </summary>
-        public T Setting => this.ItemKeeper.GetItem(nameof(T), () => {
+        public T Define => this.ItemKeeper.GetItem(nameof(T), () => {
             if (SettingsExists)
             {
                 var json = FileFunc.FileReadAllText(this.SettingFilePath);
-                return BaseFunc.JsonToObject<T>(json);
+                return JsonFunc.JsonToObject<T>(json);
             }
 
             return Activator.CreateInstance<T>();
@@ -45,15 +50,14 @@ namespace ME.Define
         /// </summary>
         /// <returns></returns>
         public string GetSettingJson()
-            => BaseFunc.ObjectToJson(this.Setting);
+            => JsonFunc.ObjectToJson(this.Define);
 
         /// <summary>
         /// 儲存設定
         /// </summary>
         public virtual void SaveSetting()
         {
-            var json = GetSettingJson();
-            FileFunc.FileWriteAllText(this.SettingFilePath, json);
+            this.SaveDefineHelper.SaveDefine(this.Define);
         }
 
         /// <summary>

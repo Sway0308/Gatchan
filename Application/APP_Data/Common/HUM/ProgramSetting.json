@@ -1,9 +1,9 @@
-{
+﻿{
   "SystemID": "HUM",
   "DisplayName": "人資管理",
   "Modules": [
     {
-      "ID": "Emp",
+      "ModuleID": "Emp",
       "DisplayName": "",
       "Categories": [],
       "Items": [

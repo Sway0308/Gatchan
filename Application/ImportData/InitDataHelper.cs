@@ -27,20 +27,12 @@ namespace ImportData
         /// 檔案路徑
         /// </summary>
         private string AppDataPath => BaseInfo.AppDataPath;
-        /// <summary>
-        /// 設定檔檔案路徑
-        /// </summary>
-        private string SettingDataPath(string systemID) => $@"{this.AppDataPath}\Common\{systemID.ToUpper()}";
-        /// <summary>
-        /// 程式定義路徑
-        /// </summary>
-        private string ProgDefineDataPath(string systemID) => $@"{SettingDataPath(systemID)}\ProgramDefine";
-        /// <summary>
-        /// 資料表定義路徑
-        /// </summary>
-        private string DbDefineDataPath(string systemID) => $@"{SettingDataPath(systemID)}\DbTableDefine";
-
         private Guid SessionGuid => Guid.NewGuid();
+
+        /// <summary>
+        /// 定義儲存輔助器
+        /// </summary>
+        private GSaveDefineHelper SaveDefineHelper { get; } = new GSaveDefineHelper();
 
         /// <summary>
         /// 檔案初始化
@@ -77,7 +69,7 @@ namespace ImportData
             progSetting.Modules["Emp"].Items.Add(new GProgramItem("Depart") { DisplayName = "部門" });
             progSetting.Modules["Emp"].Items.Add(new GProgramItem("Duty") { DisplayName = "職缺" });
             progSetting.Modules["Emp"].Items.Add(new GProgramItem("Employee") { DisplayName = "員工" });
-            ProgSettingToJson(progSetting);
+            this.SaveDefineHelper.SaveDefine(progSetting);
         }
 
         /// <summary>
@@ -94,18 +86,7 @@ namespace ImportData
                 LoginID = "sa",
                 Password = "guest"
             });
-            DbSettingToJson(dbSetting);
-        }
-
-        /// <summary>
-        /// 資料庫清單設定轉Json
-        /// </summary>
-        /// <param name="dbSetting"></param>
-        private void DbSettingToJson(GDatabaseSettings dbSetting)
-        {
-            var json = BaseFunc.ObjectToJson(dbSetting);
-            var fileName = $@"DatabaseSettings.json";
-            FileFunc.FileWriteAllText(this.AppDataPath, fileName, json);
+            this.SaveDefineHelper.SaveDefine(dbSetting);
         }
 
         /// <summary>
@@ -116,7 +97,7 @@ namespace ImportData
         /// <returns></returns>
         private GProgramDefine CreateProgDefines(string progID, string displayName)
         {
-            var progDefine = new GProgramDefine { ProgID = progID, DisplayName = displayName };
+            var progDefine = new GProgramDefine { SystemID = "HUM", ProgID = progID, DisplayName = displayName };
             var tableDefine = new GTableDefine { TableName = progID, DisplayName = displayName, DbTableName = progID, PrimaryKey = $"{progID}ID" };
             tableDefine.Fields.Add(new GFieldDefine { FieldName = SysFields.CompanyID, DisplayName = $"公司編號", MaxLength = 10 });
             tableDefine.Fields.Add(new GFieldDefine { FieldName = SysFields.ID, DisplayName = $"{displayName}編號", MaxLength = 10 });
@@ -152,67 +133,13 @@ namespace ImportData
         /// <param name="programDefine"></param>
         public void ProgDefineToJson(GProgramDefine programDefine)
         {
-            var json = BaseFunc.ObjectToJson(programDefine);
-            var fileName = $@"{programDefine.ProgID}.ProgramDefine.json";
-            FileFunc.FileWriteAllText(this.ProgDefineDataPath("HRM"), fileName, json);
-            ProgDefineToTableDefineToJson(programDefine);
-        }
+            this.SaveDefineHelper.SaveDefine(programDefine);
 
-        /// <summary>
-        /// 程式定義轉資料表定義
-        /// </summary>
-        /// <param name="programDefine"></param>
-        private void ProgDefineToTableDefineToJson(GProgramDefine programDefine)
-        {
             var dbDefines = DefineFunc.ProgDefineToDbTableDefine(programDefine);
             foreach (var d in dbDefines)
             {
-                var dbJson = BaseFunc.ObjectToJson(d);
-                var dbPath = $@"{d.TableName}.DbTableDefine.json";
-                FileFunc.FileWriteAllText(this.DbDefineDataPath("HRM"), dbPath, dbJson);
+                this.SaveDefineHelper.SaveDefine(d);
             }
-        }
-
-        /// <summary>
-        /// 程式定義轉XML
-        /// </summary>
-        /// <param name="programSetting"></param>
-        private void ProgSettingToJson(GProgramSetting programSetting)
-        {
-            var json = BaseFunc.ObjectToJson(programSetting);
-            var fileName = $@"ProgramSetting.json";
-            FileFunc.FileWriteAllText(this.SettingDataPath(programSetting.SystemID), fileName, json);
-        }
-
-        /// <summary>
-        /// 根據路徑取得定義檔案
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private IEnumerable<T> GetDefines<T>(string path) where T : GKeyCollectionItem
-        {
-            var files = from f in Directory.EnumerateFiles(path, "*.json", SearchOption.TopDirectoryOnly)
-                        select new { Text = FileFunc.FileReadAllText(f) };
-            foreach (var file in files)
-            {
-                var define = BaseFunc.JsonToObject<T>(file.Text);
-                if (!define.Key.IsEmpty())
-                    yield return define;
-            }
-        }
-
-        /// <summary>
-        /// 根據路徑取得定義檔案
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private T GetDefine<T>(string path)
-        {
-            var files = from f in Directory.EnumerateFiles(path, "*.json", SearchOption.TopDirectoryOnly)
-                        select new { Text = FileFunc.FileReadAllText(f) };
-            return BaseFunc.JsonToObject<T>(files.FirstOrDefault().Text);
         }
 
         /// <summary>
@@ -220,9 +147,7 @@ namespace ImportData
         /// </summary>
         public void CreateDbTable()
         {
-            //var progSettings = GetDefine<AProgramSetting>(this.SettingDataPath);
-            //var progDefines = GetDefines<AProgramDefine>(this.ProgDefineDataPath);
-            var dbDefines = GetDefines<GDbTableDefine>(this.DbDefineDataPath("HRM"));
+            var dbDefines = CacheFunc.GetDbTableDefines();
             var dbSetting = CacheFunc.GetDatabaseSettings();
             var helper = new UpgradeTableHelper(dbSetting);
             foreach (var define in dbDefines)

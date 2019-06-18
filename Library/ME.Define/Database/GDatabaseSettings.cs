@@ -10,7 +10,7 @@ namespace ME.Define
     /// <summary>
     /// 資料庫清單設定。
     /// </summary>
-    public class GDatabaseSettings
+    public class GDatabaseSettings : IDefineFile
     {
         /// <summary>
         /// 資料庫集合。
@@ -31,9 +31,8 @@ namespace ME.Define
                 throw new GException("Empty value is not allowed");
 
             var maxID = this.Items.Max(x => x.DatabaseID) + 1;
-            this.Items.Add(new GDatabaseItem
+            this.Items.Add(new GDatabaseItem(maxID)
             {
-                DatabaseID = maxID,
                 DisplayName = displayName,
                 DbServer = dbServer,
                 DbName = dbName,

@@ -95,10 +95,6 @@ namespace GatTool
             Console.WriteLine("Password：");
             var password = Console.ReadLine();
 
-            var dbItem = new GDatabaseItem { DisplayName = displayName, DbServer = dbServer, DbName = dbName, LoginID = loginID, Password = password };
-            var text = BaseFunc.ObjectToJson(dbItem);
-            Console.WriteLine("You want to add this setting？ Yes/No");
-            Console.WriteLine(text);
             var ans = Console.ReadLine();
             if (ans.SameTextOr("Y", "Yes"))
             {

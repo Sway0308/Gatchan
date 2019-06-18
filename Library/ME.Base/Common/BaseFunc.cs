@@ -3,7 +3,6 @@ using System.Collections;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 
 namespace ME.Base
 {
@@ -540,64 +539,6 @@ namespace ME.Base
                 oBuffer.Append(buffer[i].ToString("X2")); // hex format
             }
             return oBuffer.ToString();
-        }
-
-        /// <summary>
-        /// 將物件序列化為 XML 字串。
-        /// </summary>
-        /// <param name="value">物件。</param>
-        public static string ObjectToXml(object value)
-        {
-            return GSerializerHelper.ObjectToXml(value);
-        }
-
-        /// <summary>
-        /// 將 XML 字串反序列化為物件。
-        /// </summary>
-        /// <param name="xml">XML 字串。</param>
-        /// <param name="type">型別。</param>
-        public static object XmlToObject(string xml, Type type)
-        {
-            return GSerializerHelper.XmlToObject(xml, type);
-        }
-
-        /// <summary>
-        /// 將 XML 字串反序列化為物件。
-        /// </summary>
-        /// <param name="xml">XML 字串。</param>
-        /// <param name="type">型別。</param>
-        public static T XmlToObject<T>(string xml)
-        {
-            return (T)GSerializerHelper.XmlToObject(xml, typeof(T));
-        }
-
-        /// <summary>
-        /// 將物件序列化為 JSON 字串。
-        /// </summary>
-        /// <param name="value">物件。</param>
-        public static string ObjectToJson(object value)
-        {
-            return GSerializerHelper.ObjectToJson(value);
-        }
-
-        /// <summary>
-        /// 將 JOSN 字串反序列化為物件。
-        /// </summary>
-        /// <param name="json">JSON 字串。</param>
-        /// <param name="type">型別。</param>
-        public static object JsonToObject(string json, Type type)
-        {
-            return GSerializerHelper.JsonToObject(json, type);
-        }
-
-        /// <summary>
-        /// 將 JOSN 字串反序列化為物件。
-        /// </summary>
-        /// <param name="json">JSON 字串。</param>
-        /// <param name="type">型別。</param>
-        public static T JsonToObject<T>(string json)
-        {
-            return GSerializerHelper.JsonToObject<T>(json);
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace ME.Define
     /// 程式定義
     /// </summary>
     [Serializable]
-    public class GProgramDefine : GKeyCollectionItem
+    public class GProgramDefine : GKeyCollectionItem, IProgDefine
     {
         /// <summary>
         /// 建構函式
@@ -20,6 +20,11 @@ namespace ME.Define
         {
             this.Tables = new GTableDefineCollection(this);
         }
+
+        /// <summary>
+        /// 系統編號
+        /// </summary>
+        public string SystemID { get; set; }
 
         /// <summary>
         /// 程式代碼

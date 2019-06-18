@@ -28,7 +28,7 @@ namespace ME.Database
         /// <param name="password">登入密碼</param>
         public void AddDbSettingItem(string displayName, string dbServer, string dbName, string loginID, string password)
         {
-            this.Setting.AddDatabaseItem(displayName, dbServer, dbName, loginID, password);
+            this.Define.AddDatabaseItem(displayName, dbServer, dbName, loginID, password);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace ME.Database
         /// <param name="item">資料庫設定項目</param>
         public void AddDbSettingItem(GDatabaseItem item)
         {
-            this.Setting.Items.Add(item);
+            this.Define.Items.Add(item);
         }
     }
 }

@@ -2,17 +2,28 @@
 using ME.Cahce;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ImportData
 {
     class Program
     {
+        /// <summary>
+        /// 程式進入點
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            BaseInfo.AppDataPath = @"C:\Users\SCSRD\Documents\GitHub\Gatchan\Application\APP_Data";
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            var reg = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
+            var ans = reg.Match(dir).Value;
+            var appDir = Directory.GetParent(ans).FullName;
+            BaseInfo.AppDataPath = $@"{appDir}\APP_Data";
             MechanismDemo();
         }
 

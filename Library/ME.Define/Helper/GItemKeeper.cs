@@ -112,6 +112,17 @@ namespace ME.Define
         }
 
         /// <summary>
+        /// 取得指定型別的暫存項目列舉
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IEnumerable<T> GetAllItems<T>()
+        {
+            var keeper = GetKeeper<T>();
+            return keeper.Values.ToList();
+        }
+
+        /// <summary>
         /// 根據資料表名稱判斷是否存在資料表
         /// </summary>
         /// <param name="tableName"></param>
