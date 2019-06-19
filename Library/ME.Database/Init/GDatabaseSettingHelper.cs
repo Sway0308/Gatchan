@@ -11,12 +11,31 @@ namespace ME.Database
     /// <summary>
     /// 資料庫連線設定輔助器
     /// </summary>
-    public class GDbSettingHelper : GBaseSettingHelper<GDatabaseSettings>
+    public class GDatabaseSettingHelper : GBaseDefineFileHelper<GDatabaseSettings>
     {
+        /// <summary>
+        /// 建構函式
+        /// </summary>
+        public GDatabaseSettingHelper()
+        {
+            if (DefineFileExists)
+            {
+                var json = FileFunc.FileReadAllText(this.DefineFilePath);
+                this.DatabaseSettings = JsonFunc.JsonToObject<GDatabaseSettings>(json);
+            }
+
+            this.DatabaseSettings = new GDatabaseSettings();
+        }
+
         /// <summary>
         /// 資料庫定義檔設定路徑
         /// </summary>
-        protected override string SettingFilePath => FileFunc.PathCombine(BaseInfo.AppDataPath, SysDefineSettingName.DbSettingName);
+        protected override string DefineFilePath => FileFunc.PathCombine(BaseInfo.AppDataPath, SysDefineSettingName.DbSettingName);
+
+        /// <summary>
+        /// 定義設定
+        /// </summary>
+        public GDatabaseSettings DatabaseSettings { get; }
 
         /// <summary>
         /// 新增資料庫項目
@@ -28,7 +47,7 @@ namespace ME.Database
         /// <param name="password">登入密碼</param>
         public void AddDbSettingItem(string displayName, string dbServer, string dbName, string loginID, string password)
         {
-            this.Define.AddDatabaseItem(displayName, dbServer, dbName, loginID, password);
+            this.DatabaseSettings.AddDatabaseItem(displayName, dbServer, dbName, loginID, password);
         }
 
         /// <summary>
@@ -37,7 +56,7 @@ namespace ME.Database
         /// <param name="item">資料庫設定項目</param>
         public void AddDbSettingItem(GDatabaseItem item)
         {
-            this.Define.Items.Add(item);
+            this.DatabaseSettings.Items.Add(item);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace GatTool
         /// <summary>
         /// 資料庫連線設定輔助器
         /// </summary>
-        private GDbSettingHelper Helper { get; } = new GDbSettingHelper();
+        private GDatabaseSettingHelper Helper { get; } = new GDatabaseSettingHelper();
 
         /// <summary>
         /// 執行
@@ -53,7 +53,7 @@ namespace GatTool
         /// </summary>
         private void View()
         {
-            var json = this.Helper.GetSettingJson();
+            var json = JsonFunc.ObjectToJson(this.Helper.DatabaseSettings);
             Console.WriteLine("=====================");
             Console.WriteLine(json);
             Console.WriteLine("=====================");

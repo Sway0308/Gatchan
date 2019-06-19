@@ -318,14 +318,14 @@ namespace ME.Define
         /// <param name="progID">程式編號</param>
         /// <returns></returns>
         public static string ProgramDefineFilePath(string systemID, string progID) 
-            => FileFunc.PathCombine(SystemPath, $@"{systemID}\ProgramDefine\{progID}.{ProgramDefineName}");
+            => FileFunc.PathCombine(ProgramDefinePath(systemID), $@"{progID}.{ProgramDefineName}");
         /// <summary>
         /// 資料表定義檔案路徑
         /// </summary>
         /// <param name="systemID">系統編號</param>
         /// <returns></returns>
         public static string DbTableDefinePath(string systemID)
-            => FileFunc.PathCombine(SystemPath, $@"{systemID}\DbTableDefine\");
+            => FileFunc.PathCombine(SystemPath, $@"{systemID}\DbTableDefine");
         /// <summary>
         /// 資料表定義檔案路徑
         /// </summary>
@@ -333,7 +333,7 @@ namespace ME.Define
         /// <param name="progID">程式編號</param>
         /// <returns></returns>
         public static string DbTableDefineFilePath(string systemID, string progID)
-            => FileFunc.PathCombine(SystemPath, $@"{systemID}\DbTableDefine\{progID}.{DbTableDefineName}");
+            => FileFunc.PathCombine(DbTableDefinePath(systemID), $@"{progID}.{DbTableDefineName}");
     }
 
     /// <summary>

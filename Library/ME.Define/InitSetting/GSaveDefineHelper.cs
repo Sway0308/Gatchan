@@ -23,23 +23,7 @@ namespace ME.Define
                 throw new GException("Define is null");
 
             var json = JsonFunc.ObjectToJson(defineFile);
-            if (defineFile is GDatabaseSettings)
-                FileFunc.FileWriteAllText(SysDefineSettingName.DbSettingPath, json, true);
-            else if (defineFile is ISystemDefine)
-            {
-                var systemID = (defineFile as ISystemDefine).SystemID;
-
-                if (defineFile is GProgramSetting)
-                    FileFunc.FileWriteAllText(SysDefineSettingName.ProgramSettingFilePath(systemID), json, true);
-                else if (defineFile is IProgDefine)
-                {
-                    var progID = (defineFile as IProgDefine).ProgID;
-                    if (defineFile is GDbTableDefine)
-                        FileFunc.FileWriteAllText(SysDefineSettingName.DbTableDefineFilePath(systemID, progID), json, true);
-                    else if (defineFile is GProgramDefine)
-                        FileFunc.FileWriteAllText(SysDefineSettingName.ProgramDefineFilePath(systemID, progID), json, true);
-                }
-            }
+            FileFunc.FileWriteAllText(defineFile.GetDefineFilePath(), json, true);
         }
     }
 }

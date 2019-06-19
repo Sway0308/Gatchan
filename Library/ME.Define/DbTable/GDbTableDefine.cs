@@ -11,6 +11,15 @@ namespace ME.Define
     public class GDbTableDefine : GKeyCollectionItem, IProgDefine
     {
         /// <summary>
+        /// 取得定義檔案路徑
+        /// </summary>
+        /// <returns></returns>
+        public string GetDefineFilePath()
+        {
+            return SysDefineSettingName.DbTableDefinePath(this.SystemID);
+        }
+
+        /// <summary>
         /// 系統編號
         /// </summary>
         public string SystemID { get; set; }

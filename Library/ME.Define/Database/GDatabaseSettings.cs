@@ -13,6 +13,15 @@ namespace ME.Define
     public class GDatabaseSettings : IDefineFile
     {
         /// <summary>
+        /// 取得定義檔案路徑
+        /// </summary>
+        /// <returns></returns>
+        public string GetDefineFilePath()
+        {
+            return SysDefineSettingName.DbSettingPath;
+        }
+
+        /// <summary>
         /// 資料庫集合。
         /// </summary>
         public GDatabaseItemCollection Items { get; } = new GDatabaseItemCollection();

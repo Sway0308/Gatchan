@@ -20,6 +20,15 @@ namespace ME.Define
         }
 
         /// <summary>
+        /// 取得定義檔案路徑
+        /// </summary>
+        /// <returns></returns>
+        public string GetDefineFilePath()
+        {
+            return SysDefineSettingName.ProgramSettingFilePath(this.SystemID);
+        }
+
+        /// <summary>
         /// 系統代號
         /// </summary>
         public string SystemID { get; set; }
