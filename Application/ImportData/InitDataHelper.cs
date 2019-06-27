@@ -1,32 +1,22 @@
 ﻿using ME.Base;
+using ME.Business;
+using ME.Cahce;
 using ME.Define;
+using ME.Setting;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
-using System.Data;
-using ME.Cahce;
-using ME.Business;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.ComponentModel;
 
 namespace ImportData
 {
     /// <summary>
     /// 檔案初始化輔助器
     /// </summary>
-    [Description]
     public class InitDataHelper
     {
-        private string CurrentPath => Directory.GetParent(this.AppDataPath).FullName;
-        /// <summary>
-        /// 檔案路徑
-        /// </summary>
-        private string AppDataPath => BaseInfo.AppDataPath;
+        private string CurrentPath => Directory.GetParent(BaseInfo.AppDataPath).FullName;
         private Guid SessionGuid => Guid.NewGuid();
 
         /// <summary>

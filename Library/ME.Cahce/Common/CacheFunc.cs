@@ -48,6 +48,16 @@ namespace ME.Cahce
         }
 
         /// <summary>
+        /// 取得公司項目設定
+        /// </summary>
+        /// <returns></returns>
+        public static GCompanySettings GetCompanySettings()
+        {
+            return CacheKeeper.GetItem(nameof(GCompanySettings), () =>
+                   ConvertToDefine<GCompanySettings>(SysDefineSettingName.CompanySettingPath));
+        }
+
+        /// <summary>
         /// 取得資料庫設定檔案資料表
         /// </summary>
         /// <returns></returns>
@@ -55,6 +65,17 @@ namespace ME.Cahce
         {
             return CacheKeeper.GetItem(nameof(GDatabaseSettings), () =>
                    ConvertToDefine<GDatabaseSettings>(SysDefineSettingName.DbSettingPath));
+        }
+
+        /// <summary>
+        /// 取得程式設定檔案路徑
+        /// </summary>
+        /// <param name="systemID"></param>
+        /// <returns></returns>
+        public static IEnumerable<GProgramSetting> GetProgramSettings()
+        {
+            InitProgramSetting();
+            return CacheKeeper.GetAllItems<GProgramSetting>();
         }
 
         /// <summary>
@@ -153,7 +174,7 @@ namespace ME.Cahce
         /// </summary>
         /// <param name="progID"></param>
         /// <returns></returns>
-        public static void InitDbTableDefines()
+        private static void InitDbTableDefines()
         {
             InitProgramSetting();
             var progSettings = CacheKeeper.GetAllItems<GProgramSetting>();

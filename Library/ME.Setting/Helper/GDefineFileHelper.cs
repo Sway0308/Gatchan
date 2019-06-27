@@ -1,41 +1,37 @@
-﻿using ME.Base;
+﻿using ME.Cahce;
 using ME.Define;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ME.Database
+namespace ME.Setting
 {
     /// <summary>
-    /// 資料庫連線設定輔助器
+    /// 定義檔案輔助器
     /// </summary>
-    public class GDatabaseSettingHelper : GBaseDefineFileHelper<GDatabaseSettings>
+    public class GDefineFileHelper
     {
         /// <summary>
         /// 建構函式
         /// </summary>
-        public GDatabaseSettingHelper()
+        public GDefineFileHelper()
         {
-            if (DefineFileExists)
-            {
-                var json = FileFunc.FileReadAllText(this.DefineFilePath);
-                this.DatabaseSettings = JsonFunc.JsonToObject<GDatabaseSettings>(json);
-            }
-
-            this.DatabaseSettings = new GDatabaseSettings();
+            this.DatabaseSettings = CacheFunc.GetDatabaseSettings();
+            this.CompanySettings = CacheFunc.GetCompanySettings();
+            this.ProgramSettings = CacheFunc.GetProgramSettings();
         }
 
         /// <summary>
-        /// 資料庫定義檔設定路徑
-        /// </summary>
-        protected override string DefineFilePath => FileFunc.PathCombine(BaseInfo.AppDataPath, SysDefineSettingName.DbSettingName);
-
-        /// <summary>
-        /// 定義設定
+        /// 資料表定義
         /// </summary>
         public GDatabaseSettings DatabaseSettings { get; }
+        /// <summary>
+        /// 公司定義
+        /// </summary>
+        public GCompanySettings CompanySettings { get; }
+        /// <summary>
+        /// 程式項目定義列舉
+        /// </summary>
+        public IEnumerable<GProgramSetting> ProgramSettings { get; }
 
         /// <summary>
         /// 新增資料庫項目

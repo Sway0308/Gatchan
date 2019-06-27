@@ -271,6 +271,10 @@ namespace ME.Define
         /// </summary>
         public const string DbSettingName = "DatabaseSettings.json";
         /// <summary>
+        /// 公司項目定義檔案名稱
+        /// </summary>
+        public const string CompanySettingName = "CompanySettings.json";
+        /// <summary>
         /// 程式設定檔案名稱
         /// </summary>
         public const string ProgramSettingName = "ProgramSetting.json";
@@ -286,6 +290,10 @@ namespace ME.Define
         /// 資料庫連線定義檔案路徑
         /// </summary>
         public static string DbSettingPath => FileFunc.PathCombine(BaseInfo.AppDataPath, DbSettingName);
+        /// <summary>
+        /// 資料庫連線定義檔案路徑
+        /// </summary>
+        public static string CompanySettingPath => FileFunc.PathCombine(BaseInfo.AppDataPath, CompanySettingName);
         /// <summary>
         /// 系統資料夾
         /// </summary>

@@ -57,7 +57,6 @@
     <Compile Include="DbCommand\GSqlCommandBuilder.cs" />
     <Compile Include="DbCommand\GVirtualFieldBuilder.cs" />
     <Compile Include="FilterBuilder\GFilterBuilder.cs" />
-    <Compile Include="Init\GDatabaseSettingHelper.cs" />
     <Compile Include="Helper\GBaseDbCommandHelper.cs" />
     <Compile Include="Helper\GOracleCommandHelper.cs" />
     <Compile Include="Helper\GSqlCommandHelper.cs" />

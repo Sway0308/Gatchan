@@ -1,5 +1,6 @@
 ﻿using ME.Base;
 using ME.Define;
+using ME.Setting;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,19 @@ namespace GatTool
     public class Program
     {
         /// <summary>
+        /// 定義檔案設定輔助器
+        /// </summary>
+        private static GDefineFileHelper DefineFileHelper { get; } = new GDefineFileHelper();
+
+        /// <summary>
         /// 項目暫存器
         /// </summary>
         private static GItemKeeper ItemKeeper { get; } = new GItemKeeper();
         /// <summary>
         /// 資料庫清單設定輔助器
         /// </summary>
-        private static DbSettingHelper DbSettingHelper => ItemKeeper.GetItem(nameof(DbSettingHelper), () => new DbSettingHelper());
+        private static DbSettingHelper DbSettingHelper 
+            => ItemKeeper.GetItem(nameof(DbSettingHelper), () => new DbSettingHelper(DefineFileHelper));
 
         /// <summary>
         /// 程式進入點

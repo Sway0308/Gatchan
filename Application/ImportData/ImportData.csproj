@@ -80,6 +80,10 @@
       <Project>{f2d37dc0-e623-4240-b677-d252a77e12be}</Project>
       <Name>ME.Define</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Library\ME.Setting\ME.Setting.csproj">
+      <Project>{842bfcfc-5832-4b21-9cf0-14ba467f88d8}</Project>
+      <Name>ME.Setting</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

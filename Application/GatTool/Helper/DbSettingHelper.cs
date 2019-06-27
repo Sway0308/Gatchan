@@ -1,11 +1,6 @@
 ﻿using ME.Base;
-using ME.Database;
-using ME.Define;
+using ME.Setting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GatTool
 {
@@ -15,9 +10,18 @@ namespace GatTool
     public class DbSettingHelper
     {
         /// <summary>
-        /// 資料庫連線設定輔助器
+        /// 建構函式
         /// </summary>
-        private GDatabaseSettingHelper Helper { get; } = new GDatabaseSettingHelper();
+        /// <param name="defineFileHelper"></param>
+        public DbSettingHelper(GDefineFileHelper defineFileHelper)
+        {
+            DefineFileHelper = defineFileHelper;
+        }
+
+        /// <summary>
+        /// 定義檔案設定輔助器
+        /// </summary>
+        private GDefineFileHelper DefineFileHelper { get; } = new GDefineFileHelper();
 
         /// <summary>
         /// 執行
@@ -53,7 +57,7 @@ namespace GatTool
         /// </summary>
         private void View()
         {
-            var json = JsonFunc.ObjectToJson(this.Helper.DatabaseSettings);
+            var json = JsonFunc.ObjectToJson(this.DefineFileHelper.DatabaseSettings);
             Console.WriteLine("=====================");
             Console.WriteLine(json);
             Console.WriteLine("=====================");
@@ -98,7 +102,7 @@ namespace GatTool
             var ans = Console.ReadLine();
             if (ans.SameTextOr("Y", "Yes"))
             {
-                this.Helper.AddDbSettingItem(displayName, dbServer, dbName, loginID, password);
+                this.DefineFileHelper.AddDbSettingItem(displayName, dbServer, dbName, loginID, password);
                 Console.WriteLine("Add database item success");
             }
         }

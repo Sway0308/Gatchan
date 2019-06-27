@@ -67,7 +67,10 @@
     <Compile Include="Common\GSortFieldCollection.cs" />
     <Compile Include="Common\DefineConfig.cs" />
     <Compile Include="Common\DefineFunc.cs" />
+    <Compile Include="Company\GCompanyItemCollection.cs" />
     <Compile Include="Company\GCompanyInfo.cs" />
+    <Compile Include="Company\GCompanyItem.cs" />
+    <Compile Include="Company\GCompanySettings.cs" />
     <Compile Include="Database\GDatabaseItem.cs" />
     <Compile Include="Database\GDatabaseItemCollection.cs" />
     <Compile Include="Database\GDatabaseSettings.cs" />
@@ -84,8 +87,6 @@
     <Compile Include="Filter\GFilterItem.cs" />
     <Compile Include="Filter\GFilterItemCollection.cs" />
     <Compile Include="Helper\GItemKeeper.cs" />
-    <Compile Include="InitSetting\GBaseDefineFileHelper.cs" />
-    <Compile Include="InitSetting\GSaveDefineHelper.cs" />
     <Compile Include="Interface\IBusinessLogic.cs" />
     <Compile Include="Interface\IDefineFile.cs" />
     <Compile Include="Interface\IEntityRow.cs" />

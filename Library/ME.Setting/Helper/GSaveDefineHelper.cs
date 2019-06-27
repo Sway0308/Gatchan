@@ -1,11 +1,12 @@
 ﻿using ME.Base;
+using ME.Define;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ME.Define
+namespace ME.Setting
 {
     /// <summary>
     /// 儲存定義檔案輔助器
