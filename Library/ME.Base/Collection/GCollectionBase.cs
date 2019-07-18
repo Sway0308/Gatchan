@@ -11,18 +11,12 @@ namespace ME.Base
     /// 強型別集合基底類別
     /// </summary>
     /// <typeparam name="T">成員類別。</typeparam>
-    public abstract class GCollectionBase<T> : IEnumerable<T>, ICollectionBase where T : ICollectionItem
+    public abstract class GCollectionBase<T> : IList<T>, ICollectionBase where T : ICollectionItem
     {
         /// <summary>
         /// 儲存物件
         /// </summary>
-        public List<T> StorageList { get; }= new List<T>();
-
-        /// <summary>
-        /// 建構函式。
-        /// </summary>
-        public GCollectionBase()
-        {}
+        public List<T> StorageList { get; } = new List<T>();
 
         /// <summary>
         ///  擁有者。
@@ -33,6 +27,11 @@ namespace ME.Base
         /// 總數
         /// </summary>
         public int Count => this.StorageList.Count;
+
+        /// <summary>
+        /// 是否唯讀
+        /// </summary>
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// 傳回指定鍵值的快取資料。
@@ -118,21 +117,80 @@ namespace ME.Base
         #region 實作IEnumerable
 
         /// <summary>
-        /// 取得列舉物件
+        /// 傳入物件在集合的位置
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public int IndexOf(T item)
+        {
+            return this.StorageList.IndexOf(item);
+        }
+
+        /// <summary>
+        /// 插入傳入物件在集合的指定位置
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="item"></param>
+        public void Insert(int index, T item)
+        {
+            this.StorageList.Insert(index, item);
+        }
+
+        /// <summary>
+        /// 移除集合的指定位置的物件
+        /// </summary>
+        /// <param name="index"></param>
+        public void RemoveAt(int index)
+        {
+            this.StorageList.RemoveAt(index);
+        }
+
+        /// <summary>
+        /// 集合是否存在傳入物件
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public bool Contains(T item)
+        {
+            return this.StorageList.Contains(item);
+        }
+
+        /// <summary>
+        /// 複製指定位置的物件至指定的陣列
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="arrayIndex"></param>
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            this.StorageList.CopyTo(array, arrayIndex);
+        }
+
+        /// <summary>
+        /// 移除指定物件
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        bool ICollection<T>.Remove(T item)
+        {
+            return this.StorageList.Remove(item);
+        }
+
+        /// <summary>
+        /// 取得物件列舉
         /// </summary>
         /// <returns></returns>
-        public IEnumerator GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             return this.StorageList.GetEnumerator();
         }
 
         /// <summary>
-        /// 取得列舉泛型物件
+        /// 取得列舉
         /// </summary>
         /// <returns></returns>
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.StorageList.GetEnumerator();
+            return this.GetEnumerator();
         }
 
         #endregion

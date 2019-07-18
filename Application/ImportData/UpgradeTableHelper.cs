@@ -45,7 +45,7 @@ namespace ImportData
             sql.AppendLine("BEGIN TRANSACTION");
             sql.AppendLine($"CREATE TABLE dbo.{dbDefine.TableName}");
             sql.AppendLine("(");
-            foreach (GFieldDefine fieldDefine in dbDefine.Fields)
+            foreach (GDbFieldDefine fieldDefine in dbDefine.Fields)
             {
                 var text = $@"[{fieldDefine.FieldName}] {ToDbType(fieldDefine.DbType, fieldDefine.MaxLength)} {AllowNull(fieldDefine.AllowNull)},";
                 sql.AppendLine(text);

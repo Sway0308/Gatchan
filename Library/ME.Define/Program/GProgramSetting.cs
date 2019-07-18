@@ -38,8 +38,8 @@ namespace ME.Define
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// 
+        /// 程式項目
         /// </summary>
-        public GProgramItemCollection Items { get; } = new GProgramItemCollection();
+        public GProgramItemCollection Items { get; set; } = new GProgramItemCollection();
     }
 }

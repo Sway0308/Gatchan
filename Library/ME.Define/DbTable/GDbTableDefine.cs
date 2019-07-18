@@ -16,7 +16,7 @@ namespace ME.Define
         /// <returns></returns>
         public string GetDefineFilePath()
         {
-            return SysDefineSettingName.DbTableDefinePath(this.SystemID);
+            return SysDefineSettingName.DbTableDefineFilePath(this.SystemID, this.ProgID);
         }
 
         /// <summary>
