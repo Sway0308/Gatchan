@@ -1,37 +1,30 @@
 ﻿{
   "SystemID": "HUM",
   "DisplayName": "人資管理",
-  "Modules": [
+  "Items": [
     {
-      "ModuleID": "Emp",
-      "DisplayName": "",
-      "Categories": [],
-      "Items": [
-        {
-          "ProgID": "Depart",
-          "DisplayName": "部門",
-          "BusinessInstanceType": {
-            "AssemblyFile": "",
-            "TypeName": ""
-          }
-        },
-        {
-          "ProgID": "Duty",
-          "DisplayName": "職缺",
-          "BusinessInstanceType": {
-            "AssemblyFile": "",
-            "TypeName": ""
-          }
-        },
-        {
-          "ProgID": "Employee",
-          "DisplayName": "員工",
-          "BusinessInstanceType": {
-            "AssemblyFile": "",
-            "TypeName": ""
-          }
-        }
-      ]
+      "ProgID": "Depart",
+      "DisplayName": "部門",
+      "BusinessInstanceType": {
+        "AssemblyFile": "",
+        "TypeName": ""
+      }
+    },
+    {
+      "ProgID": "Duty",
+      "DisplayName": "職缺",
+      "BusinessInstanceType": {
+        "AssemblyFile": "",
+        "TypeName": ""
+      }
+    },
+    {
+      "ProgID": "Employee",
+      "DisplayName": "員工",
+      "BusinessInstanceType": {
+        "AssemblyFile": "",
+        "TypeName": ""
+      }
     }
   ]
 }
