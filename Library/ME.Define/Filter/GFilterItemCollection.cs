@@ -145,7 +145,7 @@ namespace ME.Define
             {
                 var filterItem = this[N1];
                 if (StrFunc.StrIsEmpty(filterItem.FilterValue))
-                    this.RemoveAt(N1);
+                    this.Remove(filterItem);
             }
             return this;
         }

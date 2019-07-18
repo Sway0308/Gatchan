@@ -37,14 +37,14 @@ namespace ME.Base
         {
             get
             {
-                var result = this.FirstOrDefault(x => x.Key.SameText(key));
+                var result = this.StorageList.FirstOrDefault(x => x.Key.SameText(key));
                 if (result != null)
                     return result;
-                return default(T);
+                return default;
             }
             set
             {
-                var result = this.FirstOrDefault(x => x.Key.SameText(key));
+                var result = this.StorageList.FirstOrDefault(x => x.Key.SameText(key));
                 if (result != null)
                     result = value;
             }
@@ -55,7 +55,7 @@ namespace ME.Base
         /// </summary>
         /// <param name="key">鍵值</param>
         /// <param name="item">項目</param>
-        public new virtual void Add(T item)
+        public override void Add(T item)
         {
             if (item.Collection == this)
                 return;
@@ -78,7 +78,7 @@ namespace ME.Base
         /// <returns></returns>
         public bool Contains(string key)
         {
-            return this.Any(x => StrFunc.SameText(x.Key, key));
+            return this.StorageList.Any(x => StrFunc.SameText(x.Key, key));
         }
     }
 }

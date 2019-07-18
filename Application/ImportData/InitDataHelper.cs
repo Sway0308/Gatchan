@@ -174,7 +174,7 @@ namespace ImportData
             var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, "Employee");
             var result = bl.Find(new GFindInputArgs());
             var table = result.EntityTable;
-            foreach (var row in result.EntityTable.Rows)
+            foreach (GEntityRow row in result.EntityTable.Rows)
             {
                 row.SetValue(SysFields.ViewID, row.ValueAsString(SysFields.ViewID) + "_2");
             }
@@ -191,7 +191,7 @@ namespace ImportData
             var bl = BusinessFunc.CreateBusinessLogic(this.SessionGuid, "Employee");
             var result = bl.Find(new GFindInputArgs());
             var table = result.EntityTable;
-            foreach (var row in result.EntityTable.Rows)
+            foreach (GEntityRow row in result.EntityTable.Rows)
             {
                 bl.Delete(new GDeleteInputArgs { FormID = row.ValueAsString(SysFields.ID) });
             }
