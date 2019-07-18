@@ -36,9 +36,10 @@ namespace ME.Define
         /// 顯示名稱
         /// </summary>
         public string DisplayName { get; set; }
+
         /// <summary>
-        /// 程式模組別集合
+        /// 
         /// </summary>
-        public GProgramModuleCollection Modules { get; } = new GProgramModuleCollection();
+        public GProgramItemCollection Items { get; } = new GProgramItemCollection();
     }
 }

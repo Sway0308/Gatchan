@@ -55,10 +55,9 @@ namespace ImportData
         private void InitProgSetting()
         {
             var progSetting = new GProgramSetting("HUM") { DisplayName = "人資管理" };
-            progSetting.Modules.Add(new GProgramModule("Emp"));
-            progSetting.Modules["Emp"].Items.Add(new GProgramItem("Depart") { DisplayName = "部門" });
-            progSetting.Modules["Emp"].Items.Add(new GProgramItem("Duty") { DisplayName = "職缺" });
-            progSetting.Modules["Emp"].Items.Add(new GProgramItem("Employee") { DisplayName = "員工" });
+            progSetting.Items.Add(new GProgramItem("Depart") { DisplayName = "部門" });
+            progSetting.Items.Add(new GProgramItem("Duty") { DisplayName = "職缺" });
+            progSetting.Items.Add(new GProgramItem("Employee") { DisplayName = "員工" });
             this.SaveDefineHelper.SaveDefine(progSetting);
         }
 

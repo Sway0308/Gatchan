@@ -146,23 +146,7 @@ namespace ME.Cahce
         private static void ExtractProgramSetting(GProgramSetting progSetting)
         {
             var systemID = progSetting.SystemID;
-            foreach (GProgramModule module in progSetting.Modules)
-            {
-                foreach (GProgramCategory category in module.Categories)
-                    CacheProgramItem(systemID, category.Items);
-
-                CacheProgramItem(systemID, module.Items);
-            }
-        }
-
-        /// <summary>
-        /// 將程式項目快取到快取暫存器
-        /// </summary>
-        /// <param name="systemID"></param>
-        /// <param name="progItems"></param>
-        private static void CacheProgramItem(string systemID, GProgramItemCollection progItems)
-        {
-            foreach (GProgramItem progItem in progItems)
+            foreach (GProgramItem progItem in progSetting.Items)
             {
                 CacheKeeper.AddItem(progItem.ProgID, systemID);
                 CacheKeeper.AddItem(progItem.ProgID, progItem);
