@@ -27,10 +27,10 @@ namespace ME.Define
         /// </summary>
         public void AcceptChanges()
         {
-            foreach (var row in this.Where(x => x.RowState == EEntityRowState.Deleted))
+            foreach (GEntityRow row in this.Where(x => x.RowState == EEntityRowState.Deleted))
                 row.Remove();
 
-            foreach (var row in this)
+            foreach (GEntityRow row in this)
                 row.SetRowState(EEntityRowState.Unchanged);
         }
     }

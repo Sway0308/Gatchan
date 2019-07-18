@@ -289,7 +289,7 @@ namespace ME.Business
         protected virtual void DoMove(GMoveInputArgs inputArgs, GMoveOutputResult outputResult)
         {
             outputResult.EntitySet = new GEntitySet(this.ProgID);
-            foreach (var tableDefine in this.ProgramDefine.Tables)
+            foreach (GTableDefine tableDefine in this.ProgramDefine.Tables)
             {
                 if (tableDefine.IsMaster)
                 {
@@ -316,7 +316,7 @@ namespace ME.Business
         {
             var fieldName = tableDefine.IsMaster ? SysFields.ID : SysFields.MasterID;
             var args = new GSelectInputArgs { TableName = tableDefine.TableName, FilterItems = { new GFilterItem(fieldName, formID) } };
-            foreach (var filterItem in tableDefine.FilterItems)
+            foreach (GFilterItem filterItem in tableDefine.FilterItems)
             {
                 args.FilterItems.Add(filterItem.Clone());
             }
@@ -404,7 +404,7 @@ namespace ME.Business
             }
             else
             {
-                foreach (var row in table.Rows)
+                foreach (GEntityRow row in table.Rows)
                 {
                     var sql = new StringBuilder();
                     sql.AppendLine("Update A Set");

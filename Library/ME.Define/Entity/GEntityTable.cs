@@ -42,7 +42,7 @@ namespace ME.Define
         /// </summary>
         private void ConvertToGEntityRow(GInstanceType instanceType)
         {
-            foreach (var entity in OriginalEntityTable.Rows)
+            foreach (GEntityRow entity in OriginalEntityTable.Rows)
             {
                 var realEntity = (T)DefineFunc.CreateEntityRow(instanceType);
                 this.EntityRows.Add(entity.ToRealEntity(realEntity), entity);
@@ -111,7 +111,7 @@ namespace ME.Define
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("Name：{0}, Count：{1}", this.TableName, this.Rows.Count());
+            return string.Format("Name：{0}, Count：{1}", this.TableName, this.Rows.Count);
         }
     }
 }

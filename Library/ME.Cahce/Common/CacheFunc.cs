@@ -146,9 +146,9 @@ namespace ME.Cahce
         private static void ExtractProgramSetting(GProgramSetting progSetting)
         {
             var systemID = progSetting.SystemID;
-            foreach (var module in progSetting.Modules)
+            foreach (GProgramModule module in progSetting.Modules)
             {
-                foreach (var category in module.Categories)
+                foreach (GProgramCategory category in module.Categories)
                     CacheProgramItem(systemID, category.Items);
 
                 CacheProgramItem(systemID, module.Items);
@@ -162,7 +162,7 @@ namespace ME.Cahce
         /// <param name="progItems"></param>
         private static void CacheProgramItem(string systemID, GProgramItemCollection progItems)
         {
-            foreach (var progItem in progItems)
+            foreach (GProgramItem progItem in progItems)
             {
                 CacheKeeper.AddItem(progItem.ProgID, systemID);
                 CacheKeeper.AddItem(progItem.ProgID, progItem);

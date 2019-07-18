@@ -10,18 +10,6 @@ namespace ME.Base
     /// </summary>
     public class GCollectionItem : ICollectionItem
     {
-        #region 建構函式
-
-        /// <summary>
-        /// 建構函式。
-        /// </summary>
-        public GCollectionItem()
-        {
-            Collection = null;
-        }
-
-        #endregion
-
         #region ICollectionItem 介面
 
         /// <summary>

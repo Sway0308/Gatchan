@@ -3,6 +3,7 @@ using System.Collections;
 using System.Xml.Serialization;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ME.Base
 {
@@ -10,8 +11,13 @@ namespace ME.Base
     /// 強型別集合基底類別
     /// </summary>
     /// <typeparam name="T">成員類別。</typeparam>
-    public class GCollectionBase<T> : List<T>, ICollectionBase where T : ICollectionItem
+    public abstract class GCollectionBase<T> : IEnumerable<T>, ICollectionBase where T : ICollectionItem
     {
+        /// <summary>
+        /// 儲存物件
+        /// </summary>
+        public List<T> StorageList { get; }= new List<T>();
+
         /// <summary>
         /// 建構函式。
         /// </summary>
@@ -19,18 +25,30 @@ namespace ME.Base
         {}
 
         /// <summary>
-        /// 建構函式。
-        /// </summary>
-        /// <param name="owner">擁有者。</param>
-        public GCollectionBase(object owner)
-        {
-            this.Owner = owner;
-        }
-
-        /// <summary>
         ///  擁有者。
         /// </summary>
         public virtual object Owner { get; protected set; }
+
+        /// <summary>
+        /// 總數
+        /// </summary>
+        public int Count => this.StorageList.Count;
+
+        /// <summary>
+        /// 傳回指定鍵值的快取資料。
+        /// </summary>
+        /// <param name="key">鍵值。</param>
+        public virtual T this[int index]
+        {
+            get
+            {
+                return this.StorageList[index];
+            }
+            set
+            {
+                this.StorageList[index] = value;
+            }
+        }
 
         /// <summary>
         /// 依索引取得成員。
@@ -38,7 +56,7 @@ namespace ME.Base
         /// <param name="index">索引。</param>
         public object GetItem(int index)
         {
-            return base[index];
+            return this.StorageList[index];
         }
 
         /// <summary>
@@ -54,21 +72,29 @@ namespace ME.Base
         /// 移除成員。
         /// </summary>
         /// <param name="item"></param>
-        public new void Remove(T item)
+        public void Remove(T item)
         {
             OnRemove(item);
-            base.Remove(item);
+            this.StorageList.Remove(item);
         }
 
         /// <summary>
         /// 新增成員
         /// </summary>
         /// <param name="item"></param>
-        public new virtual void Add(T item)
+        public virtual void Add(T item)
         {
             OnAdd(item);
             item.SetCollection(this);
-            base.Add(item);
+            this.StorageList.Add(item);
+        }
+
+        /// <summary>
+        /// 清除清單資料
+        /// </summary>
+        public void Clear()
+        {
+            this.StorageList.Clear();
         }
 
         /// <summary>
@@ -88,5 +114,27 @@ namespace ME.Base
         {
 
         }
+
+        #region 實作IEnumerable
+
+        /// <summary>
+        /// 取得列舉物件
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator GetEnumerator()
+        {
+            return this.StorageList.GetEnumerator();
+        }
+
+        /// <summary>
+        /// 取得列舉泛型物件
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return this.StorageList.GetEnumerator();
+        }
+
+        #endregion
     }
 }

@@ -142,7 +142,7 @@ namespace ME.Define
         /// <param name="originalRow">來源資料列</param>
         private void ImportFieldNames(GEntityRow originalRow)
         {
-            foreach (var field in originalRow.Fields)
+            foreach (GEntityField field in originalRow.Fields)
                 this.Fields.Add(field.Key, DataFunc.GetDefaultValue(field.Value.GetType()));
         }
 
