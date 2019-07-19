@@ -300,41 +300,32 @@ namespace ME.Define
         public static string SystemPath => FileFunc.PathCombine(BaseInfo.AppDataPath, "Common");
         /// <summary>
         /// 程式設定檔案路徑
-        /// </summary>
-        
-        /// <returns></returns>
-        public static string ProgramSettingPath()
-            => FileFunc.PathCombine(SystemPath, $@"");
-        /// <summary>
-        /// 程式設定檔案路徑
         /// </summary>        
         /// <returns></returns>
-        public static string ProgramSettingFilePath()
+        public static string ProgramSettingFilePath
             => FileFunc.PathCombine(SystemPath, $@"{ProgramSettingName}");
         /// <summary>
         /// 程式定義檔案路徑
         /// </summary>        
         /// <returns></returns>
-        public static string ProgramDefinePath()
-            => FileFunc.PathCombine(SystemPath, $@"ProgramDefine\");
+        public static string ProgramDefinePath
+            => FileFunc.PathCombine(SystemPath, $@"ProgramDefine");
         /// <summary>
         /// 程式定義檔案路徑
         /// </summary>        
         /// <param name="progID">功能定義</param>
         /// <returns></returns>
         public static string ProgramDefineFilePath(string progID) 
-            => FileFunc.PathCombine(ProgramDefinePath(), $@"{progID}.{ProgramDefineName}");
+            => FileFunc.PathCombine(ProgramDefinePath, $@"{progID}.{ProgramDefineName}");
         /// <summary>
         /// 資料表定義檔案路徑
-        /// </summary>
-        
+        /// </summary>        
         /// <returns></returns>
         public static string DbTableDefinePath()
             => FileFunc.PathCombine(SystemPath, $@"DbTableDefine");
         /// <summary>
         /// 資料表定義檔案路徑
-        /// </summary>
-        
+        /// </summary>        
         /// <param name="progID">功能定義</param>
         /// <returns></returns>
         public static string DbTableDefineFilePath(string progID)

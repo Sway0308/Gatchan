@@ -23,7 +23,7 @@ namespace ME.Define
         /// <returns></returns>
         public string GetDefineFilePath()
         {
-            return SysDefineSettingName.ProgramSettingFilePath();
+            return SysDefineSettingName.ProgramSettingFilePath;
         }
 
         /// <summary>
@@ -34,6 +34,6 @@ namespace ME.Define
         /// <summary>
         /// 程式項目
         /// </summary>
-        public GProgramItemCollection Items { get; set; } = new GProgramItemCollection();
+        public GProgramItemCollection Items { get; } = new GProgramItemCollection();
     }
 }
