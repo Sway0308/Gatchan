@@ -91,7 +91,6 @@
     <Compile Include="Interface\IDefineFile.cs" />
     <Compile Include="Interface\IEntityRow.cs" />
     <Compile Include="Interface\IProgDefine.cs" />
-    <Compile Include="Interface\ISystemDefine.cs" />
     <Compile Include="Program\GFieldDefine.cs" />
     <Compile Include="Program\GFieldDefineCollection.cs" />
     <Compile Include="Program\GLinkReturnField.cs" />

@@ -301,47 +301,44 @@ namespace ME.Define
         /// <summary>
         /// 程式設定檔案路徑
         /// </summary>
-        /// <param name="systemID">系統編號</param>
+        
         /// <returns></returns>
-        public static string ProgramSettingPath(string systemID)
-            => FileFunc.PathCombine(SystemPath, $@"{systemID}");
+        public static string ProgramSettingPath()
+            => FileFunc.PathCombine(SystemPath, $@"");
         /// <summary>
         /// 程式設定檔案路徑
-        /// </summary>
-        /// <param name="systemID">系統編號</param>
+        /// </summary>        
         /// <returns></returns>
-        public static string ProgramSettingFilePath(string systemID)
-            => FileFunc.PathCombine(SystemPath, $@"{systemID}\{ProgramSettingName}");
+        public static string ProgramSettingFilePath()
+            => FileFunc.PathCombine(SystemPath, $@"{ProgramSettingName}");
         /// <summary>
         /// 程式定義檔案路徑
-        /// </summary>
-        /// <param name="systemID">系統編號</param>
+        /// </summary>        
         /// <returns></returns>
-        public static string ProgramDefinePath(string systemID)
-            => FileFunc.PathCombine(SystemPath, $@"{systemID}\ProgramDefine\");
+        public static string ProgramDefinePath()
+            => FileFunc.PathCombine(SystemPath, $@"ProgramDefine\");
         /// <summary>
         /// 程式定義檔案路徑
-        /// </summary>
-        /// <param name="systemID">系統編號</param>
-        /// <param name="progID">程式編號</param>
+        /// </summary>        
+        /// <param name="progID">功能定義</param>
         /// <returns></returns>
-        public static string ProgramDefineFilePath(string systemID, string progID) 
-            => FileFunc.PathCombine(ProgramDefinePath(systemID), $@"{progID}.{ProgramDefineName}");
+        public static string ProgramDefineFilePath(string progID) 
+            => FileFunc.PathCombine(ProgramDefinePath(), $@"{progID}.{ProgramDefineName}");
         /// <summary>
         /// 資料表定義檔案路徑
         /// </summary>
-        /// <param name="systemID">系統編號</param>
+        
         /// <returns></returns>
-        public static string DbTableDefinePath(string systemID)
-            => FileFunc.PathCombine(SystemPath, $@"{systemID}\DbTableDefine");
+        public static string DbTableDefinePath()
+            => FileFunc.PathCombine(SystemPath, $@"DbTableDefine");
         /// <summary>
         /// 資料表定義檔案路徑
         /// </summary>
-        /// <param name="systemID">系統編號</param>
-        /// <param name="progID">程式編號</param>
+        
+        /// <param name="progID">功能定義</param>
         /// <returns></returns>
-        public static string DbTableDefineFilePath(string systemID, string progID)
-            => FileFunc.PathCombine(DbTableDefinePath(systemID), $@"{progID}.{DbTableDefineName}");
+        public static string DbTableDefineFilePath(string progID)
+            => FileFunc.PathCombine(DbTableDefinePath(), $@"{progID}.{DbTableDefineName}");
     }
 
     /// <summary>

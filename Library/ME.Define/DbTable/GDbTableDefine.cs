@@ -16,13 +16,8 @@ namespace ME.Define
         /// <returns></returns>
         public string GetDefineFilePath()
         {
-            return SysDefineSettingName.DbTableDefineFilePath(this.SystemID, this.ProgID);
+            return SysDefineSettingName.DbTableDefineFilePath(this.ProgID);
         }
-
-        /// <summary>
-        /// 系統編號
-        /// </summary>
-        public string SystemID { get; set; }
 
         /// <summary>
         /// 程式代碼

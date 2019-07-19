@@ -54,7 +54,7 @@ namespace ImportData
         /// </summary>
         private void InitProgSetting()
         {
-            var progSetting = new GProgramSetting("HUM") { DisplayName = "人資管理" };
+            var progSetting = new GProgramSetting { DisplayName = "人資管理" };
             progSetting.Items.Add(new GProgramItem("Depart") { DisplayName = "部門" });
             progSetting.Items.Add(new GProgramItem("Duty") { DisplayName = "職缺" });
             progSetting.Items.Add(new GProgramItem("Employee") { DisplayName = "員工" });
@@ -86,7 +86,7 @@ namespace ImportData
         /// <returns></returns>
         private GProgramDefine CreateProgDefines(string progID, string displayName)
         {
-            var progDefine = new GProgramDefine { SystemID = "HUM", ProgID = progID, DisplayName = displayName };
+            var progDefine = new GProgramDefine { ProgID = progID, DisplayName = displayName };
             var tableDefine = new GTableDefine { TableName = progID, DisplayName = displayName, DbTableName = progID, PrimaryKey = $"{progID}ID" };
             tableDefine.Fields.Add(new GFieldDefine { FieldName = SysFields.CompanyID, DisplayName = $"公司編號", MaxLength = 10 });
             tableDefine.Fields.Add(new GFieldDefine { FieldName = SysFields.ID, DisplayName = $"{displayName}編號", MaxLength = 10 });

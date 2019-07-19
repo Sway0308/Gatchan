@@ -1,14 +1,13 @@
 ﻿{
-  "SystemID": "HUM",
-  "ProgID": "Depart",
-  "DisplayName": "部門",
+  "ProgID": "Duty",
+  "DisplayName": "職缺",
   "Tables": [
     {
-      "TableName": "Depart",
-      "DbTableName": "Depart",
-      "DisplayName": "部門",
+      "TableName": "Duty",
+      "DbTableName": "Duty",
+      "DisplayName": "職缺",
       "MasterKey": "",
-      "PrimaryKey": "DepartID",
+      "PrimaryKey": "DutyID",
       "Fields": [
         {
           "FieldName": "SYS_CompanyID",
@@ -24,7 +23,7 @@
         },
         {
           "FieldName": "SYS_ID",
-          "DisplayName": "部門編號",
+          "DisplayName": "職缺編號",
           "DbType": "String",
           "DbFieldName": "SYS_ID",
           "FieldType": "DataField",
@@ -36,7 +35,7 @@
         },
         {
           "FieldName": "SYS_ViewID",
-          "DisplayName": "部門代碼",
+          "DisplayName": "職缺代碼",
           "DbType": "String",
           "DbFieldName": "SYS_ViewID",
           "FieldType": "DataField",
@@ -48,7 +47,7 @@
         },
         {
           "FieldName": "SYS_Name",
-          "DisplayName": "部門名稱",
+          "DisplayName": "職缺名稱",
           "DbType": "String",
           "DbFieldName": "SYS_Name",
           "FieldType": "DataField",

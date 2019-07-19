@@ -8,15 +8,13 @@ namespace ME.Define
     /// <summary>
     /// 程式設定
     /// </summary>
-    public class GProgramSetting : ISystemDefine
+    public class GProgramSetting : IDefineFile
     {
         /// <summary>
         /// 建構函式
         /// </summary>
-        /// <param name="systemID"></param>
-        public GProgramSetting(string systemID)
+        public GProgramSetting()
         {
-            SystemID = systemID;
         }
 
         /// <summary>
@@ -25,13 +23,9 @@ namespace ME.Define
         /// <returns></returns>
         public string GetDefineFilePath()
         {
-            return SysDefineSettingName.ProgramSettingFilePath(this.SystemID);
+            return SysDefineSettingName.ProgramSettingFilePath();
         }
 
-        /// <summary>
-        /// 系統代號
-        /// </summary>
-        public string SystemID { get; set; }
         /// <summary>
         /// 顯示名稱
         /// </summary>
