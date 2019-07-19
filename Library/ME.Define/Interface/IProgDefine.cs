@@ -9,7 +9,7 @@ namespace ME.Define
     /// <summary>
     /// 功能定義介面
     /// </summary>
-    public interface IProgDefine : ISystemDefine
+    public interface IProgDefine : IDefineFile
     {
         /// <summary>
         /// 程式定義

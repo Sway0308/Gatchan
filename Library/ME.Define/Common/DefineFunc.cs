@@ -22,7 +22,6 @@ namespace ME.Define
             foreach (GTableDefine tableDefine in progDefine.Tables)
             {
                 var dbDefine = new GDbTableDefine {
-                    SystemID = progDefine.SystemID,
                     ProgID = progDefine.ProgID,
                     TableName = tableDefine.DbTableName,
                     DisplayName = tableDefine.DisplayName

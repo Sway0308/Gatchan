@@ -1,8 +1,7 @@
 ﻿{
-  "SystemID": "HUM",
-  "ProgID": "Employee",
-  "TableName": "Employee",
-  "DisplayName": "員工",
+  "ProgID": "Duty",
+  "TableName": "Duty",
+  "DisplayName": "職缺",
   "Fields": [
     {
       "FieldName": "SYS_CompanyID",
@@ -13,35 +12,21 @@
     },
     {
       "FieldName": "SYS_ID",
-      "DisplayName": "員工編號",
+      "DisplayName": "職缺編號",
       "DbType": "String",
       "MaxLength": 10,
       "AllowNull": false
     },
     {
       "FieldName": "SYS_ViewID",
-      "DisplayName": "員工代碼",
+      "DisplayName": "職缺代碼",
       "DbType": "String",
       "MaxLength": 10,
       "AllowNull": false
     },
     {
       "FieldName": "SYS_Name",
-      "DisplayName": "員工名稱",
-      "DbType": "String",
-      "MaxLength": 10,
-      "AllowNull": false
-    },
-    {
-      "FieldName": "DepartID",
-      "DisplayName": "部門編號",
-      "DbType": "String",
-      "MaxLength": 10,
-      "AllowNull": false
-    },
-    {
-      "FieldName": "DutyID",
-      "DisplayName": "職缺編號",
+      "DisplayName": "職缺名稱",
       "DbType": "String",
       "MaxLength": 10,
       "AllowNull": false

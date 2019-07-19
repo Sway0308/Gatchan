@@ -33,17 +33,12 @@ namespace ME.Cahce
         /// <summary>
         /// 取得程式定義檔案路徑
         /// </summary>
-        /// <param name="systemID"></param>
         /// <param name="progID"></param>
         /// <returns></returns>
         public static GProgramDefine GetProgramDefine(string progID)
         {
-            var systemID = CacheKeeper.GetItem<string>(progID);
-            if (systemID.IsEmpty())
-                throw new GException($"No such ProgID:{progID} exists");
-
             return CacheKeeper.GetItem(progID, () => 
-                ConvertToDefine<GProgramDefine>(SysDefineSettingName.ProgramDefineFilePath(systemID, progID))
+                ConvertToDefine<GProgramDefine>(SysDefineSettingName.ProgramDefineFilePath(progID))
             );
         }
 
@@ -70,7 +65,6 @@ namespace ME.Cahce
         /// <summary>
         /// 取得程式設定檔案路徑
         /// </summary>
-        /// <param name="systemID"></param>
         /// <returns></returns>
         public static IEnumerable<GProgramSetting> GetProgramSettings()
         {
@@ -81,17 +75,16 @@ namespace ME.Cahce
         /// <summary>
         /// 取得程式設定檔案路徑
         /// </summary>
-        /// <param name="systemID"></param>
         /// <returns></returns>
-        public static GProgramSetting GetProgramSetting(string systemID)
+        public static GProgramSetting GetProgramSetting()
         {
             InitProgramSetting();
-            var result = CacheKeeper.GetItem<GProgramSetting>(systemID);
+            var result = CacheKeeper.GetItem<GProgramSetting>(nameof(GProgramSetting));
             if (result != null)
                 return result;
 
             ExtractProgramSetting();
-            return CacheKeeper.GetItem<GProgramSetting>(systemID);
+            return CacheKeeper.GetItem<GProgramSetting>(nameof(GProgramSetting));
         }
 
         /// <summary>
@@ -129,11 +122,9 @@ namespace ME.Cahce
                                select new { Setting = JsonFunc.JsonToObject<GProgramSetting>(FileFunc.FileReadAllText(f)) };
             foreach (var set in progSettings)
             {
-                var currSystemID = set.Setting.SystemID;
-
-                if (!CacheKeeper.HasItem<GProgramSetting>(currSystemID))
+                if (!CacheKeeper.HasItem<GProgramSetting>(nameof(GProgramSetting)))
                 {
-                    CacheKeeper.AddItem(currSystemID, set.Setting);
+                    CacheKeeper.AddItem(nameof(GProgramSetting), set.Setting);
                     ExtractProgramSetting(set.Setting);
                 }
             }
@@ -145,10 +136,8 @@ namespace ME.Cahce
         /// <param name="progSetting"></param>
         private static void ExtractProgramSetting(GProgramSetting progSetting)
         {
-            var systemID = progSetting.SystemID;
             foreach (GProgramItem progItem in progSetting.Items)
             {
-                CacheKeeper.AddItem(progItem.ProgID, systemID);
                 CacheKeeper.AddItem(progItem.ProgID, progItem);
             }
         }
@@ -171,7 +160,7 @@ namespace ME.Cahce
                 foreach (var item in progItems)
                 {
                     CacheKeeper.GetItem(item.ProgID, () =>
-                        ConvertToDefine<GDbTableDefine>(SysDefineSettingName.DbTableDefineFilePath(progSetting.SystemID, item.ProgID))
+                        ConvertToDefine<GDbTableDefine>(SysDefineSettingName.DbTableDefineFilePath(item.ProgID))
                     );
                 }
             }
