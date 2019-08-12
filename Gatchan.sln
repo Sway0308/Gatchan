@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportData", "Application\I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatTool", "Application\GatTool\GatTool.csproj", "{EC6EFCE4-4DEB-4CD5-8CF8-7C714A99DC8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ME.Setting", "Library\ME.Setting\ME.Setting.csproj", "{842BFCFC-5832-4B21-9CF0-14BA467F88D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ME.Setting", "Library\ME.Setting\ME.Setting.csproj", "{842BFCFC-5832-4B21-9CF0-14BA467F88D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

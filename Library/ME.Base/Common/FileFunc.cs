@@ -272,7 +272,7 @@ namespace ME.Base
         public static string GetAssemblyPath()
         {
             //取得程式組件路徑
-            if (StrFunc.StrIsEmpty(AppDomain.CurrentDomain.RelativeSearchPath))
+            if (string.IsNullOrEmpty(AppDomain.CurrentDomain.RelativeSearchPath))
                 return AppDomain.CurrentDomain.BaseDirectory;
             else
                 return AppDomain.CurrentDomain.RelativeSearchPath;
