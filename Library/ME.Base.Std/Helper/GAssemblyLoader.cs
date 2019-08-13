@@ -33,7 +33,8 @@ namespace ME.Base
         /// <param name="args">建構函式引數。</param>
         public object CreateInstance(string typeName, params object[] args)
         {
-            return AppDomain.CurrentDomain.CreateInstanceFromAndUnwrap(this.AssemblyFile, typeName, true, BindingFlags.CreateInstance, null, args, null, null);
+            var type = Type.GetType(typeName);
+            return Activator.CreateInstance(type, args);
         }
 
         /// <summary>

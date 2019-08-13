@@ -60,25 +60,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Library\ME.Base\ME.Base.csproj">
-      <Project>{bd976132-c4c1-4289-bb59-ad4a3d53a641}</Project>
-      <Name>ME.Base</Name>
+    <ProjectReference Include="..\..\Library\ME.Base.Std\ME.Base.Std.csproj">
+      <Project>{975f708c-246f-4734-ae9b-b39925966de9}</Project>
+      <Name>ME.Base.Std</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\ME.Business\ME.Business.csproj">
-      <Project>{4982b085-a03e-43ed-b752-a6841c13699d}</Project>
-      <Name>ME.Business</Name>
+    <ProjectReference Include="..\..\Library\ME.Business.Std\ME.Business.Std.csproj">
+      <Project>{cb556ca7-b96f-4041-b96d-00e16b906878}</Project>
+      <Name>ME.Business.Std</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\ME.Cahce\ME.Cahce.csproj">
-      <Project>{0fc476fd-16dc-4f5f-b1e6-8da85fc3c043}</Project>
-      <Name>ME.Cahce</Name>
+    <ProjectReference Include="..\..\Library\ME.Cahce.Std\ME.Cahce.Std.csproj">
+      <Project>{681bab9d-a2e5-4675-bc6a-92278ff6f5d5}</Project>
+      <Name>ME.Cahce.Std</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\ME.Database\ME.Database.csproj">
-      <Project>{5c159065-f612-47c3-9840-91eaffd5da1d}</Project>
-      <Name>ME.Database</Name>
+    <ProjectReference Include="..\..\Library\ME.Database.Std\ME.Database.Std.csproj">
+      <Project>{218a7d0d-0067-43fa-af80-e2ffa2b91142}</Project>
+      <Name>ME.Database.Std</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\ME.Define\ME.Define.csproj">
-      <Project>{f2d37dc0-e623-4240-b677-d252a77e12be}</Project>
-      <Name>ME.Define</Name>
+    <ProjectReference Include="..\..\Library\ME.Define.Std\ME.Define.Std.csproj">
+      <Project>{c7ba0967-230c-4a06-973f-f333d7a14e15}</Project>
+      <Name>ME.Define.Std</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\ME.Setting\ME.Setting.csproj">
       <Project>{842bfcfc-5832-4b21-9cf0-14ba467f88d8}</Project>

@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ME.Base.Std\ME.Base.Std.csproj" />
     <ProjectReference Include="..\ME.Cahce.Std\ME.Cahce.Std.csproj" />
+    <ProjectReference Include="..\ME.Database.Std\ME.Database.Std.csproj" />
     <ProjectReference Include="..\ME.Define.Std\ME.Define.Std.csproj" />
   </ItemGroup>
 

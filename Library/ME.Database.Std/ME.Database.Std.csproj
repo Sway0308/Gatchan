@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
+    <PackageReference Include="System.Data.OracleClient" Version="1.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ME.Base.Std\ME.Base.Std.csproj" />
     <ProjectReference Include="..\ME.Cahce.Std\ME.Cahce.Std.csproj" />
     <ProjectReference Include="..\ME.Define.Std\ME.Define.Std.csproj" />
